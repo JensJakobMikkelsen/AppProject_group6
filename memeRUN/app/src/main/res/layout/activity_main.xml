@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView4"
+            android:layout_width="310dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="38dp"
+            android:layout_marginLeft="38dp"
+            android:layout_marginEnd="38dp"
+            android:layout_marginRight="38dp"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="16dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView3">
+
+                <Button
+                    android:id="@+id/start_btn"
+                    android:layout_width="283dp"
+                    android:layout_height="70dp"
+                    android:background="@color/colorAccent"
+                    android:shadowColor="@android:color/background_dark"
+                    android:text="Start"
+                    android:verticalScrollbarPosition="left"
+                    android:visibility="visible"
+                    tools:text="Start" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView3"
+            android:layout_width="310dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="38dp"
+            android:layout_marginLeft="38dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginRight="36dp"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="16dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
+                <Button
+                    android:id="@+id/Recent_activity_btn"
+                    android:layout_width="283dp"
+                    android:layout_height="70dp"
+                    android:background="@color/colorAccent"
+                    android:shadowColor="@android:color/background_dark"
+                    android:text="Recent activity"
+                    android:verticalScrollbarPosition="left"
+                    android:visibility="visible"
+                    tools:text="Recent activity" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="310dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="38dp"
+            android:layout_marginLeft="38dp"
+            android:layout_marginEnd="38dp"
+            android:layout_marginRight="38dp"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="16dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView">
+
+                <Button
+                    android:id="@+id/Achievements_btn"
+                    android:layout_width="283dp"
+                    android:layout_height="70dp"
+                    android:background="@color/colorAccent"
+                    android:shadowColor="@android:color/background_dark"
+                    android:text="Achievements"
+                    android:verticalScrollbarPosition="left"
+                    android:visibility="visible"
+                    tools:text="Achievements" />
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cardView"
+            android:layout_width="310dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="38dp"
+            android:layout_marginLeft="38dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="38dp"
+            android:layout_marginRight="38dp"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="16dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/View_collection_btn"
+                    android:layout_width="283dp"
+                    android:layout_height="70dp"
+                    android:background="@color/colorAccent"
+                    android:shadowColor="@android:color/background_dark"
+                    android:text="View collection"
+                    android:verticalScrollbarPosition="left"
+                    android:visibility="visible"
+                    tools:text="View collection" />
+
+        </android.support.v7.widget.CardView>
+
+        <ImageView
+            android:id="@+id/trollface"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="452dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/trollface_foregnd" />
+
+        <TextView
+            android:id="@+id/retCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginEnd="150dp"
+            android:layout_marginRight="150dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/trollface"
+            app:layout_constraintTop_toBottomOf="@+id/cardView4" />
+
+</android.support.constraint.ConstraintLayout>
