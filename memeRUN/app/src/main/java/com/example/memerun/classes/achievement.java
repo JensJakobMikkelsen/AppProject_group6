@@ -14,7 +14,6 @@ public class achievement {
         return imageName;
     }
 
-
     public void setImageName(String imageName) {
         this.imageName = imageName;
     }

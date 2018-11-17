@@ -8,6 +8,7 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,6 +21,8 @@ import com.android.volley.toolbox.Volley;
 public class memeService extends Service {
 
     int timeCount = 0;
+
+    DownLoadImageTask download;
 
     public memeService() {
     }
@@ -45,12 +48,6 @@ public class memeService extends Service {
 
     //https://i.imgflip.com/10r5wh.jpg
 
-
-    /*
-
-
-     */
-
     @Override
     public void onCreate()
     {
@@ -68,6 +65,11 @@ public class memeService extends Service {
                 .setContentIntent(pendingIntent).build();
 
         startForeground(1337, notification);
+
+        /*
+        download = (DownLoadImageTask) new DownLoadImageTask()
+                .execute("https://i.imgflip.com/10r5wh.jpg");
+        */
 
         final Handler handler = new Handler();
         final int delay = 1000; //milliseconds

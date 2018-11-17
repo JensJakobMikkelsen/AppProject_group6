@@ -3,21 +3,22 @@ package com.example.memerun;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 public class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
     ImageView bmImage;
+    Bitmap bmImage_bm;
 
     public DownLoadImageTask(ImageView bmImage) {
         this.bmImage = bmImage;
     }
 
-    // https://stackoverflow.com/questions/5776851/load-image-from-url
+    public Bitmap getBmImage_bm() {
+        return bmImage_bm;
+    }
 
     protected Bitmap doInBackground(String... urls) {
         String urldisplay = urls[0];
@@ -32,9 +33,7 @@ public class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
         return mIcon11;
     }
 
-    // https://stackoverflow.com/questions/8471226/how-to-resize-image-bitmap-to-a-given-size/8471294
-
-    public static Bitmap scale(Bitmap realImage, float maxImageSize,
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
                                    boolean filter) {
         float ratio = Math.min(
                 (float) maxImageSize / realImage.getWidth(),
@@ -49,9 +48,17 @@ public class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
 
     protected void onPostExecute(Bitmap result) {
 
-        Bitmap bmmap = scale(result, 512, true);
+        bmImage_bm = scaleDown(result, 256, true);
 
-        bmImage.setImageBitmap(bmmap);
+        /*
+
+
+        byte[] imageAsBytes=null;
+        try {
+            imageAsBytes = Base64.decode(encodedImage.getBytes());
+        } catch (IOException e) {e.printStackTrace();}
+*/
+        bmImage.setImageBitmap(result);
     }
 
 }
