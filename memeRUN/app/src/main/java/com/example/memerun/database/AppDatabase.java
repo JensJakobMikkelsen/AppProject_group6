@@ -15,11 +15,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.example.memerun.classes.achievement;
 import com.example.memerun.classes.memeURL;
 
 import java.lang.ref.WeakReference;
 
-@Database(entities = {memeURL.class}, version = 9, exportSchema = false)
+@Database(entities = {memeURL.class, achievement.class}, version = 9, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
 
@@ -93,7 +94,20 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
 
-            mDao.deleteAll();
+            mDao.deleteAll_achievements();
+            mDao.deleteAll_URLs();
+
+            final memeURL yoda = new memeURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpvUWRq0XGg9-27dA-qm1mnp4ksXu1QdUqrvgBZdzdGizmXtef4g");
+            final memeURL successkid = new memeURL("http://ubuyfirst.com/wp-content/uploads/2015/01/the-game-i-won-it.jpg");
+            final memeURL burrito = new memeURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIKLJiJY_Z_tvxb5S8tWXrfGGKw47LX3y3H-Yy8FwccWzrkeDe");
+            final memeURL lion = new memeURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXJd-Jp0hw-nnPhNvTxdas9x4Qx6woACIOrYK5bLjuPvJuWfsptw");
+            final memeURL caveman = new memeURL("https://i.ytimg.com/vi/Ugw6Aod27sU/hqdefault.jpg");
+
+            mDao.insert(yoda);
+            mDao.insert(successkid);
+            mDao.insert(burrito);
+            mDao.insert(lion);
+            mDao.insert(caveman);
 
             /*
 

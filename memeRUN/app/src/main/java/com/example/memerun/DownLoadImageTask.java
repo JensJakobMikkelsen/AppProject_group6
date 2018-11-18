@@ -1,19 +1,41 @@
 package com.example.memerun;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.InputStream;
 
+
+
 public class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
     ImageView bmImage;
     Bitmap bmImage_bm;
 
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("message");
+
+            if(message == "databasePopulated")
+            {
+            }
+        }
+    };
+
+
     public DownLoadImageTask(ImageView bmImage) {
         this.bmImage = bmImage;
+
     }
 
     public Bitmap getBmImage_bm() {
@@ -21,6 +43,7 @@ public class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected Bitmap doInBackground(String... urls) {
+
         String urldisplay = urls[0];
         Bitmap mIcon11 = null;
         try {
@@ -50,15 +73,9 @@ public class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
 
         bmImage_bm = scaleDown(result, 256, true);
 
-        /*
-
-
-        byte[] imageAsBytes=null;
-        try {
-            imageAsBytes = Base64.decode(encodedImage.getBytes());
-        } catch (IOException e) {e.printStackTrace();}
-*/
         bmImage.setImageBitmap(result);
+
     }
+
 
 }
