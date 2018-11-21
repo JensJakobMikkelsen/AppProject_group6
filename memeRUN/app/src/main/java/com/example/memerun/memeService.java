@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.memerun.classes.achievement;
 import com.example.memerun.classes.memeURL;
+import com.example.memerun.customAdapter.SwipeAdapter;
 import com.example.memerun.database.AppDatabase;
 
 import java.lang.ref.WeakReference;
@@ -113,7 +115,7 @@ public class memeService extends Service {
     {
         super.onCreate();
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
+       LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
 
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
@@ -181,7 +183,12 @@ public class memeService extends Service {
         // Add the request to the RequestQueue.
                 queue.add(stringRequest);
 
+
+
+
+
 */
+
 
     }
 

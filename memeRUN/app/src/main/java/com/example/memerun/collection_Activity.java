@@ -17,12 +17,15 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import com.example.memerun.customAdapter.SwipeAdapter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -66,8 +69,8 @@ public class collection_Activity extends AppCompatActivity {
             String message = intent.getStringExtra("message");
             if(message == "Initialization_done")
             {
-                final ImageView meme = findViewById(R.id.URLview);
-                    mService.setImage(1, meme);
+               // final ImageView meme = findViewById(R.id.URLview);
+                  // mService.setImage(1, meme);
 
             }
         }
@@ -90,12 +93,21 @@ public class collection_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection_);
 
+        ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
+        viewPager.setOffscreenPageLimit(1);
+        SwipeAdapter swipeAdapter = new SwipeAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(swipeAdapter);
+        viewPager.setCurrentItem(0);
+
+
+
+
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
 
         bound = new Intent(this, memeService.class);
         bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
 
-        final ImageView meme = findViewById(R.id.URLview);
+      //  final ImageView meme = findViewById(R.id.URLview);
         //download = (DownLoadImageTask) new DownLoadImageTask(meme)
                 //.execute("https://i.ytimg.com/vi/Ugw6Aod27sU/hqdefault.jpg");
 
@@ -108,9 +120,9 @@ public class collection_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                meme.buildDrawingCache();
-                Bitmap bmap = meme.getDrawingCache();
-                saveToExternalStorage(bmap);
+              //  meme.buildDrawingCache();
+              //  Bitmap bmap = meme.getDrawingCache();
+                //saveToExternalStorage(bmap);
             }
 
         });
