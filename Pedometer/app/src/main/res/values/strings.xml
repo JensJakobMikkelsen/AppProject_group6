@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Pedometer</string>
+    <string name="title_activity_pedometer">Pedometer</string>
+</resources>
