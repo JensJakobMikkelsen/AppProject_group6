@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+
+import android.net.Uri;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
@@ -19,13 +21,24 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.memerun.classes.achievement;
+import com.example.memerun.classes.bitmapCounter;
 import com.example.memerun.classes.memeURL;
 import com.example.memerun.customAdapter.SwipeAdapter;
 import com.example.memerun.database.AppDatabase;
@@ -40,11 +53,8 @@ public class memeService extends Service {
     int amountOfStepsRun = 0;
     int amountOfStepsWalked = 0;
 
-
     private WeakReference<Context> contextRef;
-    DownLoadImageTask download;
     AppDatabase appDb;
-
 
     public memeService() {
     }
@@ -59,31 +69,56 @@ public class memeService extends Service {
         }
     }
 
-    Bitmap bmp;
-
     @Override
     public IBinder onBind(Intent intent) {
 
         return mBinder;
 
-        // TODO: Return the communication channel to the service.
-        //throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    public void setImage(int position, ImageView img)
-    {
-        List<memeURL> urlList = appDb.daoAccess().getAllURLS();
+    List<bitmapCounter> bmList = new ArrayList<>();
 
-        download = (DownLoadImageTask) new DownLoadImageTask(img)
-                .execute(urlList.get(position).getURL());
-
-        bmp = download.getBmImage_bm();
-
+    public List<bitmapCounter> getBmList() {
+        return bmList;
     }
 
-    public Bitmap getBmp() {
-        return bmp;
-    }
+
+
+    public void initImageList() {
+
+        List<memeURL> memeList = appDb.daoAccess().getAllURLSbyID();
+
+        List<memeURL> tempMemeList = new ArrayList<>();
+
+        for(int i = 0; i < 10; ++i)
+        {
+            tempMemeList.add(null);
+        }
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        for(int i = 0; i < memeList.size(); i++) {
+
+            final int localI = i;
+
+            ImageRequest ir = new ImageRequest(memeList.get(i).getURL(),
+                    new Response.Listener<Bitmap>() {
+
+                        @Override
+                        public void onResponse(Bitmap response) {
+
+                            bmList.add(new bitmapCounter(response, localI));
+
+                        }
+                    }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+                public void onErrorResponse(VolleyError error) {
+                }
+            });
+
+            requestQueue.add(ir);
+        }
+};
+
 
     public List<achievement> getAchievements()
     {
@@ -97,26 +132,29 @@ public class memeService extends Service {
             // Get extra data included in the Intent
             String message = intent.getStringExtra("message");
 
-            if(message == "collection_init")
+            if(message == "databasePopulated")
             {
+                AppDatabase VolleappDb = AppDatabase.getDatabase(getApplicationContext());
+                List<memeURL> memeList = appDb.daoAccess().getAllURLS();
 
+                initImageList();
+            }
+
+            else if(message == "collection_init")
+            {
                 sendInitializationMessage();
             }
+
+
         }
     };
-
-
-
-
-
 
     @Override
     public void onCreate()
     {
         super.onCreate();
 
-       LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
-
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
 
@@ -131,9 +169,7 @@ public class memeService extends Service {
 
         startForeground(1337, notification);
 
-
         contextRef = new WeakReference<>(getApplicationContext());
-
 
         //Database callback happens only if getDatabase is called
         appDb = AppDatabase.getDatabase(contextRef.get());
@@ -149,45 +185,10 @@ public class memeService extends Service {
             }
         }, delay);
 
-
         //Create + init pedometer
 
         //amountOfStepsWalked = pedometer.getAmountOfStepsWalked();
         //amountOfStepsRun = pedometer.getAmountOfStepsRun();
-
-
-        //Hvis volley?
-
-      /*
-
-
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://www.google.com";
-
-
-
-        // Request a string response from the provided URL.
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                    }
-                });
-
-        // Add the request to the RequestQueue.
-                queue.add(stringRequest);
-
-
-
-
-
-*/
 
 
     }
@@ -215,12 +216,9 @@ public class memeService extends Service {
 
     }
 
-
-
     private void sendInitializationMessage()
     {
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
-
 
         Log.d("sender", "Initialization_done");
         Intent intent = new Intent("memeService");

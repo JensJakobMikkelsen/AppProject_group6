@@ -4,14 +4,12 @@ import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Environment;
+
 import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -25,17 +23,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+
+import com.example.memerun.classes.bitmapCounter;
 import com.example.memerun.customAdapter.SwipeAdapter;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Random;
+import java.util.List;
 
 public class collection_Activity extends AppCompatActivity {
 
-    DownLoadImageTask download;
 
     int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
 
@@ -61,16 +56,17 @@ public class collection_Activity extends AppCompatActivity {
         }
     };
 
-
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String message = intent.getStringExtra("message");
-            if(message == "Initialization_done")
-            {
-               // final ImageView meme = findViewById(R.id.URLview);
-                  // mService.setImage(1, meme);
+            if (message == "Initialization_done") {
+
+                //Sker en enkelt gang efter init
+
+                ImageView volley = findViewById(R.id.volleyUrl);
+                setBitmapByNumber(3, volley);
 
             }
         }
@@ -87,11 +83,20 @@ public class collection_Activity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection_);
+
+
+        //Adnaan kode start
 
         ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
         viewPager.setOffscreenPageLimit(1);
@@ -99,17 +104,11 @@ public class collection_Activity extends AppCompatActivity {
         viewPager.setAdapter(swipeAdapter);
         viewPager.setCurrentItem(0);
 
+        //Adnaan kode slut
 
-
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
 
         bound = new Intent(this, memeService.class);
         bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
-
-      //  final ImageView meme = findViewById(R.id.URLview);
-        //download = (DownLoadImageTask) new DownLoadImageTask(meme)
-                //.execute("https://i.ytimg.com/vi/Ugw6Aod27sU/hqdefault.jpg");
 
         Button back = findViewById(R.id.Back_collection_btn);
         final Button saveToPhone = findViewById(R.id.save_image);
@@ -120,9 +119,18 @@ public class collection_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-              //  meme.buildDrawingCache();
-              //  Bitmap bmap = meme.getDrawingCache();
                 //saveToExternalStorage(bmap);
+
+
+
+                //Test af setBitmapByNumber, kan fjernes
+                /*
+
+                ImageView volley = findViewById(R.id.volleyUrl);
+                setBitmapByNumber(4, volley);
+
+                */
+
             }
 
         });
@@ -138,6 +146,18 @@ public class collection_Activity extends AppCompatActivity {
 
         });
 
+    }
+
+    void setBitmapByNumber(int position, ImageView img)
+    {
+        List<bitmapCounter> tempBitmapList = mService.getBmList();
+        for(int i = 0; i < tempBitmapList.size(); ++i)
+        {
+            if(tempBitmapList.get(i).getNumberOfBitmap() == position)
+            {
+                img.setImageBitmap(tempBitmapList.get(i).getBm());
+            }
+        }
     }
 
     // https://stackoverflow.com/questions/17674634/saving-and-reading-bitmaps-images-from-internal-memory-in-android
@@ -183,7 +203,24 @@ public class collection_Activity extends AppCompatActivity {
 
     }
 
+    //Skalerer et bitmap
+    /*
 
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+                                   boolean filter) {
+        float ratio = Math.min(
+                (float) maxImageSize / realImage.getWidth(),
+                (float) maxImageSize / realImage.getHeight());
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
+
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
+        return newBitmap;
+    }
+
+
+    */
 
 
 }

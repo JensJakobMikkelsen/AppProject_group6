@@ -25,7 +25,6 @@ public class memeURL {
         URL = url;
     }
 
-
     public String getURL() {
         return URL;
     }

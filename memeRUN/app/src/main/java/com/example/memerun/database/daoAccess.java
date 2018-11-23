@@ -28,8 +28,14 @@ public interface daoAccess {
     @Delete
     void delete(memeURL url);
 
+
+    //Sorterer efter URL
     @Query("SELECT * from URL_table ORDER BY URL ASC")
     List<memeURL> getAllURLS();
+
+    //Sorterer efter ID
+    @Query("SELECT * from URL_table ORDER BY ID ASC")
+    List<memeURL> getAllURLSbyID();
 
     @Update
     void updateAll(memeURL... memeURLS);

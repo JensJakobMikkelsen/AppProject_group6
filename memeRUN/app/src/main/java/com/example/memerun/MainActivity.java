@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    DownLoadImageTask download;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
         final TextView retCount = findViewById(R.id.retCount);
         ImageView trollface = findViewById(R.id.trollface);
-
-        //download = (DownLoadImageTask) new DownLoadImageTask((ImageView) findViewById(R.id.trollface))
-        //        .execute("https://i.imgflip.com/10r5wh.jpg");
-
 
         collection.setOnClickListener(new View.OnClickListener() {
             @Override
