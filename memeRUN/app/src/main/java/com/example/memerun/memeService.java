@@ -10,6 +10,10 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Handler;
@@ -47,18 +51,22 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class memeService extends Service {
+public class memeService extends Service implements SensorEventListener {
+
+    Context context_;
 
     int timeCount = 0;
     int amountOfStepsRun = 0;
     int amountOfStepsWalked = 0;
+
+    SensorManager sensorManager;
+    public Sensor counterSensor;
 
     private WeakReference<Context> contextRef;
     AppDatabase appDb;
 
     public memeService() {
     }
-
 
     private final IBinder mBinder = new LocalBinder();
 
@@ -71,11 +79,40 @@ public class memeService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-
         return mBinder;
+    }
+
+
+    public void startStepSensor()
+    {
+        sensorManager.registerListener(this, counterSensor, sensorManager.SENSOR_DELAY_FASTEST);
+    }
+
+    public void stopStepSensor()
+    {
+        sensorManager.unregisterListener(this);
+    }
+
+    public void onSensorChanged(SensorEvent event) {
+        steps++;
+        sendSensorUpdateMessage(steps);
 
     }
 
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    int steps;
+    private void sendSensorUpdateMessage(int steps)
+    {
+        Log.d("sender", "Initialization_done");
+        Intent intent = new Intent("memeService");
+        intent.putExtra("message", "update");
+        intent.putExtra("steps", steps);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
     List<bitmapCounter> bmList = new ArrayList<>();
 
     public List<bitmapCounter> getBmList() {
@@ -153,6 +190,11 @@ public class memeService extends Service {
     public void onCreate()
     {
         super.onCreate();
+
+        context_ = getApplicationContext();
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        counterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
 
