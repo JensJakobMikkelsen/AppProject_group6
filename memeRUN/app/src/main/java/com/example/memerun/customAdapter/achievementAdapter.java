@@ -48,6 +48,9 @@ public class achievementAdapter extends ArrayAdapter<achievement> {
 
         achievements_image.setImageResource(id);
 
+        TextView requirement = convertView.findViewById(R.id.requirement_in_m_text);
+        requirement.setText(user.getRequirement());
+
 /*
         // Populate the data into the template view using the data object
         date.setText(user.getDate());

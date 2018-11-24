@@ -74,7 +74,6 @@ public class collection_Activity extends AppCompatActivity {
 
     private void sendInitMessage()
     {
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
 
 
         Log.d("sender", "Collection_started");

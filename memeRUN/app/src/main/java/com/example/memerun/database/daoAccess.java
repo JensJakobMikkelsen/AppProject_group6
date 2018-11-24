@@ -58,6 +58,9 @@ public interface daoAccess {
     @Query("SELECT * from achievement_table ORDER BY imageName ASC")
     List<achievement> getAll_Achievements();
 
+    @Query("SELECT * from achievement_table ORDER BY ID ASC")
+    List<achievement> getAll_AchievementsByID();
+
     @Update
     void updateAll(achievement... achievements);
 

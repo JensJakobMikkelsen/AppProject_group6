@@ -109,11 +109,17 @@ public abstract class AppDatabase extends RoomDatabase {
             mDao.insert(lion);
             mDao.insert(caveman);
 
-            /*
+            achievement achievement1 = new achievement("Run 235083290 metres", 5);
+            achievement achievement2 = new achievement("hej", 10);
+            achievement achievement3 = new achievement("Hest", 12);
+            achievement achievement4 = new achievement("Run 1 meter", 14);
+            achievement achievement5 = new achievement("ghbewj09hjew", 15);
 
-            //INSERT FOR PREPOPULATION
-
-             */
+            mDao.insert(achievement1);
+            mDao.insert(achievement2);
+            mDao.insert(achievement3);
+            mDao.insert(achievement4);
+            mDao.insert(achievement5);
 
 
             Log.d("sender", "Broadcasting message");

@@ -19,6 +19,15 @@ public class achievement {
     @ColumnInfo(name = "unlocked")
     public boolean unlocked = false;
 
+    @ColumnInfo(name = "steps")
+    public int steps;
+
+
+
+
+    public int getSteps() {
+        return steps;
+    }
 
     public int getId() {
         return id;
@@ -30,12 +39,16 @@ public class achievement {
 
     public achievement()
     {
-
     }
 
-    public achievement(String name_id)
+    public String getRequirement() {
+        return requirement;
+    }
+
+    public achievement(String requirement, int steps)
     {
-        imageName = name_id;
+        this.requirement = requirement;
+        this.steps = steps;
     }
 
     public String getImageName() {
@@ -49,6 +62,8 @@ public class achievement {
     public boolean isUnlocked() {
         return unlocked;
     }
+
+
 
     public void setUnlocked(boolean unlocked) {
         this.unlocked = unlocked;

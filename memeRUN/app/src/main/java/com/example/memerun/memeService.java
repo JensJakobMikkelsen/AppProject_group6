@@ -64,6 +64,7 @@ public class memeService extends Service implements SensorEventListener {
 
     private WeakReference<Context> contextRef;
     AppDatabase appDb;
+    List<achievement> achievementList;
 
     public memeService() {
     }
@@ -82,7 +83,6 @@ public class memeService extends Service implements SensorEventListener {
         return mBinder;
     }
 
-
     public void startStepSensor()
     {
         sensorManager.registerListener(this, counterSensor, sensorManager.SENSOR_DELAY_FASTEST);
@@ -96,8 +96,25 @@ public class memeService extends Service implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         steps++;
         sendSensorUpdateMessage(steps);
+        checkAchievements(achievementList, steps);
 
     }
+
+    public void checkAchievements(List<achievement> achievementList, int steps)
+    {
+        for(int i = 0; i < achievementList.size(); ++i)
+        {
+            if(achievementList.get(i).getSteps() == steps)
+            {
+                achievementList.get(i).setUnlocked(true);
+
+                Toast.makeText(getApplicationContext(),"Achievement unlocked!",
+                        Toast.LENGTH_LONG).show();
+
+            }
+        }
+    }
+
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
@@ -159,7 +176,7 @@ public class memeService extends Service implements SensorEventListener {
 
     public List<achievement> getAchievements()
     {
-        return appDb.daoAccess().getAll_Achievements();
+        return achievementList;
     }
 
 
@@ -173,6 +190,7 @@ public class memeService extends Service implements SensorEventListener {
             {
                 AppDatabase VolleappDb = AppDatabase.getDatabase(getApplicationContext());
                 List<memeURL> memeList = appDb.daoAccess().getAllURLS();
+                achievementList = appDb.daoAccess().getAll_AchievementsByID();
 
                 initImageList();
             }
@@ -180,6 +198,11 @@ public class memeService extends Service implements SensorEventListener {
             else if(message == "collection_init")
             {
                 sendInitializationMessage();
+            }
+
+            else if(message == "achievement_init")
+            {
+                sendInitialization_achievements();
             }
 
 
@@ -227,22 +250,7 @@ public class memeService extends Service implements SensorEventListener {
             }
         }, delay);
 
-        //Create + init pedometer
-
-        //amountOfStepsWalked = pedometer.getAmountOfStepsWalked();
-        //amountOfStepsRun = pedometer.getAmountOfStepsRun();
-
-
     }
-
-    public int getAmountOfStepsRun() {
-        return amountOfStepsRun;
-    }
-
-    public int getAmountOfStepsWalked() {
-        return amountOfStepsWalked;
-    }
-
 
     public int retCount()
     {
@@ -265,6 +273,16 @@ public class memeService extends Service implements SensorEventListener {
         Log.d("sender", "Initialization_done");
         Intent intent = new Intent("memeService");
         intent.putExtra("message", "Initialization_done");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    private void sendInitialization_achievements()
+    {
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
+
+        Log.d("sender", "Initialization_done");
+        Intent intent = new Intent("memeService");
+        intent.putExtra("message", "achievements___");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
