@@ -142,7 +142,6 @@ public class achievements_Activity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
     }
 
-
     private void sendInitMessage()
     {
         Log.d("sender", "achievement_started");

@@ -63,8 +63,6 @@ public class achievement {
         return unlocked;
     }
 
-
-
     public void setUnlocked(boolean unlocked) {
         this.unlocked = unlocked;
     }

@@ -68,13 +68,25 @@ public class collection_Activity extends AppCompatActivity {
                 ImageView volley = findViewById(R.id.volleyUrl);
                 setBitmapByNumber(3, volley);
 
+                List<bitmapCounter> tempBitmapList = mService.getBmList();
+
+                ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
+                viewPager.setOffscreenPageLimit(1);
+                SwipeAdapter swipeAdapter = new SwipeAdapter(getSupportFragmentManager(), tempBitmapList );
+
+                //tempBitmapList lagt ind i constructoren i swipeadapter - se swipeAdapter for brug
+
+                viewPager.setAdapter(swipeAdapter);
+                viewPager.setCurrentItem(0);
+
+
+
             }
         }
     };
 
     private void sendInitMessage()
     {
-
 
         Log.d("sender", "Collection_started");
         Intent intent = new Intent("memeService");
@@ -97,11 +109,6 @@ public class collection_Activity extends AppCompatActivity {
 
         //Adnaan kode start
 
-        ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
-        viewPager.setOffscreenPageLimit(1);
-        SwipeAdapter swipeAdapter = new SwipeAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(swipeAdapter);
-        viewPager.setCurrentItem(0);
 
         //Adnaan kode slut
 
