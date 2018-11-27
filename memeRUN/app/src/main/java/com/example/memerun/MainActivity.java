@@ -7,15 +7,26 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.memerun.classes.bitmapCounter;
+import com.example.memerun.customAdapter.SwipeAdapter;
+
+import java.util.List;
+import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
     memeService mService;
     Intent bound;
     boolean mBound = false;
+
+    boolean visibility1 = false;
+    boolean visibility2;
+
+    int min = 0;
+    int max = 4;
+
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -45,8 +63,87 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("message");
+            String placement = intent.getStringExtra("placement");
+
+            if (message.equals("hide")) {
+
+                if(placement.equals("left"))
+                {
+                    ImageView troll = findViewById(R.id.troll_left);
+                    troll.setVisibility(View.INVISIBLE);
+
+                }
+
+                else if (placement.equals("top"))
+                {
+                    ImageView troll = findViewById(R.id.troll_top);
+                    troll.setVisibility(View.INVISIBLE);
+                }
+
+                else if (placement.equals("top_right"))
+                {
+                    ImageView troll = findViewById(R.id.troll_top_right);
+                    troll.setVisibility(View.INVISIBLE);
+                }
+
+                else if (placement.equals("right"))
+                {
+                    ImageView troll = findViewById(R.id.troll_right);
+                    troll.setVisibility(View.INVISIBLE);
+
+                }
+
+                else if (placement.equals("bottom"))
+                {
+                    ImageView troll = findViewById(R.id.troll_bottom);
+                    troll.setVisibility(View.INVISIBLE);
+
+                }
+
+            }
+
+            else if(message.equals("show"))
+            {
+                Bitmap bmap = intent.getParcelableExtra("bmap");
 
 
+                if(placement.equals("left"))
+                {
+                    ImageView troll = findViewById(R.id.troll_left);
+                    troll.setVisibility(View.VISIBLE);
+                }
+
+                else if (placement.equals("top"))
+                {
+                    ImageView troll = findViewById(R.id.troll_top);
+                    troll.setVisibility(View.VISIBLE);
+                }
+
+                else if (placement.equals("top_right"))
+                {
+                    ImageView troll = findViewById(R.id.troll_top_right);
+                    troll.setVisibility(View.VISIBLE);
+                }
+
+                else if (placement.equals("right"))
+                {
+                    ImageView troll = findViewById(R.id.troll_right);
+                    troll.setVisibility(View.VISIBLE);
+                }
+
+                else if (placement.equals("bottom"))
+                {
+                    ImageView troll = findViewById(R.id.troll_bottom);
+                    troll.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
         bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
 
         final MediaPlayer player = MediaPlayer.create(this, R.raw.fuckyou);
-
 
         Button start = findViewById(R.id.start_btn);
         Button recent = findViewById(R.id.Recent_activity_btn);
@@ -77,9 +173,12 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        final Handler handler = new Handler();
         trollface.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                boolean visibility2;
 
                 int count = 0;
                 count = mService.retCount();
@@ -87,22 +186,92 @@ public class MainActivity extends AppCompatActivity {
                 setContentView(R.layout.troll_layout);
                 player.start();
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
+                final Handler handler = new Handler();
+                final int delay = 250; //milliseconds
 
+                handler.postDelayed(new Runnable(){
+                    public void run(){
+                        //do something
 
-                        while(true)
+                        if(!player.isPlaying())
                         {
-                            if(!player.isPlaying())
+                            android.os.Process.killProcess(android.os.Process.myPid());
+                        }
+
+                        if(visibility1) {
+
+                            for(int i = 0; i < 5; ++i)
                             {
-                                android.os.Process.killProcess(android.os.Process.myPid());
+                                Random r = new Random();
+                                int i1 = r.nextInt(max - min + 1) + min;
+
+                                switch(i1) {
+                                    case 0:
+                                        sendHideMessage("left");
+                                        break;
+                                    case 1:
+                                        sendHideMessage("top");
+                                        break;
+                                    case 2:
+                                        sendHideMessage("bottom");
+                                        break;
+                                    case 3:
+                                        sendHideMessage("top_right");
+                                        break;
+                                    case 4:
+                                        sendHideMessage("right");
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+
                             }
+                        }
+
+
+                        else
+                        {
+
+                            for(int i = 0; i < 5; ++i)
+                            {
+                                Random r = new Random();
+                                int i1 = r.nextInt(max - min + 1) + min;
+
+                                switch(i1) {
+                                    case 0:
+                                        sendShowMessage("left");
+                                        break;
+                                    case 1:
+                                        sendShowMessage("top");
+                                        break;
+                                    case 2:
+                                        sendShowMessage("bottom");
+                                        break;
+                                    case 3:
+                                        sendShowMessage("top_right");
+                                        break;
+                                    case 4:
+                                        sendShowMessage("right");
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+
+                            }
+
 
                         }
 
+
+                        visibility1 = !visibility1;
+
+                        handler.postDelayed(this, delay);
+
                     }
-                }).start();
+                }, delay);
+
 
             }
 
@@ -140,6 +309,32 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
+    }
+
+    private void sendHideMessage(String placement)
+    {
+
+        Log.d("sender", "Collection_started");
+        Intent intent = new Intent("memeService");
+        intent.putExtra("placement", placement);
+        intent.putExtra("message", "hide");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    private void sendShowMessage(String placement)
+    {
+        Log.d("sender", "Collection_started");
+        Intent intent = new Intent("memeService");
+        intent.putExtra("placement", placement);
+        intent.putExtra("message", "show");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     @Override
