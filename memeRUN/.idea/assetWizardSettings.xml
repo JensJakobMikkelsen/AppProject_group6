@@ -16,10 +16,26 @@
                             <entry key="launcher">
                               <value>
                                 <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="foregroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="scalingPercent" value="69" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="foregroundImage" value="C:\Users\Bruger\Desktop\Smartphone\questionmark.jpg" />
-                                      <entry key="outputName" value="question" />
+                                      <entry key="backgroundImage" value="C:\Users\Bruger\Desktop\Smartphone\troll_3.jpg" />
+                                      <entry key="foregroundImage" value="C:\Users\Bruger\Desktop\Smartphone\speech_bubble.jpg" />
+                                      <entry key="outputName" value="speech_bubble" />
                                     </map>
                                   </option>
                                 </PersistentState>

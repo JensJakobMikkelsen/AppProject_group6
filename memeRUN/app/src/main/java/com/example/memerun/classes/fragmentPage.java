@@ -19,8 +19,8 @@ public class fragmentPage extends Fragment {
 
         final View view;
         Bundle bundle =getArguments();
-       int pageNumber= bundle.getInt("pageNumber");
-      view = inflater.inflate(R.layout.page_fragmet_layout,container,false);
+        int pageNumber= bundle.getInt("pageNumber");
+        view = inflater.inflate(R.layout.page_fragmet_layout,container,false);
         TextView textView = (TextView)view.findViewById(R.id.textviewer_Page1);
         textView.setText(Integer.toString(pageNumber));
         return view;

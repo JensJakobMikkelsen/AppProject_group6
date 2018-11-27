@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -54,12 +56,15 @@ public class MainActivity extends AppCompatActivity {
         bound = new Intent(this, memeService.class);
         bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
 
+        final MediaPlayer player = MediaPlayer.create(this, R.raw.fuckyou);
+
+
         Button start = findViewById(R.id.start_btn);
         Button recent = findViewById(R.id.Recent_activity_btn);
         Button achievements = findViewById(R.id.Achievements_btn);
         Button collection = findViewById(R.id.View_collection_btn);
 
-        final TextView retCount = findViewById(R.id.retCount);
+        //final TextView retCount = findViewById(R.id.retCount);
         ImageView trollface = findViewById(R.id.trollface);
 
         collection.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +83,27 @@ public class MainActivity extends AppCompatActivity {
 
                 int count = 0;
                 count = mService.retCount();
-                retCount.setText(Integer.toString(count));
+                //retCount.setText(Integer.toString(count));
+                setContentView(R.layout.troll_layout);
+                player.start();
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        while(true)
+                        {
+                            if(!player.isPlaying())
+                            {
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                            }
+
+                        }
+
+                    }
+                }).start();
+
             }
 
         });
@@ -110,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent achievements = new Intent(getApplicationContext(), achievements_Activity.class);
                 startActivityForResult(achievements, ACHIEVEMENTSACTIVITY);
+
             }
 
         });
