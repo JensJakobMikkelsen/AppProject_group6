@@ -23,8 +23,6 @@ public class achievement {
     public int steps;
 
 
-
-
     public int getSteps() {
         return steps;
     }

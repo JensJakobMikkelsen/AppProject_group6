@@ -17,10 +17,11 @@ import android.util.Log;
 
 import com.example.memerun.classes.achievement;
 import com.example.memerun.classes.memeURL;
+import com.example.memerun.classes.recent;
 
 import java.lang.ref.WeakReference;
 
-@Database(entities = {memeURL.class, achievement.class}, version = 9, exportSchema = false)
+@Database(entities = {memeURL.class, achievement.class, recent.class}, version = 9, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
 
@@ -120,7 +121,6 @@ public abstract class AppDatabase extends RoomDatabase {
             mDao.insert(achievement3);
             mDao.insert(achievement4);
             mDao.insert(achievement5);
-
 
             Log.d("sender", "Broadcasting message");
             Intent intent = new Intent("memeService");

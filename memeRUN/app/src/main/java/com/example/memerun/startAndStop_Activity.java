@@ -115,4 +115,13 @@ public class startAndStop_Activity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unbindService(mConnection);
+
+    }
+
 }

@@ -44,6 +44,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.memerun.classes.achievement;
 import com.example.memerun.classes.bitmapCounter;
 import com.example.memerun.classes.memeURL;
+import com.example.memerun.classes.recent;
 import com.example.memerun.customAdapter.SwipeAdapter;
 import com.example.memerun.database.AppDatabase;
 
@@ -65,6 +66,8 @@ public class memeService extends Service implements SensorEventListener {
     private WeakReference<Context> contextRef;
     AppDatabase appDb;
     List<achievement> achievementList;
+    List<recent> recentList = new ArrayList<>();
+    public static final String myPreferences = "MyPrefs";
 
     public memeService() {
     }
@@ -78,26 +81,13 @@ public class memeService extends Service implements SensorEventListener {
         }
     }
 
+    public List<recent> getRecentActivity() {
+        return recentList;
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
-    }
-
-    public void startStepSensor()
-    {
-        sensorManager.registerListener(this, counterSensor, sensorManager.SENSOR_DELAY_FASTEST);
-    }
-
-    public void stopStepSensor()
-    {
-        sensorManager.unregisterListener(this);
-    }
-
-    public void onSensorChanged(SensorEvent event) {
-        steps++;
-        sendSensorUpdateMessage(steps);
-        checkAchievements(achievementList, steps);
-
     }
 
     public void checkAchievements(List<achievement> achievementList, int steps)
@@ -106,10 +96,14 @@ public class memeService extends Service implements SensorEventListener {
         {
             if(achievementList.get(i).getSteps() == steps)
             {
-                achievementList.get(i).setUnlocked(true);
+                if(!achievementList.get(i).isUnlocked()) {
 
-                Toast.makeText(getApplicationContext(),"Achievement unlocked!",
-                        Toast.LENGTH_LONG).show();
+                    achievementList.get(i).setUnlocked(true);
+
+                    Toast.makeText(getApplicationContext(), "Achievement unlocked!",
+                            Toast.LENGTH_LONG).show();
+                    appDb.daoAccess().update(achievementList.get(i));
+                }
 
             }
         }
@@ -135,7 +129,6 @@ public class memeService extends Service implements SensorEventListener {
     public List<bitmapCounter> getBmList() {
         return bmList;
     }
-
 
 
     public void initImageList() {
@@ -179,6 +172,8 @@ public class memeService extends Service implements SensorEventListener {
         return achievementList;
     }
 
+    int onlyOnce = 0;
+    SharedPreferences sharedPreferences;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -188,11 +183,29 @@ public class memeService extends Service implements SensorEventListener {
 
             if(message == "databasePopulated")
             {
-                AppDatabase VolleappDb = AppDatabase.getDatabase(getApplicationContext());
-                List<memeURL> memeList = appDb.daoAccess().getAllURLS();
-                achievementList = appDb.daoAccess().getAll_AchievementsByID();
+                if(onlyOnce == 0)
+                {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
 
-                initImageList();
+                            AppDatabase VolleappDb = AppDatabase.getDatabase(getApplicationContext());
+                            List<memeURL> memeList = appDb.daoAccess().getAllURLS();
+                            achievementList = appDb.daoAccess().getAll_AchievementsByID();
+                            recentList = appDb.daoAccess().getAll_recentByID();
+
+                            initImageList();
+
+                            onlyOnce = 1;
+
+                            sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt("onlyOnce", onlyOnce);
+                            editor.apply();
+
+                        }
+                    }).start();
+                }
             }
 
             else if(message == "collection_init")
@@ -205,9 +218,20 @@ public class memeService extends Service implements SensorEventListener {
                 sendInitialization_achievements();
             }
 
+            else if(message == "recent_init")
+            {
+                sendInitialization_recent();
+            }
+
 
         }
     };
+
+    public void retrieve()
+    {
+        sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE);
+        onlyOnce = sharedPreferences.getInt("onlyOnce", 0);
+    }
 
     @Override
     public void onCreate()
@@ -215,14 +239,11 @@ public class memeService extends Service implements SensorEventListener {
         super.onCreate();
 
         context_ = getApplicationContext();
-
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         counterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
-
         Intent notificationIntent = new Intent(this, startAndStop_Activity.class);
-
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
 
@@ -231,14 +252,27 @@ public class memeService extends Service implements SensorEventListener {
                 .setContentTitle("My Awesome App")
                 .setContentText("Doing some work...")
                 .setContentIntent(pendingIntent).build();
-
         startForeground(1337, notification);
+
 
         contextRef = new WeakReference<>(getApplicationContext());
 
         //Database callback happens only if getDatabase is called
         appDb = AppDatabase.getDatabase(contextRef.get());
         appDb.daoAccess().getAllURLS();
+
+        retrieve();
+
+        if(onlyOnce == 1)
+        {
+            AppDatabase VolleappDb = AppDatabase.getDatabase(getApplicationContext());
+            List<memeURL> memeList = appDb.daoAccess().getAllURLS();
+            achievementList = appDb.daoAccess().getAll_AchievementsByID();
+            recentList = appDb.daoAccess().getAll_recentByID();
+            initImageList();
+        }
+
+
 
         final Handler handler = new Handler();
         final int delay = 1000; //milliseconds
@@ -268,7 +302,6 @@ public class memeService extends Service implements SensorEventListener {
 
     private void sendInitializationMessage()
     {
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
 
         Log.d("sender", "Initialization_done");
         Intent intent = new Intent("memeService");
@@ -278,12 +311,44 @@ public class memeService extends Service implements SensorEventListener {
 
     private void sendInitialization_achievements()
     {
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
 
         Log.d("sender", "Initialization_done");
         Intent intent = new Intent("memeService");
         intent.putExtra("message", "achievements___");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    private void sendInitialization_recent()
+    {
+        Log.d("sender", "Initialization_done");
+        Intent intent = new Intent("memeService");
+        intent.putExtra("message", "recent___");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    public void startStepSensor()
+    {
+        sensorManager.registerListener(this, counterSensor, sensorManager.SENSOR_DELAY_FASTEST);
+    }
+
+    public void stopStepSensor()
+    {
+        if(steps != 0) {
+            recent recent_ = new recent(steps);
+            recentList.add(recent_);
+            appDb.daoAccess().insert(recent_);
+
+            steps = 0;
+        }
+        sensorManager.unregisterListener(this);
+
+    }
+
+    public void onSensorChanged(SensorEvent event) {
+        steps++;
+        sendSensorUpdateMessage(steps);
+        checkAchievements(achievementList, steps);
+
     }
 
 }

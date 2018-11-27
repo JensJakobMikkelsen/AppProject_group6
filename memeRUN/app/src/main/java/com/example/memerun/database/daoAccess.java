@@ -8,6 +8,7 @@ import android.arch.persistence.room.Update;
 
 import com.example.memerun.classes.achievement;
 import com.example.memerun.classes.memeURL;
+import com.example.memerun.classes.recent;
 
 import java.util.List;
 
@@ -27,7 +28,6 @@ public interface daoAccess {
 
     @Delete
     void delete(memeURL url);
-
 
     //Sorterer efter URL
     @Query("SELECT * from URL_table ORDER BY URL ASC")
@@ -65,8 +65,25 @@ public interface daoAccess {
     void updateAll(achievement... achievements);
 
 
+    //recent activity
 
+    @Insert
+    void insert(recent recent_);
 
+    @Query("DELETE FROM recent_table")
+    void deleteAll_recent();
+
+    @Update
+    void update(recent recent_);
+
+    @Delete
+    void delete(recent recent_);
+
+    @Query("SELECT * from recent_table ORDER BY ID ASC")
+    List<recent> getAll_recentByID();
+
+    @Update
+    void updateAll(recent... recents);
 
 
 }

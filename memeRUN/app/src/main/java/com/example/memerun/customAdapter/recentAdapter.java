@@ -40,7 +40,7 @@ public class recentAdapter extends ArrayAdapter<recent> {
         // Populate the data into the template view using the data object
         date.setText(user.getDate());
 
-        double metres_d = user.getMetres_run();
+        double metres_d = user.getSteps();
         String metres_s = "";
 
         try

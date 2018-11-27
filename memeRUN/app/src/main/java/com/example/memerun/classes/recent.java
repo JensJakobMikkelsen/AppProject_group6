@@ -1,22 +1,45 @@
 package com.example.memerun.classes;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+@Entity(tableName = "recent_table")
 public class recent {
 
-    private String date;
-    private double metres_run;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
-    public recent(double metres_run_)
+    @ColumnInfo(name = "date")
+    private String date;
+
+    @ColumnInfo(name = "steps")
+    private int steps;
+
+    public recent()
+    {
+
+    }
+
+    public recent(int steps_)
     {
         Long tsLong = System.currentTimeMillis()/1000;
         date = getDateCurrentTimeZone(tsLong);
-        metres_run = metres_run_;
+        steps = steps_;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setDate(String date) {
         this.date = date;
@@ -26,11 +49,11 @@ public class recent {
         return date;
     }
 
-    public void setMetres_run(double metres_run) {
-        this.metres_run = metres_run;
+    public void setSteps(int steps_) {
+        this.steps = steps_;
     }
-    public double getMetres_run() {
-        return metres_run;
+    public int getSteps() {
+        return this.steps;
     }
 
     //Fra stackOverflow

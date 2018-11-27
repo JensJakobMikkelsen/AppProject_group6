@@ -79,15 +79,12 @@ public class collection_Activity extends AppCompatActivity {
                 viewPager.setAdapter(swipeAdapter);
                 viewPager.setCurrentItem(0);
 
-
-
             }
         }
     };
 
     private void sendInitMessage()
     {
-
         Log.d("sender", "Collection_started");
         Intent intent = new Intent("memeService");
         intent.putExtra("message", "collection_init");
@@ -206,6 +203,14 @@ public class collection_Activity extends AppCompatActivity {
 
             MediaStore.Images.Media.insertImage(getContentResolver(), bmp, "test" , "test");
         }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unbindService(mConnection);
 
     }
 

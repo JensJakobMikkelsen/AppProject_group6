@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.memerun.classes.achievement;
 import com.example.memerun.customAdapter.achievementAdapter;
@@ -103,7 +104,6 @@ public class achievements_Activity extends AppCompatActivity {
         adapter = new achievementAdapter(this);
         listView.setAdapter(adapter);
 
-
         tempList = new ArrayList<>();
 
         tempList.add(new achievement("Run 235083290 metres", 15));
@@ -148,5 +148,14 @@ public class achievements_Activity extends AppCompatActivity {
         Intent intent = new Intent("memeService");
         intent.putExtra("message", "achievement_init");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+        Toast.makeText(this, "Service destroyed!", Toast.LENGTH_LONG).show();
+        unbindService(mConnection);
+
     }
 }
