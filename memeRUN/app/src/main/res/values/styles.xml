@@ -5,11 +5,15 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimaryInverse">@android:color/background_dark</item>
     </style>
 
     <style name="addTheGreen" parent="AppTheme" >
-        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorAccent</item>
+        <item name="colorAccent">@color/cardview_light_background</item>
+        <item name="android:textColorPrimary">@android:color/background_dark</item>
     </style>
 
 </resources>

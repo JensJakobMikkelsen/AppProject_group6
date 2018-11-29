@@ -1,6 +1,7 @@
 package com.example.memerun;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -14,6 +15,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Handler;
@@ -92,6 +94,7 @@ public class memeService extends Service implements SensorEventListener {
 
     public void checkAchievements(List<achievement> achievementList, int steps)
     {
+
         for(int i = 0; i < achievementList.size(); ++i)
         {
             if(achievementList.get(i).getSteps() == steps)
@@ -102,6 +105,27 @@ public class memeService extends Service implements SensorEventListener {
 
                     Toast.makeText(getApplicationContext(), "Achievement unlocked!",
                             Toast.LENGTH_LONG).show();
+
+
+                    Intent notificationIntent = new Intent(this, achievements_Activity.class);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                            notificationIntent, 0);
+
+                    NotificationCompat.Builder b = new NotificationCompat.Builder(getApplicationContext());
+                    b.setAutoCancel(true)
+                            .setDefaults(NotificationCompat.DEFAULT_ALL)
+                            .setWhen(System.currentTimeMillis())
+                            .setSmallIcon(R.drawable.ic_launcher_background)
+                            .setContentTitle("memeRUN")
+                            .setContentText("Achievement unLOCKED!!!!")
+                            .setContentIntent(pendingIntent).build();
+
+                    NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                    nm.notify(1, b.build());
+                 /*
+                    final MediaPlayer player = MediaPlayer.create(this, R.raw.videosoundeffect);
+                    player.start();
+*/
                     appDb.daoAccess().update(achievementList.get(i));
                 }
 
@@ -233,6 +257,8 @@ public class memeService extends Service implements SensorEventListener {
         onlyOnce = sharedPreferences.getInt("onlyOnce", 0);
     }
 
+    Notification notification;
+
     @Override
     public void onCreate()
     {
@@ -243,11 +269,13 @@ public class memeService extends Service implements SensorEventListener {
         counterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
+
+
         Intent notificationIntent = new Intent(this, startAndStop_Activity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
 
-        Notification notification = new NotificationCompat.Builder(this)
+        notification = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.sad_rage)
                 .setContentTitle("My Awesome App")
                 .setContentText("Doing some work...")
@@ -271,7 +299,6 @@ public class memeService extends Service implements SensorEventListener {
             recentList = appDb.daoAccess().getAll_recentByID();
             initImageList();
         }
-
 
 
         final Handler handler = new Handler();
