@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                 {
                     ImageView troll = findViewById(R.id.troll_left);
                     troll.setVisibility(View.INVISIBLE);
-
                 }
 
                 else if (placement.equals("top"))

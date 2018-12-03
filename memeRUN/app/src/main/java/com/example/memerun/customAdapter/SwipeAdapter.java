@@ -1,5 +1,6 @@
 package com.example.memerun.customAdapter;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,12 +30,10 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        //Er det den her funktion der arbejdes i? I så fald skulle setBitMapByNumber kaldes her, går jeg ud fra
-
-
         Fragment pageFragment = new fragmentPage();
         Bundle bundle = new Bundle();
-        bundle.putInt("pageNumber",position+1);
+        bundle.putParcelable("bmp", getBitmapByNumber(position+1));
+        //bundle.putInt("pageNumber",position+1);
         pageFragment.setArguments(bundle);
         return pageFragment;
 
@@ -45,14 +44,17 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
         return Integer.MAX_VALUE;
     }
 
-    void setBitmapByNumber(int position, ImageView img)
+    public Bitmap getBitmapByNumber(int position)
     {
         for (int i = 0; i < tempBitmapList.size(); ++i)
         {
             if (tempBitmapList.get(i).getNumberOfBitmap() == position) {
-                img.setImageBitmap(tempBitmapList.get(i).getBm());
+                return tempBitmapList.get(i).getBm();
+
+                //img.setImageBitmap(tempBitmapList.get(i).getBm());
             }
         }
-    }
 
+        return null;
+    }
 }

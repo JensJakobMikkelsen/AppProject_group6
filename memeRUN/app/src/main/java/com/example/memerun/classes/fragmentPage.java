@@ -1,5 +1,6 @@
 package com.example.memerun.classes;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.memerun.R;
@@ -20,9 +22,13 @@ public class fragmentPage extends Fragment {
         final View view;
         Bundle bundle =getArguments();
         int pageNumber= bundle.getInt("pageNumber");
+
+        Bitmap bmp = bundle.getParcelable("bmp");
+
         view = inflater.inflate(R.layout.page_fragmet_layout,container,false);
-        TextView textView = (TextView)view.findViewById(R.id.textviewer_Page1);
-        textView.setText(Integer.toString(pageNumber));
+        ImageView img = view.findViewById(R.id.imgviewer_page1);
+        img.setImageBitmap(bmp);
+
         return view;
 
     }

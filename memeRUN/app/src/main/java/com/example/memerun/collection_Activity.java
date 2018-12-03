@@ -65,8 +65,8 @@ public class collection_Activity extends AppCompatActivity {
 
                 //Sker en enkelt gang efter init
 
-                ImageView volley = findViewById(R.id.volleyUrl);
-                setBitmapByNumber(3, volley);
+                //ImageView volley = findViewById(R.id.volleyUrl);
+                //setBitmapByNumber(3, volley);
 
                 List<bitmapCounter> tempBitmapList = mService.getBmList();
 
