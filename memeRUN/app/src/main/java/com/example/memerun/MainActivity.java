@@ -159,22 +159,7 @@ public class MainActivity extends AppCompatActivity {
         Button recent = findViewById(R.id.Recent_activity_btn);
         Button achievements = findViewById(R.id.Achievements_btn);
         Button collection = findViewById(R.id.View_collection_btn);
-        Button ret = findViewById(R.id.ret_btn);
 
-        final TextView retCount = findViewById(R.id.retCount);
-
-        ret.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(mBound)
-                {
-                    retCount.setText(Integer.toString(mService.retCount()));
-                }
-
-            }
-
-        });
 
         //final TextView retCount = findViewById(R.id.retCount);
         ImageView trollface = findViewById(R.id.trollface);

@@ -11,6 +11,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -28,6 +31,51 @@ public class recent_Activity extends AppCompatActivity {
     memeService mService;
     Intent bound;
     boolean mBound = false;
+
+    int STARTANDSTOPACTIVITY = 111;
+    int RECENTACTIVITY = 112;
+    int ACHIEVEMENTSACTIVITY = 113;
+    int COLLECTIONACTIVITY = 114;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.recent, menu);
+
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.collection:
+
+                Intent collectionIntent = new Intent(recent_Activity.this, collection_Activity.class);
+                startActivityForResult(collectionIntent, COLLECTIONACTIVITY);
+                return true;
+
+            case R.id.achievement:
+
+                Intent achievementIntent = new Intent(recent_Activity.this, achievements_Activity.class);
+                startActivityForResult(achievementIntent, RECENTACTIVITY);
+                return true;
+
+            case R.id.startandstop:
+
+                Intent startAndStopIntent = new Intent(recent_Activity.this, startAndStop_Activity.class);
+                startActivityForResult(startAndStopIntent, STARTANDSTOPACTIVITY);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
 
     private ServiceConnection mConnection = new ServiceConnection() {
 

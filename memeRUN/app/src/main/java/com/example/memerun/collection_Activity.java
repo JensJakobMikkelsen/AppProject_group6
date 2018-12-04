@@ -11,17 +11,18 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -40,6 +41,53 @@ public class collection_Activity extends AppCompatActivity {
     Intent bound;
     boolean mBound = false;
     Bitmap bmp;
+
+    int STARTANDSTOPACTIVITY = 111;
+    int RECENTACTIVITY = 112;
+    int ACHIEVEMENTSACTIVITY = 113;
+    int COLLECTIONACTIVITY = 114;
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.collection, menu);
+
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.startAndStop:
+
+                Intent startAndStopIntent = new Intent(collection_Activity.this, startAndStop_Activity.class);
+                startActivityForResult(startAndStopIntent, STARTANDSTOPACTIVITY);
+                return true;
+
+            case R.id.recent_activity:
+
+                Intent recentIntent = new Intent(collection_Activity.this, recent_Activity.class);
+                startActivityForResult(recentIntent, RECENTACTIVITY);
+                return true;
+
+            case R.id.achievement:
+
+                Intent achievementIntent = new Intent(collection_Activity.this, achievements_Activity.class);
+                startActivityForResult(achievementIntent, ACHIEVEMENTSACTIVITY);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -200,6 +248,33 @@ public class collection_Activity extends AppCompatActivity {
             MediaStore.Images.Media.insertImage(getContentResolver(), bmp, "test" , "test");
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == STARTANDSTOPACTIVITY) {
+            if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
+
+        if (requestCode == RECENTACTIVITY) {
+            if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
+
+        if (requestCode == ACHIEVEMENTSACTIVITY) {
+            if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
+
+        if (requestCode == COLLECTIONACTIVITY) {
+            if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
     }
 
     @Override

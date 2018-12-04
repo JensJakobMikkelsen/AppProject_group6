@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+
+        android:id="@+id/settings"
+        android:title="settings">
+        <menu>
+
+            <item
+                android:id="@+id/settings1"
+                android:title="menuitem2" />
+            <item
+                android:id="@+id/settings2"
+                android:title="menuitem3" />
+        </menu>
+    </item>
+
+    <item
+
+        android:id = "@+id/activities"
+        android:title = "Activities">
+
+        <menu>
+            <item
+                android:id="@+id/startandstop"
+                android:title="Start" />
+            <item
+                android:id="@+id/recent_activity"
+                android:title="Recent activity" />
+            <item
+                android:id="@+id/collection"
+                android:title="Collection" />
+
+        </menu>
+
+
+    </item>
+
+    <item
+        android:id = "@+id/Cheats"
+        android:title = "Cheats">
+
+        <menu>
+            <item
+                android:id="@+id/cheats1"
+                android:title="menuitem6" />
+            <item
+                android:id="@+id/cheats2"
+                android:title="menuitem7" />
+        </menu>
+
+
+    </item>
+
+
+
+</menu>

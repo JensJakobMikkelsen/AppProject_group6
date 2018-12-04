@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -12,13 +13,19 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -31,11 +38,62 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class startAndStop_Activity extends AppCompatActivity {
 
-    int STARTANDSTOPACTIVITY = 111;
 
     memeService mService;
     Intent bound;
     boolean mBound = false;
+    int STARTANDSTOPACTIVITY = 111;
+    int RECENTACTIVITY = 112;
+    int ACHIEVEMENTSACTIVITY = 113;
+    int COLLECTIONACTIVITY = 114;
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.startandstop, menu);
+
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+                case R.id.collection:
+
+                    Intent collectionIntent = new Intent(startAndStop_Activity.this, collection_Activity.class);
+                    startActivityForResult(collectionIntent, COLLECTIONACTIVITY);
+                    return true;
+
+                case R.id.recent_activity:
+
+                    Intent recentIntent = new Intent(startAndStop_Activity.this, recent_Activity.class);
+                    startActivityForResult(recentIntent, STARTANDSTOPACTIVITY);
+                    return true;
+
+                case R.id.achievement:
+
+                    Intent achievementIntent = new Intent(startAndStop_Activity.this, achievements_Activity.class);
+                    startActivityForResult(achievementIntent, ACHIEVEMENTSACTIVITY);
+                    return true;
+
+                    default:
+                        return super.onOptionsItemSelected(item);
+            }
+
+    }
+
+
+
+
+
+
+
+
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -137,7 +195,6 @@ public class startAndStop_Activity extends AppCompatActivity {
         });
 
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -196,6 +253,33 @@ public class startAndStop_Activity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == STARTANDSTOPACTIVITY) {
+            if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
+
+        if (requestCode == RECENTACTIVITY) {
+            if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
+
+        if (requestCode == ACHIEVEMENTSACTIVITY) {
+            if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
+
+        if (requestCode == COLLECTIONACTIVITY) {
+            if (resultCode == RESULT_CANCELED) {
+
+            }
+        }
     }
 
 }
