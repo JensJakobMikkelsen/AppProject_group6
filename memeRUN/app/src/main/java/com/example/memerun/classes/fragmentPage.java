@@ -1,6 +1,7 @@
 package com.example.memerun.classes;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,22 +15,40 @@ import android.widget.TextView;
 import com.example.memerun.R;
 
 public class fragmentPage extends Fragment {
+
+    ImageView img;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
 
-        final View view;
-        Bundle bundle =getArguments();
-        int pageNumber= bundle.getInt("pageNumber");
+        Bitmap bmp = null;
+        Bundle bundle = getArguments();
+        View view = null;
 
-        Bitmap bmp = bundle.getParcelable("bmp");
+        try
+        {
+            byte[] byteArray = bundle.getByteArray("image");
+            bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+        }
+        catch(NullPointerException nfe)
+        {
 
-        view = inflater.inflate(R.layout.page_fragmet_layout,container,false);
-        ImageView img = view.findViewById(R.id.imgviewer_page1);
-        img.setImageBitmap(bmp);
+        }
+
+        if(bmp != null)
+        {
+            view = inflater.inflate(R.layout.page_fragmet_layout, container, false);
+            img = view.findViewById(R.id.imgviewer_page1);
+            img.setImageBitmap(bmp);
+        }
 
         return view;
 
+    }
+
+    public ImageView getImg() {
+        return img;
     }
 }

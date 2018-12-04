@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="69" />
+                                                <entry key="scalingPercent" value="89" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -33,9 +33,8 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="backgroundImage" value="C:\Users\Bruger\Desktop\Smartphone\troll_3.jpg" />
-                                      <entry key="foregroundImage" value="C:\Users\Bruger\Desktop\Smartphone\speech_bubble.jpg" />
-                                      <entry key="outputName" value="speech_bubble" />
+                                      <entry key="foregroundImage" value="C:\Users\Bruger\Desktop\Smartphone\not_unlocked.bmp" />
+                                      <entry key="outputName" value="not_unlocked" />
                                     </map>
                                   </option>
                                 </PersistentState>

@@ -5,20 +5,32 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.SparseArray;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.memerun.classes.achievement;
 import com.example.memerun.classes.bitmapCounter;
 import com.example.memerun.classes.fragmentPage;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class SwipeAdapter extends FragmentStatePagerAdapter {
 
     List<bitmapCounter> tempBitmapList;
+    public Bitmap bm;
+    int position;
+    fragmentPage pageFragment;
+    Bitmap notUnlocked;
+    List<achievement> achievementList;
 
-    public SwipeAdapter(FragmentManager fm, List<bitmapCounter> tempBitmapList) {
 
+    public SwipeAdapter(FragmentManager fm, List<bitmapCounter> tempBitmapList, List<achievement> achievements_, Bitmap not_unlocked_)
+    {
         super(fm);
+        this.notUnlocked = not_unlocked_;
+        this.achievementList = achievements_;
         this.tempBitmapList = tempBitmapList;
     }
 
@@ -30,11 +42,39 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
 
-        Fragment pageFragment = new fragmentPage();
+        this.position = position;
+        pageFragment = new fragmentPage();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("bmp", getBitmapByNumber(position+1));
-        //bundle.putInt("pageNumber",position+1);
-        pageFragment.setArguments(bundle);
+        Bitmap bmp = null;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        int size = achievementList.size();
+
+        try
+        {
+            if(position < size) {
+                if (achievementList.get(position).isUnlocked()) {
+                    bmp = getBitmapByNumber(position);
+                }
+
+                else
+                {
+                    bmp = notUnlocked;
+                }
+            }
+
+        }
+        catch(NullPointerException nfe)
+        {
+        }
+
+        if(bmp != null) {
+
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            bundle.putByteArray("image",byteArray);
+            pageFragment.setArguments(bundle);
+        }
+
         return pageFragment;
 
     }
@@ -49,12 +89,25 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
         for (int i = 0; i < tempBitmapList.size(); ++i)
         {
             if (tempBitmapList.get(i).getNumberOfBitmap() == position) {
-                return tempBitmapList.get(i).getBm();
+                bm = tempBitmapList.get(i).getBm();
+                return bm;
 
-                //img.setImageBitmap(tempBitmapList.get(i).getBm());
+
             }
         }
-
         return null;
     }
+
+    public Bitmap getBm() {
+        return bm;
+    }
+
+    public List<bitmapCounter> getTempBitmapList() {
+        return tempBitmapList;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
 }

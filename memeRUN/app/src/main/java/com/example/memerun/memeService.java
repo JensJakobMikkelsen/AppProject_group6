@@ -122,10 +122,7 @@ public class memeService extends Service implements SensorEventListener {
 
                     NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
                     nm.notify(1, b.build());
-                 /*
-                    final MediaPlayer player = MediaPlayer.create(this, R.raw.videosoundeffect);
-                    player.start();
-*/
+
                     appDb.daoAccess().update(achievementList.get(i));
                 }
 
@@ -151,6 +148,15 @@ public class memeService extends Service implements SensorEventListener {
     List<bitmapCounter> bmList = new ArrayList<>();
 
     public List<bitmapCounter> getBmList() {
+
+        List<bitmapCounter> tempBmList = new ArrayList<>();
+        List<achievement> tempAchievementList = new ArrayList<>();
+
+        for(int i = 0; i < bmList.size(); ++i)
+        {
+
+        }
+
         return bmList;
     }
 
@@ -281,7 +287,6 @@ public class memeService extends Service implements SensorEventListener {
                 .setContentText("Doing some work...")
                 .setContentIntent(pendingIntent).build();
         startForeground(1337, notification);
-
 
         contextRef = new WeakReference<>(getApplicationContext());
 

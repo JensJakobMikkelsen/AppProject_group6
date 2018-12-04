@@ -6,22 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".recent_Activity">
 
-    <Button
-        android:id="@+id/Back_recent_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="37dp"
-        android:layout_marginLeft="37dp"
-        android:layout_marginTop="21dp"
-        android:layout_marginEnd="259dp"
-        android:layout_marginRight="259dp"
-        android:text="Back"
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview_back_recent"
+        android:layout_width="154dp"
+        android:layout_height="109dp"
+        android:layout_marginStart="118dp"
+        android:layout_marginEnd="112dp"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="16dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Achievements_back_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/cardview_save">
+
+        <Button
+            android:id="@+id/back_recent_btn"
+            android:layout_width="125dp"
+            android:layout_height="61dp"
+            android:background="@color/colorAccent"
+            android:shadowColor="@android:color/background_dark"
+            android:text="Save to phone"
+            android:verticalScrollbarPosition="left"
+            android:visibility="visible" />
+
+    </android.support.v7.widget.CardView>
+
 
     <ListView
-        android:id="@+id/Achievements_back_btn"
+        android:id="@+id/cardview_save"
         android:layout_width="368dp"
         android:layout_height="382dp"
         android:layout_marginStart="8dp"

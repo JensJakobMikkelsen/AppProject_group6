@@ -6,6 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".collection_Activity">
 
+    <Button
+        android:id="@+id/btn_save_collection"
+        android:layout_width="125dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="47dp"
+        android:background="@color/colorAccent"
+        android:shadowColor="@android:color/background_dark"
+        android:text="Save to phone"
+        android:verticalScrollbarPosition="left"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
+
+    <Button
+        android:id="@+id/back_btn_collection"
+        android:layout_width="125dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="58dp"
+        android:background="@color/colorAccent"
+        android:shadowColor="@android:color/background_dark"
+        android:text="Back"
+        android:verticalScrollbarPosition="left"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/btn_save_collection"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="352dp"
@@ -14,28 +44,5 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/Back_collection_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="40dp"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
-
-    <Button
-        android:id="@+id/save_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="66dp"
-        android:text="Save to phone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/Back_collection_btn"
-        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
 
 </android.support.constraint.ConstraintLayout>

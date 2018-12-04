@@ -6,6 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".achievements_Activity">
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView_back"
+        android:layout_width="154dp"
+        android:layout_height="109dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="128dp"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="16dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Achievements_listView">
+
+        <Button
+            android:id="@+id/cardview_save"
+            android:layout_width="125dp"
+            android:layout_height="61dp"
+            android:background="@color/colorAccent"
+            android:shadowColor="@android:color/background_dark"
+            android:text="Back"
+            android:verticalScrollbarPosition="left"
+            android:visibility="visible" />
+
+    </android.support.v7.widget.CardView>
+
     <ListView
         android:id="@+id/Achievements_listView"
         android:layout_width="369dp"
@@ -19,31 +45,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/Achievements_back_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="33dp"
-        android:layout_marginEnd="280dp"
-        android:layout_marginRight="280dp"
-        android:text="Back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Achievements_listView" />
-
-    <ImageView
-        android:id="@+id/image__"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="166dp"
-        android:layout_marginLeft="166dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginRight="42dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Achievements_back_btn"
-        app:layout_constraintTop_toBottomOf="@+id/Achievements_listView"
-        app:srcCompat="@mipmap/ic_launcher" />
 </android.support.constraint.ConstraintLayout>

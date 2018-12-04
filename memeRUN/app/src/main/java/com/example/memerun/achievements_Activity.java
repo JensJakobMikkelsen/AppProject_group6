@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -122,7 +121,7 @@ public class achievements_Activity extends AppCompatActivity {
 
         //achievement user = new achievement("sad_rage");
 
-        Button back = findViewById(R.id.Achievements_back_btn);
+        Button back = findViewById(R.id.cardview_save);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override

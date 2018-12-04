@@ -10,9 +10,12 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
@@ -31,9 +34,7 @@ import java.util.List;
 
 public class collection_Activity extends AppCompatActivity {
 
-
     int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
-
 
     memeService mService;
     Intent bound;
@@ -56,6 +57,12 @@ public class collection_Activity extends AppCompatActivity {
         }
     };
 
+    SwipeAdapter swipeAdapter;
+    ViewPager viewPager;
+
+
+    int swipePosition;
+
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -63,21 +70,30 @@ public class collection_Activity extends AppCompatActivity {
             String message = intent.getStringExtra("message");
             if (message == "Initialization_done") {
 
-                //Sker en enkelt gang efter init
-
-                //ImageView volley = findViewById(R.id.volleyUrl);
-                //setBitmapByNumber(3, volley);
-
                 List<bitmapCounter> tempBitmapList = mService.getBmList();
 
-                ViewPager viewPager = (ViewPager)findViewById(R.id.viewPager);
+                viewPager = (ViewPager)findViewById(R.id.viewPager);
                 viewPager.setOffscreenPageLimit(1);
-                SwipeAdapter swipeAdapter = new SwipeAdapter(getSupportFragmentManager(), tempBitmapList );
 
-                //tempBitmapList lagt ind i constructoren i swipeadapter - se swipeAdapter for brug
+                Bitmap not_unlocked = BitmapFactory.decodeResource(getResources(), R.mipmap.not_unlocked);
+                swipeAdapter = new SwipeAdapter(getSupportFragmentManager(), tempBitmapList, mService.getAchievements(), not_unlocked);
 
                 viewPager.setAdapter(swipeAdapter);
                 viewPager.setCurrentItem(0);
+
+                viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    }
+                    @Override
+                    public void onPageSelected(int position) {
+
+                        swipePosition = position;
+                    }
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+                    }
+                });
 
             }
         }
@@ -103,48 +119,28 @@ public class collection_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection_);
 
-
-        //Adnaan kode start
-
-
-        //Adnaan kode slut
-
-
         bound = new Intent(this, memeService.class);
         bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
 
-        Button back = findViewById(R.id.Back_collection_btn);
-        final Button saveToPhone = findViewById(R.id.save_image);
+        Button back = findViewById(R.id.back_btn_collection);
+        Button save = findViewById(R.id.btn_save_collection);
 
         sendInitMessage();
-
-        saveToPhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //saveToExternalStorage(bmap);
-
-
-
-                //Test af setBitmapByNumber, kan fjernes
-                /*
-
-                ImageView volley = findViewById(R.id.volleyUrl);
-                setBitmapByNumber(4, volley);
-
-                */
-
-            }
-
-        });
-
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setResult(RESULT_CANCELED);
                 finish();
+            }
 
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //Save to external storage
             }
 
         });
