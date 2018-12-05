@@ -59,9 +59,6 @@ public class memeService extends Service implements SensorEventListener {
     Context context_;
 
     int timeCount = 0;
-    int amountOfStepsRun = 0;
-    int amountOfStepsWalked = 0;
-
     SensorManager sensorManager;
     public Sensor counterSensor;
 
@@ -70,6 +67,15 @@ public class memeService extends Service implements SensorEventListener {
     List<achievement> achievementList;
     List<recent> recentList = new ArrayList<>();
     public static final String myPreferences = "MyPrefs";
+    double mode = 0;
+
+    public double getMode() {
+        return mode;
+    }
+
+    public void setMode(double mode) {
+        this.mode = mode;
+    }
 
     public memeService() {
     }
@@ -136,7 +142,7 @@ public class memeService extends Service implements SensorEventListener {
 
     }
 
-    int steps;
+    double steps;
     private void sendSensorUpdateMessage(int steps)
     {
         Log.d("sender", "Initialization_done");
@@ -377,9 +383,19 @@ public class memeService extends Service implements SensorEventListener {
     }
 
     public void onSensorChanged(SensorEvent event) {
-        steps++;
-        sendSensorUpdateMessage(steps);
-        checkAchievements(achievementList, steps);
+
+        double calc_steps = 0;
+
+        if(mode != 0) {
+            calc_steps = (calc_steps) + ((steps++) * mode);
+        }
+
+        else
+        {
+            steps++;
+        }
+        sendSensorUpdateMessage((int) calc_steps);
+        checkAchievements(achievementList, (int)calc_steps);
 
     }
 

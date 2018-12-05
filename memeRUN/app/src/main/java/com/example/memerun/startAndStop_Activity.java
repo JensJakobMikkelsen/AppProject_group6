@@ -81,6 +81,24 @@ public class startAndStop_Activity extends AppCompatActivity {
                     startActivityForResult(achievementIntent, ACHIEVEMENTSACTIVITY);
                     return true;
 
+                case R.id.easy:
+
+                    mService.setMode(2);
+
+                    return true;
+
+                case R.id.medium:
+
+                    mService.setMode(1);
+
+                    return true;
+
+                case R.id.hard:
+
+                    mService.setMode(0.5);
+
+                    return true;
+
                     default:
                         return super.onOptionsItemSelected(item);
             }

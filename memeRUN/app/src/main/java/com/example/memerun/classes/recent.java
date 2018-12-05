@@ -19,14 +19,14 @@ public class recent {
     private String date;
 
     @ColumnInfo(name = "steps")
-    private int steps;
+    private double steps;
 
     public recent()
     {
 
     }
 
-    public recent(int steps_)
+    public recent(double steps_)
     {
         Long tsLong = System.currentTimeMillis()/1000;
         date = getDateCurrentTimeZone(tsLong);
@@ -49,10 +49,10 @@ public class recent {
         return date;
     }
 
-    public void setSteps(int steps_) {
+    public void setSteps(double steps_) {
         this.steps = steps_;
     }
-    public int getSteps() {
+    public double getSteps() {
         return this.steps;
     }
 
