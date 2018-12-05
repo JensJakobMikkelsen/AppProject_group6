@@ -46,7 +46,16 @@ public class achievementAdapter extends ArrayAdapter<achievement> {
         int id = context_.getResources().getIdentifier("com.example.memerun:mipmap/" + user.getImageName(), null, null);
         ImageView achievements_image = (ImageView) convertView.findViewById(R.id.Achievements_image);
 
-        achievements_image.setImageResource(id);
+        if(user.getBm() != null) {
+            achievements_image.setImageBitmap(user.getBm());
+        }
+
+        else
+        {
+            achievements_image.setImageResource(id);
+        }
+
+
 
         TextView requirement = convertView.findViewById(R.id.requirement_in_m_text);
         requirement.setText(user.getRequirement());

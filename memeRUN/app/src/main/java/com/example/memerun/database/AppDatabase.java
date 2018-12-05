@@ -110,11 +110,11 @@ public abstract class AppDatabase extends RoomDatabase {
             mDao.insert(lion);
             mDao.insert(caveman);
 
-            achievement achievement1 = new achievement("Run 235083290 metres", 5);
-            achievement achievement2 = new achievement("hej", 10);
-            achievement achievement3 = new achievement("Hest", 12);
-            achievement achievement4 = new achievement("Run 1 meter", 14);
-            achievement achievement5 = new achievement("ghbewj09hjew", 15);
+            achievement achievement1 = new achievement("5 steps", 5);
+            achievement achievement2 = new achievement("50 steps", 50);
+            achievement achievement3 = new achievement("500 steps", 500);
+            achievement achievement4 = new achievement("5000 steps", 5000);
+            achievement achievement5 = new achievement("50000 steps", 50000);
 
             mDao.insert(achievement1);
             mDao.insert(achievement2);

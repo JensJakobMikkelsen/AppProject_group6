@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
     boolean visibility1 = false;
     boolean visibility2;
+    boolean troll_pressed = false;
+    public static final String myPreferences = "MyPrefs";
+    SharedPreferences sharedPreferences;
 
     int min = 0;
     int max = 4;
@@ -174,17 +177,21 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        final Handler handler = new Handler();
         trollface.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                boolean visibility2;
 
-                int count = 0;
-                count = mService.retCount();
-                //retCount.setText(Integer.toString(count));
+
                 setContentView(R.layout.troll_layout);
+
+                troll_pressed = true;
+
+                sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("troll_pressed", troll_pressed);
+                editor.apply();
+
                 player.start();
 
                 final Handler handler = new Handler();

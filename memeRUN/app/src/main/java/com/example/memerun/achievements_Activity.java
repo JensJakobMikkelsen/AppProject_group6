@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,10 +17,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.memerun.classes.achievement;
+import com.example.memerun.classes.bitmapCounter;
 import com.example.memerun.customAdapter.achievementAdapter;
 
 import java.util.ArrayList;
@@ -104,11 +107,20 @@ public class achievements_Activity extends AppCompatActivity {
         {
             // Get extra data included in the Intent
             String message = intent.getStringExtra("message");
+            achievements_list = mService.getAchievements();
 
-            if(message == "achievements___") {
+            if(message == "achievements___")
+            {
+                tempList = new ArrayList<>();
+
+                for(int i = 0; i < 5; ++i)
+                {
+                    tempList.add(achievements_list.get(i));
+                    tempList.get(i).setImageName("question");
+                    adapter.add(tempList.get(i));
+                }
+
                 int countIsUnlocked = 0;
-                achievements_list = mService.getAchievements();
-                List<achievement> tempAdapterList = new ArrayList<>();
 
                 if (achievements_list.get(0).isUnlocked()) {
 
@@ -122,7 +134,7 @@ public class achievements_Activity extends AppCompatActivity {
                     adapter.clear();
 
                     for (int i = 0; i < countIsUnlocked; ++i) {
-                        achievements_list.get(i).setImageName("sad_rage");
+                        achievements_list.get(i).setBm(getBitmapByNumber(i));
                         adapter.add(achievements_list.get(i));
                     }
 
@@ -138,6 +150,19 @@ public class achievements_Activity extends AppCompatActivity {
 
     };
 
+    Bitmap getBitmapByNumber(int position)
+    {
+        List<bitmapCounter> tempBitmapList = mService.getBmList();
+        for(int i = 0; i < tempBitmapList.size(); ++i)
+        {
+            if(tempBitmapList.get(i).getNumberOfBitmap() == position)
+            {
+                return tempBitmapList.get(i).getBm();
+            }
+        }
+        return null;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,19 +176,6 @@ public class achievements_Activity extends AppCompatActivity {
         adapter = new achievementAdapter(this);
         listView.setAdapter(adapter);
 
-        tempList = new ArrayList<>();
-
-        tempList.add(new achievement("Run 235083290 metres", 15));
-        tempList.add(new achievement("hej", 30));
-        tempList.add(new achievement("Hest", 45));
-        tempList.add(new achievement("Run 1 meter", 60));
-        tempList.add(new achievement("ghbewj09hjew", 70));
-
-        for(int i = 0; i < 5; ++i)
-        {
-            tempList.get(i).setImageName("question");
-            adapter.add(tempList.get(i));
-        }
 
         sendInitMessage();
 

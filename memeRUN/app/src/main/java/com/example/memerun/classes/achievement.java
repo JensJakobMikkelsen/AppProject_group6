@@ -2,7 +2,9 @@ package com.example.memerun.classes;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.graphics.Bitmap;
 
 @Entity(tableName = "achievement_table")
 public class achievement {
@@ -22,6 +24,16 @@ public class achievement {
     @ColumnInfo(name = "steps")
     public int steps;
 
+    @Ignore
+    public Bitmap bm = null;
+
+    public Bitmap getBm() {
+        return bm;
+    }
+
+    public void setBm(Bitmap bm) {
+        this.bm = bm;
+    }
 
     public int getSteps() {
         return steps;

@@ -67,7 +67,16 @@ public class memeService extends Service implements SensorEventListener {
     List<achievement> achievementList;
     List<recent> recentList = new ArrayList<>();
     public static final String myPreferences = "MyPrefs";
-    double mode = 0;
+    double mode = 1;
+
+
+    public double getSteps() {
+        return steps;
+    }
+
+    public void setSteps(double steps) {
+        this.steps = steps;
+    }
 
     public double getMode() {
         return mode;
@@ -101,39 +110,44 @@ public class memeService extends Service implements SensorEventListener {
     public void checkAchievements(List<achievement> achievementList, int steps)
     {
 
+        boolean unlocked = false;
+
         for(int i = 0; i < achievementList.size(); ++i)
         {
-            if(achievementList.get(i).getSteps() == steps)
+            if(achievementList.get(i).getSteps() <= steps)
             {
                 if(!achievementList.get(i).isUnlocked()) {
 
                     achievementList.get(i).setUnlocked(true);
-
-                    Toast.makeText(getApplicationContext(), "Achievement unlocked!",
-                            Toast.LENGTH_LONG).show();
-
-
-                    Intent notificationIntent = new Intent(this, achievements_Activity.class);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-                            notificationIntent, 0);
-
-                    NotificationCompat.Builder b = new NotificationCompat.Builder(getApplicationContext());
-                    b.setAutoCancel(true)
-                            .setDefaults(NotificationCompat.DEFAULT_ALL)
-                            .setWhen(System.currentTimeMillis())
-                            .setSmallIcon(R.drawable.ic_launcher_background)
-                            .setContentTitle("memeRUN")
-                            .setContentText("Achievement unLOCKED!!!!")
-                            .setContentIntent(pendingIntent).build();
-
-                    NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-                    nm.notify(1, b.build());
+                    send_achievement_unlocked(i);
 
                     appDb.daoAccess().update(achievementList.get(i));
+                    unlocked = true;
                 }
 
             }
         }
+
+        if(unlocked) {
+
+            Intent notificationIntent = new Intent(this, achievements_Activity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                    notificationIntent, 0);
+
+            NotificationCompat.Builder b = new NotificationCompat.Builder(getApplicationContext());
+            b.setAutoCancel(true)
+                    .setDefaults(NotificationCompat.DEFAULT_ALL)
+                    .setWhen(System.currentTimeMillis())
+                    .setSmallIcon(R.drawable.ic_launcher_background)
+                    .setContentTitle("memeRUN")
+                    .setContentText("Achievement unLOCKED!!!!")
+                    .setContentIntent(pendingIntent).build();
+
+            NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            nm.notify(1, b.build());
+        }
+
+
     }
 
 
@@ -143,7 +157,7 @@ public class memeService extends Service implements SensorEventListener {
     }
 
     double steps;
-    private void sendSensorUpdateMessage(int steps)
+    public void sendSensorUpdateMessage(int steps)
     {
         Log.d("sender", "Initialization_done");
         Intent intent = new Intent("memeService");
@@ -244,19 +258,24 @@ public class memeService extends Service implements SensorEventListener {
                 }
             }
 
-            else if(message == "collection_init")
+            else if(message.equals("collection_init"))
             {
                 sendInitializationMessage();
             }
 
-            else if(message == "achievement_init")
+            else if(message.equals("achievement_init"))
             {
                 sendInitialization_achievements();
             }
 
-            else if(message == "recent_init")
+            else if(message.equals("recent_init"))
             {
                 sendInitialization_recent();
+            }
+
+            else if(message.equals("init_startAndStop"))
+            {
+                sendInitialization_startAndStop();
             }
 
 
@@ -364,6 +383,23 @@ public class memeService extends Service implements SensorEventListener {
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
+    private void sendInitialization_startAndStop()
+    {
+        Log.d("sender", "Initialization_done");
+        Intent intent = new Intent("memeService");
+        intent.putExtra("message", "startAndStop___");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    private void send_achievement_unlocked(int number)
+    {
+        Log.d("sender", "Initialization_done");
+        Intent intent = new Intent("memeService");
+        intent.putExtra("message", "Achievement unlocked!");
+        intent.putExtra("number", number);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
     public void startStepSensor()
     {
         sensorManager.registerListener(this, counterSensor, sensorManager.SENSOR_DELAY_FASTEST);
@@ -384,18 +420,10 @@ public class memeService extends Service implements SensorEventListener {
 
     public void onSensorChanged(SensorEvent event) {
 
-        double calc_steps = 0;
+        steps += 1 * mode;
 
-        if(mode != 0) {
-            calc_steps = (calc_steps) + ((steps++) * mode);
-        }
-
-        else
-        {
-            steps++;
-        }
-        sendSensorUpdateMessage((int) calc_steps);
-        checkAchievements(achievementList, (int)calc_steps);
+        sendSensorUpdateMessage((int) steps);
+        checkAchievements(achievementList, (int)steps);
 
     }
 

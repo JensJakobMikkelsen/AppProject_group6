@@ -8,14 +8,18 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,11 +31,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.memerun.classes.achievement;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -46,6 +54,17 @@ public class startAndStop_Activity extends AppCompatActivity {
     int RECENTACTIVITY = 112;
     int ACHIEVEMENTSACTIVITY = 113;
     int COLLECTIONACTIVITY = 114;
+    public static final String myPreferences = "MyPrefs";
+    SharedPreferences sharedPreferences;
+    boolean troll_pressed = false;
+
+    final int textSize_big = 34;
+    int textSize_count = 15;
+    int textSize_stop = 0;
+    final int textSize_small = 14;
+
+    TextView TvSteps2;
+    List<achievement> achievements = new ArrayList<>();
 
 
     @Override
@@ -57,10 +76,22 @@ public class startAndStop_Activity extends AppCompatActivity {
         return true;
     }
 
+    boolean mShowVisible =false;
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        menu.findItem(R.id.cheats).setVisible(mShowVisible);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+
+        MenuItem cheat = findViewById(R.id.cheats);
+
         switch(item.getItemId())
         {
                 case R.id.collection:
@@ -99,19 +130,63 @@ public class startAndStop_Activity extends AppCompatActivity {
 
                     return true;
 
+            case R.id.Set:
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(startAndStop_Activity.this);
+                // set title
+                alertDialogBuilder.setTitle("Set steps");
+
+                final EditText input = new EditText (this);
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                final TextView input_ = new EditText (this);
+
+                alertDialogBuilder.setView(input);
+
+
+                // set dialog message
+                alertDialogBuilder
+                        .setMessage("NEJ")
+                        .setCancelable(false)
+                        .setPositiveButton("Search", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                mService.setSteps(Double.parseDouble(input.getText().toString()));
+                                Toast.makeText(getApplicationContext(), "fatass",
+                                        Toast.LENGTH_LONG).show();
+                                mService.sendSensorUpdateMessage((int)mService.getSteps());
+                                mService.checkAchievements(mService.getAchievements(), (int)mService.getSteps());
+
+                                if(mService.getSteps() > 10000)
+                                {
+                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=d0aIqx1McVI"));
+                                    startActivity(browserIntent);
+                                }
+
+                            }
+
+
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
+
+
+
+                return true;
+
                     default:
                         return super.onOptionsItemSelected(item);
             }
 
     }
-
-
-
-
-
-
-
-
 
     private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -121,6 +196,7 @@ public class startAndStop_Activity extends AppCompatActivity {
             memeService.LocalBinder binder = (memeService.LocalBinder) service;
             mService = binder.getService();
             mBound = true;
+            mService.sendSensorUpdateMessage(0);
         }
 
         @Override
@@ -128,13 +204,6 @@ public class startAndStop_Activity extends AppCompatActivity {
             mBound = false;
         }
     };
-
-    final int textSize_big = 34;
-    int textSize_count = 15;
-    int textSize_stop = 0;
-    final int textSize_small = 14;
-
-    TextView TvSteps2;
 
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -154,9 +223,30 @@ public class startAndStop_Activity extends AppCompatActivity {
 
                 TvSteps2 = findViewById(R.id.progress_text);
                 TvSteps2.setText(steps_s);
-
                 changeTextSize();
 
+            }
+
+            else if(message.equals("startAndStop___"))
+            {
+                achievements = mService.getAchievements();
+                TextView next = findViewById(R.id.next_achievevement_txt);
+                next.setText(achievements.get(0).getRequirement());
+            }
+
+            else if(message.equals("Achievement unlocked!"))
+            {
+                int number = intent.getIntExtra("number", 0);
+                TextView next = findViewById(R.id.next_achievevement_txt);
+
+                if(number < achievements.size()-1) {
+                    next.setText(achievements.get(number + 1).getRequirement());
+                }
+
+                else
+                {
+                    next.setText("Everything is unlocked");
+                }
             }
         }
 
@@ -170,13 +260,23 @@ public class startAndStop_Activity extends AppCompatActivity {
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
 
+        sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE);
+        troll_pressed = sharedPreferences.getBoolean("troll_pressed", false);
+
+        if(troll_pressed)
+        {
+            mShowVisible = true;
+            this.invalidateOptionsMenu();
+        }
+
+
         bound = new Intent(this, memeService.class);
         bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
 
+        sendInitialization_recent();
 
         Button back = findViewById(R.id.start_and_stop_back_btn);
         Button start = findViewById(R.id.Start_and_stop_Start_btn);
-
         ImageView sad = findViewById(R.id.cancel_startAndStop_btn);
 
 
@@ -298,6 +398,14 @@ public class startAndStop_Activity extends AppCompatActivity {
 
             }
         }
+    }
+
+    private void sendInitialization_recent()
+    {
+        Log.d("sender", "Initialization_done");
+        Intent intent = new Intent("memeService");
+        intent.putExtra("message", "init_startAndStop");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
 }
