@@ -1,14 +1,22 @@
 package com.example.memerun;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -32,11 +41,13 @@ public class achievements_Activity extends AppCompatActivity {
 
     achievementAdapter adapter;
     ListView listView;
-
     memeService mService;
     Intent bound;
     boolean mBound = false;
+
     List<achievement> achievements_list;
+
+    int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
 
     int STARTANDSTOPACTIVITY = 111;
     int RECENTACTIVITY = 112;
@@ -51,7 +62,6 @@ public class achievements_Activity extends AppCompatActivity {
 
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -150,6 +160,48 @@ public class achievements_Activity extends AppCompatActivity {
 
     };
 
+    private void saveToExternalStorage(Bitmap bmp) {
+
+
+        // https://developer.android.com/training/permissions/requesting
+
+
+        /*
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+        }
+        */
+
+        if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(achievements_Activity.this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(achievements_Activity.this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+
+            MediaStore.Images.Media.insertImage(getContentResolver(), bmp, "test" , "test");
+        }
+
+    }
+
+
     Bitmap getBitmapByNumber(int position)
     {
         List<bitmapCounter> tempBitmapList = mService.getBmList();
@@ -176,10 +228,51 @@ public class achievements_Activity extends AppCompatActivity {
         adapter = new achievementAdapter(this);
         listView.setAdapter(adapter);
 
-
         sendInitMessage();
 
-        //achievement user = new achievement("sad_rage");
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    final int position, long id) {
+
+                // https://stackoverflow.com/questions/12244297/how-to-add-multiple-buttons-on-a-single-alertdialog
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(achievements_Activity.this);
+                builder.setTitle("Title");
+                builder.setItems(new CharSequence[]
+                                {"Save to phone", "view in full"},
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // The 'which' argument contains the index position
+                                // of the selected item
+                                switch (which) {
+                                    case 0:
+
+                                        if(tempList.get(position).isUnlocked()) {
+                                            saveToExternalStorage(tempList.get(position).getBm());
+                                        }
+
+                                        else
+                                        {
+                                            int id = getResources().getIdentifier("com.example.memerun:mipmap/question", null, null);
+                                            Bitmap bm = BitmapFactory.decodeResource(getResources(), id);
+                                            saveToExternalStorage(bm);
+                                        }
+
+                                        break;
+                                    case 1:
+                                        break;
+                                }
+                            }
+                        });
+                builder.create().show();
+
+
+
+
+
+            }
+        });
 
         Button back = findViewById(R.id.cardview_save);
 
