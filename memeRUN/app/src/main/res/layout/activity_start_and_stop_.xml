@@ -54,7 +54,7 @@
             android:layout_height="59dp"
             android:background="@color/colorAccent"
             android:shadowColor="@android:color/background_dark"
-            android:text="Back"
+            android:text="@string/BackButton"
             android:verticalScrollbarPosition="left"
             android:visibility="visible" />
 
@@ -81,7 +81,7 @@
             android:layout_height="70dp"
             android:background="@color/colorAccent"
             android:shadowColor="@android:color/background_dark"
-            android:text="Start"
+            android:text="@string/Start"
             android:verticalScrollbarPosition="left"
             android:visibility="visible" />
 

@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">memeRUN</string>
+    <string name="BackButton">Back</string>
+    <string name="SavetoPhone">Save to Phone</string>
+    <string name="ViewCollection">View Collection</string>
+    <string name="Achievements">Achievements</string>
+    <string name="RecentActivity">Recent Activity</string>
+    <string name="Start">Start</string>
+    <string name="NextAchievement">Next Achievement</string>
+    <string name="Requirement">Requirement</string>
+    <string name="MemeUnlocked">Meme Unlocked</string>
+    <string name="Date">Date</string>
 </resources>

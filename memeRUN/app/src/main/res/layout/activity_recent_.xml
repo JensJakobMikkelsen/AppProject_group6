@@ -25,7 +25,7 @@
             android:layout_height="61dp"
             android:background="@color/colorAccent"
             android:shadowColor="@android:color/background_dark"
-            android:text="Save to phone"
+            android:text="@string/SavetoPhone"
             android:verticalScrollbarPosition="left"
             android:visibility="visible" />
 
