@@ -171,7 +171,7 @@ public class collection_Activity extends AppCompatActivity {
         bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
 
         Button back = findViewById(R.id.back_btn_collection);
-        Button save = findViewById(R.id.btn_save_collection);
+  //      Button save = findViewById(R.id.btn_save_collection);
 
         sendInitMessage();
 
@@ -184,7 +184,7 @@ public class collection_Activity extends AppCompatActivity {
 
         });
 
-        save.setOnClickListener(new View.OnClickListener() {
+   /*     save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -192,7 +192,7 @@ public class collection_Activity extends AppCompatActivity {
             }
 
         });
-
+*/
     }
 
     void setBitmapByNumber(int position, ImageView img)
