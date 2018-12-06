@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">memeRUN</string>
+    <string name="BackButton">Tilbage</string>
+    <string name="SavetoPhone">Gem på telefon</string>
+    <string name="ViewCollection">Se Samling</string>
+    <string name="Achievements">Resultater</string>
+    <string name="RecentActivity">Seneste aktivitet</string>
+    <string name="Start">Start</string>
+    <string name="NextAchievement">Næste Resultat</string>
+    <string name="Requirement">Krav:</string>
+    <string name="MemeUnlocked">Meme Låst op</string>
+    <string name="Date">Dato</string>
+</resources>
