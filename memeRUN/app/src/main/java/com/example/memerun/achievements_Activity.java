@@ -238,9 +238,9 @@ public class achievements_Activity extends AppCompatActivity {
                 // https://stackoverflow.com/questions/12244297/how-to-add-multiple-buttons-on-a-single-alertdialog
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(achievements_Activity.this);
-                builder.setTitle("Title");
+                builder.setTitle("Choose:");
                 builder.setItems(new CharSequence[]
-                                {"Save to phone", "view in full"},
+                                {"Save to phone", "View in full"},
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // The 'which' argument contains the index position
