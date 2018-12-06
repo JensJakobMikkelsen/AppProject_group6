@@ -5,10 +5,12 @@
     <string name="SavetoPhone">Gem på telefon</string>
     <string name="ViewCollection">Se Samling</string>
     <string name="Achievements">Resultater</string>
-    <string name="RecentActivity">Seneste aktivitet</string>
+    <string name="RecentActivity">Dagbog</string>
     <string name="Start">Start</string>
     <string name="NextAchievement">Næste Resultat</string>
     <string name="Requirement">Krav:</string>
     <string name="MemeUnlocked">Meme Låst op</string>
     <string name="Date">Dato</string>
+    <string name="map">Map</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

@@ -24,10 +24,15 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.example.memerun.classes.bitmapCounter;
+import com.example.memerun.classes.memesday;
 import com.example.memerun.customAdapter.SwipeAdapter;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.TimeZone;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,8 +52,10 @@ public class MainActivity extends AppCompatActivity {
     public static final String myPreferences = "MyPrefs";
     SharedPreferences sharedPreferences;
 
-    int min = 0;
-    int max = 4;
+    int min_ = 0;
+    int max_ = 4;
+
+
 
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -152,6 +159,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        memesday memesday_ = new memesday();
+        List<String> quotes = memesday_.getMemesday();
+
+        Long tsLong = System.currentTimeMillis()/1000;
+        String timeStamp = getDateCurrentTimeZone(tsLong);
+
+        int min = 0;
+        int max = quotes.size()-1;
+        Random r = new Random();
+        int i1 = r.nextInt(max - min + 1) + min;
+        TextView memesday = findViewById(R.id.diary_txt);
+        memesday.setText(timeStamp + ": " + quotes.get(i1));
+
+
 
         bound = new Intent(this, memeService.class);
         bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
@@ -211,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                             for(int i = 0; i < 5; ++i)
                             {
                                 Random r = new Random();
-                                int i1 = r.nextInt(max - min + 1) + min;
+                                int i1 = r.nextInt(max_ - min_ + 1) + min_;
 
                                 switch(i1) {
                                     case 0:
@@ -244,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
                             for(int i = 0; i < 5; ++i)
                             {
                                 Random r = new Random();
-                                int i1 = r.nextInt(max - min + 1) + min;
+                                int i1 = r.nextInt(max_ - min_ + 1) + min_;
 
                                 switch(i1) {
                                     case 0:
@@ -344,6 +365,25 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("message", "show");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+
+
+    //Fra stackOverflow
+
+    public String getDateCurrentTimeZone(long timestamp) {
+        try{
+
+            Calendar calendar = Calendar.getInstance();
+            TimeZone tz = TimeZone.getTimeZone("Denmark");
+            calendar.setTimeInMillis(timestamp * 1000);
+            calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.getTimeInMillis()));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date currentTimeZone = (Date) calendar.getTime();
+            return sdf.format(currentTimeZone);
+        }catch (Exception e) {
+        }
+        return "";
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)

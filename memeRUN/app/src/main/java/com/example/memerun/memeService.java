@@ -51,8 +51,12 @@ import com.example.memerun.customAdapter.SwipeAdapter;
 import com.example.memerun.database.AppDatabase;
 
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class memeService extends Service implements SensorEventListener {
 
@@ -282,6 +286,8 @@ public class memeService extends Service implements SensorEventListener {
         }
     };
 
+    double firstTime;
+
     public void retrieve()
     {
         sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE);
@@ -403,6 +409,23 @@ public class memeService extends Service implements SensorEventListener {
     public void startStepSensor()
     {
         sensorManager.registerListener(this, counterSensor, sensorManager.SENSOR_DELAY_FASTEST);
+    }
+
+
+
+    public String getDateCurrentTimeZone(long timestamp) {
+        try{
+
+            Calendar calendar = Calendar.getInstance();
+            TimeZone tz = TimeZone.getTimeZone("Denmark");
+            calendar.setTimeInMillis(timestamp * 1000);
+            calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.getTimeInMillis()));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date currentTimeZone = (Date) calendar.getTime();
+            return sdf.format(currentTimeZone);
+        }catch (Exception e) {
+        }
+        return "";
     }
 
     public void stopStepSensor()

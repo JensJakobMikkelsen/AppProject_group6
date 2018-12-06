@@ -1,6 +1,7 @@
 package com.example.memerun;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,6 +12,8 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.IBinder;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -24,10 +27,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.memerun.classes.achievement;
@@ -261,6 +267,7 @@ public class achievements_Activity extends AppCompatActivity {
 
                                         break;
                                     case 1:
+                                        showImage(tempList.get(position).getBm());
                                         break;
                                 }
                             }
@@ -287,6 +294,42 @@ public class achievements_Activity extends AppCompatActivity {
         });
 
     }
+
+    Dialog builder;
+
+    // https://stackoverflow.com/questions/7693633/android-image-dialog-popup
+
+    public void showImage(Bitmap bmp) {
+        builder = new Dialog(this, android.R.style.Theme_DeviceDefault);
+
+        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        builder.getWindow().setBackgroundDrawable(
+                new ColorDrawable(Color.BLACK));
+
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+            }
+        });
+
+        ImageView imageView = new ImageView(this);
+        imageView.setImageBitmap(bmp);
+
+        imageView.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View View3)
+            {
+                builder.dismiss();
+            }
+
+        });
+
+        builder.addContentView(imageView, new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        builder.show();
+
+    }
+
 
     @Override
     protected void onResume() {

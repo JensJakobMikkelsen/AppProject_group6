@@ -21,6 +21,17 @@ public class recent {
     @ColumnInfo(name = "steps")
     private double steps;
 
+    @ColumnInfo(name = "rating")
+    private String rating;
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
     public recent()
     {
 
