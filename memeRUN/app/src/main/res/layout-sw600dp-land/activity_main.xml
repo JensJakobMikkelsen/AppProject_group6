@@ -33,7 +33,7 @@
             app:cardElevation="16dp"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.485"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView_start">
 
@@ -60,6 +60,7 @@
             app:cardElevation="16dp"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
@@ -86,6 +87,7 @@
             app:cardElevation="16dp"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView">
 
@@ -113,7 +115,7 @@
             app:cardElevation="16dp"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.475"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/diary_txt">
 
