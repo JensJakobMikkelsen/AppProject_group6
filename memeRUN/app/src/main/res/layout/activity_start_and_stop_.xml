@@ -16,10 +16,9 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="26dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Next achievement"
+        android:text="@string/NextAchievement"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Next Achievement" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/next_achievevement_txt"
