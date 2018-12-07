@@ -116,4 +116,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/next_achievevement_txt" />
 
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:src="@raw/walk"
+
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="67dp" />
+
 </android.support.constraint.ConstraintLayout>

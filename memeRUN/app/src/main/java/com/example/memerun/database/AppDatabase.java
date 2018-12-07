@@ -103,12 +103,29 @@ public abstract class AppDatabase extends RoomDatabase {
             final memeURL burrito = new memeURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIKLJiJY_Z_tvxb5S8tWXrfGGKw47LX3y3H-Yy8FwccWzrkeDe");
             final memeURL lion = new memeURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXJd-Jp0hw-nnPhNvTxdas9x4Qx6woACIOrYK5bLjuPvJuWfsptw");
             final memeURL caveman = new memeURL("https://i.ytimg.com/vi/Ugw6Aod27sU/hqdefault.jpg");
-
+            final memeURL goal = new memeURL("https://www.lifewire.com/thmb/hR2GPjS2ZUQBRv2CHCdPcIfBQZ0=/768x0/filters:no_upscale():max_bytes(150000):strip_icc()/sstMxMh-5ab00c7bfa6bcc003622e4f5.jpg");
+            final memeURL pain = new memeURL("https://www.todaysparent.com/wp-content/uploads/2017/06/when-your-kid-becomes-a-meme-1024x576-1497986561.jpg");
+            final memeURL getThanos = new memeURL("https://img-9gag-fun.9cache.com/photo/aOYzXdM_700bwp.webp");
+            final memeURL stairs = new memeURL("https://img-9gag-fun.9cache.com/photo/a6ObY0R_700bwp.webp");
+            final memeURL robot = new memeURL("https://img-9gag-fun.9cache.com/photo/aB0WAYZ_460swp.webp");
+            final memeURL pikachu = new memeURL("https://i.imgur.com/n2RTfvL.jpg");
+            final memeURL yours = new memeURL("https://i.imgur.com/zDKQfzn.jpg");
+            final memeURL hotdogs = new memeURL("https://i.imgur.com/EuPLdJY.jpg");
+            final memeURL bathroom = new memeURL("https://i.imgur.com/xLJfNDv.jpg");
             mDao.insert(yoda);
             mDao.insert(successkid);
             mDao.insert(burrito);
             mDao.insert(lion);
             mDao.insert(caveman);
+            mDao.insert(goal);
+            mDao.insert(pain);
+            mDao.insert(getThanos);
+            mDao.insert(stairs);
+            mDao.insert(robot);
+            mDao.insert(pikachu);
+            mDao.insert(yours);
+            mDao.insert(hotdogs);
+            mDao.insert(bathroom);
 
             achievement achievement1 = new achievement("5 steps", 5);
             achievement achievement2 = new achievement("50 steps", 50);
