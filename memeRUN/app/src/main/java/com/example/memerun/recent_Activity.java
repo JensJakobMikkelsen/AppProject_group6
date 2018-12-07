@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.memerun.classes.recent;
 import com.example.memerun.customAdapter.recentAdapter;
@@ -95,6 +96,7 @@ public class recent_Activity extends AppCompatActivity {
     };
 
     ProgressBar prog;
+    TextView progess_txt;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -117,12 +119,20 @@ public class recent_Activity extends AppCompatActivity {
                 prog.setMax(mService.getAchievements().size());
                 prog.setProgress(mService.getProgAmount());
 
+                String progAmount_s = Integer.toString(mService.getProgAmount());
+
+                progess_txt = findViewById(R.id.progress_bar_txt);
+                progess_txt.setText("Achievements unlocked: " + progAmount_s + "/" + Integer.toString(prog.getMax()));
 
             }
 
             else if (message.equals("progressbar_inc"))
             {
                 prog.setProgress(mService.getProgAmount());
+                String progAmount_s = Integer.toString(mService.getProgAmount());
+
+                progess_txt = findViewById(R.id.progress_bar_txt);
+                progess_txt.setText("Achievements unlocked: " + progAmount_s + "/" + Integer.toString(prog.getMax()));
             }
         }
     };

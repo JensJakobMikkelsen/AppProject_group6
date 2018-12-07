@@ -127,6 +127,7 @@ public class achievements_Activity extends AppCompatActivity {
 
             if(message == "achievements___")
             {
+                adapter.clear();
                 tempList = new ArrayList<>();
 
                 for(int i = 0; i < 5; ++i)
@@ -267,15 +268,20 @@ public class achievements_Activity extends AppCompatActivity {
 
                                         break;
                                     case 1:
-                                        showImage(tempList.get(position).getBm());
+                                        if(achievements_list.get(position).isUnlocked())
+                                        {
+                                            showImage(tempList.get(position).getBm());
+                                        }
+
+                                        else {
+                                            Toast.makeText(getApplicationContext(), "Meme not unlocked yet",
+                                                    Toast.LENGTH_LONG).show();
+                                        }
                                         break;
                                 }
                             }
                         });
                 builder.create().show();
-
-
-
 
 
             }

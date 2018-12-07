@@ -70,6 +70,7 @@
             app:cardElevation="16dp"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.897"
             app:layout_constraintStart_toEndOf="@+id/diary_txt"
             app:layout_constraintTop_toBottomOf="@+id/cardView">
 
@@ -95,6 +96,7 @@
             app:cardElevation="16dp"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.897"
             app:layout_constraintStart_toEndOf="@+id/diary_txt"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -114,7 +116,7 @@
             android:id="@+id/trollface"
             android:layout_width="67dp"
             android:layout_height="69dp"
-            android:layout_marginTop="104dp"
+            android:layout_marginTop="4dp"
             android:clickable="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/diary_txt"
@@ -122,9 +124,9 @@
 
         <TextView
             android:id="@+id/diary_txt"
-            android:layout_width="119dp"
-            android:layout_height="113dp"
-            android:layout_marginStart="47dp"
+            android:layout_width="111dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:text="TextView"
             android:textStyle="bold|italic"
