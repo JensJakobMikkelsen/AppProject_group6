@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.memerun.classes.recent;
 import com.example.memerun.customAdapter.recentAdapter;
@@ -93,12 +94,14 @@ public class recent_Activity extends AppCompatActivity {
         }
     };
 
+    ProgressBar prog;
+
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String message = intent.getStringExtra("message");
-            if (message == "recent___")
+            if (message.equals("recent___"))
             {
                 adapter.clear();
                 List<recent> recentList = mService.getRecentActivity();
@@ -110,8 +113,16 @@ public class recent_Activity extends AppCompatActivity {
                     }
                 }
 
-                //recentList.clear();
+                prog = findViewById(R.id.progressbar_achievement);
+                prog.setMax(mService.getAchievements().size());
+                prog.setProgress(mService.getProgAmount());
 
+
+            }
+
+            else if (message.equals("progressbar_inc"))
+            {
+                prog.setProgress(mService.getProgAmount());
             }
         }
     };
@@ -125,12 +136,17 @@ public class recent_Activity extends AppCompatActivity {
         bound = new Intent(this, memeService.class);
         bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
 
-
         listView = (ListView) findViewById(R.id.cardview_save);
         adapter = new recentAdapter(this);
         listView.setAdapter(adapter);
 
+
         sendInitMessage();
+
+
+
+
+
         Button back = findViewById(R.id.back_recent_btn);
 
         back.setOnClickListener(new View.OnClickListener() {

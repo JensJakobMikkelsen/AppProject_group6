@@ -72,7 +72,15 @@ public class memeService extends Service implements SensorEventListener {
     List<recent> recentList = new ArrayList<>();
     public static final String myPreferences = "MyPrefs";
     double mode = 1;
+    int progAmount = 0;
 
+    public int getProgAmount() {
+        return progAmount;
+    }
+
+    public void setProgAmount(int progAmount) {
+        this.progAmount = progAmount;
+    }
 
     public double getSteps() {
         return steps;
@@ -124,9 +132,11 @@ public class memeService extends Service implements SensorEventListener {
 
                     achievementList.get(i).setUnlocked(true);
                     send_achievement_unlocked(i);
-
                     appDb.daoAccess().update(achievementList.get(i));
                     unlocked = true;
+
+                    progAmount++;
+                    send_progessbar_inc();
                 }
 
             }
@@ -403,6 +413,14 @@ public class memeService extends Service implements SensorEventListener {
         Intent intent = new Intent("memeService");
         intent.putExtra("message", "Achievement unlocked!");
         intent.putExtra("number", number);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+    private void send_progessbar_inc()
+    {
+        Log.d("sender", "Initialization_done");
+        Intent intent = new Intent("memeService");
+        intent.putExtra("message", "progressbar_inc");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
