@@ -191,6 +191,11 @@ public class startAndStop_Activity extends AppCompatActivity {
 
                 TextView txt = findViewById(R.id.progress_text);
                 txt.setText(Double.toString(mService.getSteps()));
+
+                achievements = mService.getAchievements();
+                TextView next = findViewById(R.id.next_achievevement_txt);
+                next.setText(achievements.get(0).getRequirement());
+
                 //Refreshes UI when connected to service
             }
 
@@ -221,12 +226,6 @@ public class startAndStop_Activity extends AppCompatActivity {
                 changeTextSize();
 
             } else if (message.equals("startAndStop___")) {
-                achievements = mService.getAchievements();
-                TextView next = findViewById(R.id.next_achievevement_txt);
-                next.setText(achievements.get(0).getRequirement());
-
-                //https://stackoverflow.com/questions/6276501/how-to-put-an-image-in-an-alertdialog-android
-                //https://stackoverflow.com/questions/3263736/playing-a-video-in-videoview-in-android
 
             } else if (message.equals("Achievement unlocked!")) {
                 int number = intent.getIntExtra("number", 0);
@@ -237,6 +236,9 @@ public class startAndStop_Activity extends AppCompatActivity {
                 } else {
                     next.setText("Everything is unlocked");
                 }
+
+                //https://stackoverflow.com/questions/6276501/how-to-put-an-image-in-an-alertdialog-android
+                //https://stackoverflow.com/questions/3263736/playing-a-video-in-videoview-in-android
 
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(startAndStop_Activity.this);
                 LayoutInflater inflater = startAndStop_Activity.this.getLayoutInflater();
@@ -337,7 +339,6 @@ public class startAndStop_Activity extends AppCompatActivity {
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 mService.stopStepSensor();
             }
 

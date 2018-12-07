@@ -425,6 +425,7 @@ public class memeService extends Service implements SensorEventListener {
     public void startStepSensor()
     {
         sensorManager.registerListener(this, counterSensor, sensorManager.SENSOR_DELAY_FASTEST);
+        sensorIsRunning = true;
     }
 
 
@@ -444,6 +445,14 @@ public class memeService extends Service implements SensorEventListener {
         return "";
     }
 
+    public void stopSensorBecauseRotation()
+    {
+        sensorManager.unregisterListener(this);
+        sensorIsRunning = false;
+    }
+
+    public boolean sensorIsRunning = false;
+
     public void stopStepSensor()
     {
         if(steps != 0) {
@@ -454,7 +463,7 @@ public class memeService extends Service implements SensorEventListener {
             steps = 0;
         }
         sensorManager.unregisterListener(this);
-
+        sensorIsRunning = false;
     }
 
     public void onSensorChanged(SensorEvent event) {
