@@ -239,6 +239,19 @@ public class startAndStop_Activity extends AppCompatActivity {
                     next.setText("Everything is unlocked");
                 }
             }
+            //https://stackoverflow.com/questions/6276501/how-to-put-an-image-in-an-alertdialog-android
+            //https://stackoverflow.com/questions/3263736/playing-a-video-in-videoview-in-android
+            VideoView gifImageView = new VideoView(startAndStop_Activity.this);
+            Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.digitalfireplaceproject);
+            gifImageView.setVideoURI(uri);
+            AlertDialog.Builder share_dialog = new AlertDialog.Builder(startAndStop_Activity.this);
+            share_dialog.setMessage("Live Message Saved");
+            share_dialog.setPositiveButton("Done", null);
+            share_dialog.setView(gifImageView);
+            share_dialog.show();
+            gifImageView.start();
+
+
         }
 
     };
