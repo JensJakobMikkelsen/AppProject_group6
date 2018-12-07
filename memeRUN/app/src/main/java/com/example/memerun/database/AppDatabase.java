@@ -112,6 +112,15 @@ public abstract class AppDatabase extends RoomDatabase {
             final memeURL yours = new memeURL("https://i.imgur.com/zDKQfzn.jpg");
             final memeURL hotdogs = new memeURL("https://i.imgur.com/EuPLdJY.jpg");
             final memeURL bathroom = new memeURL("https://i.imgur.com/xLJfNDv.jpg");
+            final memeURL Modern = new memeURL("https://i.imgur.com/50ZYJZ1.png");
+            final memeURL ragecomic = new memeURL("https://i.kym-cdn.com/entries/icons/mobile/000/005/875/RageComics.jpg");
+            final memeURL notfunny = new memeURL("https://i.redd.it/t214o6phqgf01.png");
+            final memeURL bong = new memeURL("https://pics.me.me/le-empty-bag-o-weed-le-bong-shatter-the-greatest-3910848.png");
+            final memeURL sonnyday = new memeURL("http://weknowmemes.com/wp-content/uploads/2012/03/scumbag-sun.jpg");
+            final memeURL ghost = new memeURL("https://rg00018.files.wordpress.com/2012/09/rage-comic-i-hear-dead-people.png");
+            final memeURL road = new memeURL("https://doilooksick.files.wordpress.com/2017/02/h8631d747.png?w=775&h=685");
+            final memeURL dildo = new memeURL("https://i.ytimg.com/vi/c4XZc1fmGl8/maxresdefault.jpg");
+
             mDao.insert(yoda);
             mDao.insert(successkid);
             mDao.insert(burrito);
@@ -126,6 +135,14 @@ public abstract class AppDatabase extends RoomDatabase {
             mDao.insert(yours);
             mDao.insert(hotdogs);
             mDao.insert(bathroom);
+            mDao.insert(Modern);
+            mDao.insert(ragecomic);
+            mDao.insert(notfunny);
+            mDao.insert(bong);
+            mDao.insert(sonnyday);
+            mDao.insert(ghost);
+            mDao.insert(road);
+            mDao.insert(dildo);
 
             achievement achievement1 = new achievement("5 steps", 5);
             achievement achievement2 = new achievement("50 steps", 50);
