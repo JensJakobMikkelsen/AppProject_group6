@@ -182,28 +182,8 @@ public class collection_Activity extends AppCompatActivity {
 
         });
 
-   /*     save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //Save to external storage
-            }
-
-        });
-*/
     }
 
-    void setBitmapByNumber(int position, ImageView img)
-    {
-        List<bitmapCounter> tempBitmapList = mService.getBmList();
-        for(int i = 0; i < tempBitmapList.size(); ++i)
-        {
-            if(tempBitmapList.get(i).getNumberOfBitmap() == position)
-            {
-                img.setImageBitmap(tempBitmapList.get(i).getBm());
-            }
-        }
-    }
 
     @Override
     protected void onResume() {

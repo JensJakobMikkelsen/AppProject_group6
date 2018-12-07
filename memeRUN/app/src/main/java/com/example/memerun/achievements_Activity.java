@@ -129,7 +129,7 @@ public class achievements_Activity extends AppCompatActivity {
                 adapter.clear();
                 tempList = new ArrayList<>();
 
-                for(int i = 0; i < 5; ++i)
+                for(int i = 0; i < achievements_list.size(); ++i)
                 {
                     tempList.add(achievements_list.get(i));
                     tempList.get(i).setImageName("question");

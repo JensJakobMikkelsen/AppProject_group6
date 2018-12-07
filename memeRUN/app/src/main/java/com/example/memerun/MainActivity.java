@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     int ACHIEVEMENTSACTIVITY = 113;
     int COLLECTIONACTIVITY = 114;
 
+    boolean stop = false;
     boolean mBound = false;
 
     boolean visibility1 = false;
@@ -201,7 +202,10 @@ public class MainActivity extends AppCompatActivity {
 
                         if(!player.isPlaying())
                         {
-                            System.exit(0);
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            finish();
+                            startActivity(intent);
+                            stop = true;
                         }
 
                         if(visibility1) {
@@ -269,10 +273,11 @@ public class MainActivity extends AppCompatActivity {
 
                         }
 
-
                         visibility1 = !visibility1;
 
-                        handler.postDelayed(this, delay);
+                        if(!stop) {
+                            handler.postDelayed(this, delay);
+                        }
 
                     }
                 }, delay);
