@@ -101,22 +101,20 @@ public class memeService extends Service implements SensorEventListener {
     public memeService() {
     }
 
-    private final IBinder mBinder = new LocalBinder();
-
-    public class LocalBinder extends Binder {
+    private final IBinder binder = new stockUpdateServiceBinder();
+    public class stockUpdateServiceBinder extends Binder {
         public memeService getService() {
-            // Return this instance of LocalService so clients can call public methods
             return memeService.this;
         }
     }
+    @Override
+    public IBinder onBind(Intent intent) {
+        return binder;
+    }
+
 
     public List<recent> getRecentActivity() {
         return recentList;
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return mBinder;
     }
 
     public void checkAchievements(List<achievement> achievementList, int steps)

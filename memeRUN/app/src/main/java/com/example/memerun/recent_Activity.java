@@ -30,7 +30,6 @@ public class recent_Activity extends AppCompatActivity {
     recentAdapter adapter;
     ListView listView;
 
-    memeService mService;
     Intent bound;
     boolean mBound = false;
 
@@ -78,26 +77,28 @@ public class recent_Activity extends AppCompatActivity {
 
     }
 
+    private memeService mService;
+    private ServiceConnection mConnection;
 
-    private ServiceConnection mConnection = new ServiceConnection() {
 
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            memeService.LocalBinder binder = (memeService.LocalBinder) service;
-            mService = binder.getService();
-            mBound = true;
-        }
+    private void setupService() {
+        mConnection = new ServiceConnection() {
+            public void onServiceConnected(ComponentName className, IBinder service) {
+                // http://developer.android.com/reference/android/app/Service.html
+                mService = ((memeService.stockUpdateServiceBinder) service).getService();
+                //Refreshes UI when connected to service
+            }
 
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
+            public void onServiceDisconnected(ComponentName className) {
+
+                mService = null;
+            }
+        };
+    }
+
 
     ProgressBar prog;
     TextView progess_txt;
-
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -143,8 +144,11 @@ public class recent_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent_);
 
-        bound = new Intent(this, memeService.class);
-        bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
+        setupService();
+
+        Intent intent = new Intent(recent_Activity.this, memeService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        mBound = true;
 
         listView = (ListView) findViewById(R.id.cardview_save);
         adapter = new recentAdapter(this);
@@ -152,9 +156,6 @@ public class recent_Activity extends AppCompatActivity {
 
 
         sendInitMessage();
-
-
-
 
 
         Button back = findViewById(R.id.back_recent_btn);
@@ -185,11 +186,14 @@ public class recent_Activity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
-    protected void onStop()
+
+    @Override
+    protected void onPause()
     {
-        super.onStop();
+        super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
+
 
     @Override
     protected void onDestroy() {

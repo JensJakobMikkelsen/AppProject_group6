@@ -37,7 +37,6 @@ public class collection_Activity extends AppCompatActivity {
 
     int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
 
-    memeService mService;
     Intent bound;
     boolean mBound = false;
     Bitmap bmp;
@@ -89,21 +88,23 @@ public class collection_Activity extends AppCompatActivity {
 
 
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private memeService mService;
+    private ServiceConnection mConnection;
 
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            memeService.LocalBinder binder = (memeService.LocalBinder) service;
-            mService = binder.getService();
-            mBound = true;
-        }
+    private void setupService() {
+        mConnection = new ServiceConnection() {
+            public void onServiceConnected(ComponentName className, IBinder service) {
+                // http://developer.android.com/reference/android/app/Service.html
+                mService = ((memeService.stockUpdateServiceBinder) service).getService();
+                //Refreshes UI when connected to service
+            }
 
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
+            public void onServiceDisconnected(ComponentName className) {
+
+                mService = null;
+            }
+        };
+    }
 
     SwipeAdapter swipeAdapter;
     ViewPager viewPager;
@@ -155,20 +156,17 @@ public class collection_Activity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection_);
 
-        bound = new Intent(this, memeService.class);
-        bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
+        setupService();
+
+        Intent intent = new Intent(collection_Activity.this, memeService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        mBound = true;
 
         Button back = findViewById(R.id.back_btn_collection);
   //      Button save = findViewById(R.id.btn_save_collection);
@@ -207,47 +205,17 @@ public class collection_Activity extends AppCompatActivity {
         }
     }
 
-    // https://stackoverflow.com/questions/17674634/saving-and-reading-bitmaps-images-from-internal-memory-in-android
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
+    }
 
-    private void saveToExternalStorage(Bitmap bmp) {
-
-
-        // https://developer.android.com/training/permissions/requesting
-
-
-        /*
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted
-        }
-        */
-
-        if (ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Permission is not granted
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(collection_Activity.this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-            } else {
-                // No explanation needed; request the permission
-                ActivityCompat.requestPermissions(collection_Activity.this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
-            }
-        } else {
-
-            MediaStore.Images.Media.insertImage(getContentResolver(), bmp, "test" , "test");
-        }
-
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
     @Override

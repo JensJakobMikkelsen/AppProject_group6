@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -19,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,13 +36,15 @@ import com.example.memerun.classes.achievement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class startAndStop_Activity extends AppCompatActivity {
 
 
-    memeService mService;
-    Intent bound;
+    private memeService mService;
+    private ServiceConnection mConnection;
     boolean mBound = false;
+
     int STARTANDSTOPACTIVITY = 111;
     int RECENTACTIVITY = 112;
     int ACHIEVEMENTSACTIVITY = 113;
@@ -54,9 +58,10 @@ public class startAndStop_Activity extends AppCompatActivity {
     int textSize_stop = 0;
     final int textSize_small = 14;
 
+    int steps = 0;
+
     TextView TvSteps2;
     List<achievement> achievements = new ArrayList<>();
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
@@ -178,24 +183,23 @@ public class startAndStop_Activity extends AppCompatActivity {
             }
 
     }
+    private void setupService() {
+        mConnection = new ServiceConnection() {
+            public void onServiceConnected(ComponentName className, IBinder service) {
+                // http://developer.android.com/reference/android/app/Service.html
+                mService = ((memeService.stockUpdateServiceBinder) service).getService();
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+                TextView txt = findViewById(R.id.progress_text);
+                txt.setText(Double.toString(mService.getSteps()));
+                //Refreshes UI when connected to service
+            }
 
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            memeService.LocalBinder binder = (memeService.LocalBinder) service;
-            mService = binder.getService();
-            mBound = true;
-            mService.sendSensorUpdateMessage(0);
-        }
+            public void onServiceDisconnected(ComponentName className) {
 
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
-
+                mService = null;
+            }
+        };
+    }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -216,42 +220,60 @@ public class startAndStop_Activity extends AppCompatActivity {
                 TvSteps2.setText(steps_s);
                 changeTextSize();
 
-            }
-
-            else if(message.equals("startAndStop___"))
-            {
+            } else if (message.equals("startAndStop___")) {
                 achievements = mService.getAchievements();
                 TextView next = findViewById(R.id.next_achievevement_txt);
                 next.setText(achievements.get(0).getRequirement());
-            }
 
-            else if(message.equals("Achievement unlocked!"))
-            {
+                //https://stackoverflow.com/questions/6276501/how-to-put-an-image-in-an-alertdialog-android
+                //https://stackoverflow.com/questions/3263736/playing-a-video-in-videoview-in-android
+
+            } else if (message.equals("Achievement unlocked!")) {
                 int number = intent.getIntExtra("number", 0);
                 TextView next = findViewById(R.id.next_achievevement_txt);
 
-                if(number < achievements.size()-1) {
+                if (number < achievements.size() - 1) {
                     next.setText(achievements.get(number + 1).getRequirement());
-                }
-
-                else
-                {
+                } else {
                     next.setText("Everything is unlocked");
                 }
+
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(startAndStop_Activity.this);
+                LayoutInflater inflater = startAndStop_Activity.this.getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.video_alert, null);
+
+
+                dialogBuilder.setView(dialogView);
+                final VideoView videoView = dialogView.findViewById(R.id.videoView_alert);
+                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.achievementunlocked);
+                videoView.setVideoURI(uri);
+
+                videoView.start();
+                final AlertDialog alertDialog = dialogBuilder.create();
+                alertDialog.show();
+
+
+                final Handler handler = new Handler();
+                final int delay = 250; //milliseconds
+
+                handler.postDelayed(new Runnable() {
+                    public void run()
+                    {
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+
+                        if(!videoView.isPlaying())
+                        {
+                            alertDialog.dismiss();
+
+                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                        }
+                        handler.postDelayed(this, delay);
+
+                    }
+                }, delay);
+
+
             }
-            //https://stackoverflow.com/questions/6276501/how-to-put-an-image-in-an-alertdialog-android
-            //https://stackoverflow.com/questions/3263736/playing-a-video-in-videoview-in-android
-            VideoView gifImageView = new VideoView(startAndStop_Activity.this);
-            Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.digitalfireplaceproject);
-            gifImageView.setVideoURI(uri);
-            AlertDialog.Builder share_dialog = new AlertDialog.Builder(startAndStop_Activity.this);
-            share_dialog.setMessage("Live Message Saved");
-            share_dialog.setPositiveButton("Done", null);
-            share_dialog.setView(gifImageView);
-            share_dialog.show();
-            gifImageView.start();
-
-
         }
 
     };
@@ -262,7 +284,11 @@ public class startAndStop_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_and_stop_);
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
+        setupService();
+
+        Intent intent = new Intent(startAndStop_Activity.this, memeService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        mBound = true;
 
         sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE);
         troll_pressed = sharedPreferences.getBoolean("troll_pressed", false);
@@ -272,21 +298,18 @@ public class startAndStop_Activity extends AppCompatActivity {
             mShowVisible = true;
             this.invalidateOptionsMenu();
         }
+
         /*
         VideoView videoview = (VideoView) findViewById(R.id.videoView);
         Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.walk);
         videoview.setVideoURI(uri);
         videoview.start();
 */
-
-        bound = new Intent(this, memeService.class);
-        bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
-
         sendInitialization_recent();
 
-        Button back = findViewById(R.id.start_and_stop_back_btn);
-        Button start = findViewById(R.id.Start_and_stop_Start_btn);
-        ImageView sad = findViewById(R.id.cancel_startAndStop_btn);
+        Button back = findViewById(R.id.startandstop_back);
+        Button start = findViewById(R.id.startandstop_start);
+        Button stop = findViewById(R.id.startandstop_cancel);
 
 
         start.setOnClickListener(new View.OnClickListener() {
@@ -311,7 +334,7 @@ public class startAndStop_Activity extends AppCompatActivity {
 
         });
 
-        sad.setOnClickListener(new View.OnClickListener() {
+        stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -324,11 +347,24 @@ public class startAndStop_Activity extends AppCompatActivity {
     }
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-
+        // Unregister since the activity is about to be closed.
         unbindService(mConnection);
-
+        super.onDestroy();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
+    }
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+    }
+
 
     public void changeTextSize()
     {
@@ -378,8 +414,6 @@ public class startAndStop_Activity extends AppCompatActivity {
 
         textSize_stop = 0;
 
-
-
     }
 
     @Override
@@ -416,6 +450,5 @@ public class startAndStop_Activity extends AppCompatActivity {
         intent.putExtra("message", "init_startAndStop");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
-
 }
 

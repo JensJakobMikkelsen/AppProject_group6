@@ -47,7 +47,6 @@ public class achievements_Activity extends AppCompatActivity {
 
     achievementAdapter adapter;
     ListView listView;
-    memeService mService;
     Intent bound;
     boolean mBound = false;
 
@@ -98,23 +97,23 @@ public class achievements_Activity extends AppCompatActivity {
 
     }
 
+    private memeService mService;
+    private ServiceConnection mConnection;
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private void setupService() {
+        mConnection = new ServiceConnection() {
+            public void onServiceConnected(ComponentName className, IBinder service) {
+                // http://developer.android.com/reference/android/app/Service.html
+                mService = ((memeService.stockUpdateServiceBinder) service).getService();
+                //Refreshes UI when connected to service
+            }
 
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            memeService.LocalBinder binder = (memeService.LocalBinder) service;
-            mService = binder.getService();
-            mBound = true;
-        }
+            public void onServiceDisconnected(ComponentName className) {
 
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
-
+                mService = null;
+            }
+        };
+    }
     List<achievement> tempList;
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
@@ -228,8 +227,12 @@ public class achievements_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievements_);
 
-        bound = new Intent(this, memeService.class);
-        bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
+        setupService();
+
+        Intent intent = new Intent(achievements_Activity.this, memeService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        mBound = true;
+
 
         listView = (ListView) findViewById(R.id.Achievements_listView);
         adapter = new achievementAdapter(this);
@@ -341,6 +344,14 @@ public class achievements_Activity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
+    }
+
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
     private void sendInitMessage()

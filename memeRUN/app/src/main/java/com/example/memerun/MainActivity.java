@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
     int ACHIEVEMENTSACTIVITY = 113;
     int COLLECTIONACTIVITY = 114;
 
-    memeService mService;
-    Intent bound;
     boolean mBound = false;
 
     boolean visibility1 = false;
@@ -58,22 +56,22 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    private memeService mService;
+    private ServiceConnection mConnection;
 
-    private ServiceConnection mConnection = new ServiceConnection() {
+    private void setupStockService() {
+        mConnection = new ServiceConnection() {
+            public void onServiceConnected(ComponentName className, IBinder service) {
+                mService = ((memeService.stockUpdateServiceBinder) service).getService();
 
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            memeService.LocalBinder binder = (memeService.LocalBinder) service;
-            mService = binder.getService();
-            mBound = true;
-        }
+                //Refreshes UI when connected to service
+            }
 
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mBound = false;
-        }
-    };
+            public void onServiceDisconnected(ComponentName className) {
+                mService = null;
+            }
+        };
+    }
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -153,9 +151,8 @@ public class MainActivity extends AppCompatActivity {
         memesday.setText(timeStamp + ": " + quotes.get(i1));
 
 
-
-        bound = new Intent(this, memeService.class);
-        bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
+        Intent intent = new Intent(MainActivity.this, memeService.class);
+        startService(intent);
 
         player = MediaPlayer.create(this, R.raw.fuckyou);
 
@@ -327,6 +324,31 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
     }
 
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+
+        setupStockService();
+
+        Intent intent = new Intent(MainActivity.this, memeService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        mBound = true;
+    }
+
+    public void setupConnection()
+    {
+        if (!mBound && mService == null) {
+
+            setupStockService();
+
+            Intent intent = new Intent(MainActivity.this, memeService.class);
+            bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+            mBound = true;
+        }
+
+    }
+
     private void sendHideMessage(String placement)
     {
 
@@ -372,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
         {
             if(resultCode == RESULT_CANCELED)
             {
-
+                setupConnection();
             }
         }
 
@@ -380,7 +402,7 @@ public class MainActivity extends AppCompatActivity {
         {
             if(resultCode == RESULT_CANCELED)
             {
-
+                setupConnection();
             }
         }
 
@@ -388,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
         {
             if(resultCode == RESULT_CANCELED)
             {
-
+                setupConnection();
             }
         }
 
@@ -396,17 +418,28 @@ public class MainActivity extends AppCompatActivity {
         {
             if(resultCode == RESULT_CANCELED)
             {
-
+                setupConnection();
             }
         }
     }
 
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
+    }
 
     @Override
     protected void onDestroy() {
+        // Unregister since the activity is about to be closed.
+
+        if(mBound) {
+            unbindService(mConnection);
+            mBound = false;
+        }
         super.onDestroy();
-
-        unbindService(mConnection);
-
     }
+
+
 }
