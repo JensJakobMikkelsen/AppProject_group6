@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
@@ -83,36 +84,25 @@ public class MainActivity extends AppCompatActivity {
 
             if (message.equals("hide")) {
 
-                if(placement.equals("left"))
-                {
-                    ImageView troll = findViewById(R.id.troll_left);
-                    troll.setVisibility(View.INVISIBLE);
-                }
+                if(player.isPlaying()) {
+                    if (placement.equals("left")) {
+                        ImageView troll = findViewById(R.id.troll_left);
+                        troll.setVisibility(View.INVISIBLE);
+                    } else if (placement.equals("top")) {
+                        ImageView troll = findViewById(R.id.troll_top);
+                        troll.setVisibility(View.INVISIBLE);
+                    } else if (placement.equals("top_right")) {
+                        ImageView troll = findViewById(R.id.troll_top_right);
+                        troll.setVisibility(View.INVISIBLE);
+                    } else if (placement.equals("right")) {
+                        ImageView troll = findViewById(R.id.troll_right);
+                        troll.setVisibility(View.INVISIBLE);
 
-                else if (placement.equals("top"))
-                {
-                    ImageView troll = findViewById(R.id.troll_top);
-                    troll.setVisibility(View.INVISIBLE);
-                }
+                    } else if (placement.equals("bottom")) {
+                        ImageView troll = findViewById(R.id.troll_bottom);
+                        troll.setVisibility(View.INVISIBLE);
 
-                else if (placement.equals("top_right"))
-                {
-                    ImageView troll = findViewById(R.id.troll_top_right);
-                    troll.setVisibility(View.INVISIBLE);
-                }
-
-                else if (placement.equals("right"))
-                {
-                    ImageView troll = findViewById(R.id.troll_right);
-                    troll.setVisibility(View.INVISIBLE);
-
-                }
-
-                else if (placement.equals("bottom"))
-                {
-                    ImageView troll = findViewById(R.id.troll_bottom);
-                    troll.setVisibility(View.INVISIBLE);
-
+                    }
                 }
 
             }
@@ -121,39 +111,29 @@ public class MainActivity extends AppCompatActivity {
             {
                 Bitmap bmap = intent.getParcelableExtra("bmap");
 
+                if(player.isPlaying()) {
 
-                if(placement.equals("left"))
-                {
-                    ImageView troll = findViewById(R.id.troll_left);
-                    troll.setVisibility(View.VISIBLE);
-                }
-
-                else if (placement.equals("top"))
-                {
-                    ImageView troll = findViewById(R.id.troll_top);
-                    troll.setVisibility(View.VISIBLE);
-                }
-
-                else if (placement.equals("top_right"))
-                {
-                    ImageView troll = findViewById(R.id.troll_top_right);
-                    troll.setVisibility(View.VISIBLE);
-                }
-
-                else if (placement.equals("right"))
-                {
-                    ImageView troll = findViewById(R.id.troll_right);
-                    troll.setVisibility(View.VISIBLE);
-                }
-
-                else if (placement.equals("bottom"))
-                {
-                    ImageView troll = findViewById(R.id.troll_bottom);
-                    troll.setVisibility(View.VISIBLE);
+                    if (placement.equals("left")) {
+                        ImageView troll = findViewById(R.id.troll_left);
+                        troll.setVisibility(View.VISIBLE);
+                    } else if (placement.equals("top")) {
+                        ImageView troll = findViewById(R.id.troll_top);
+                        troll.setVisibility(View.VISIBLE);
+                    } else if (placement.equals("top_right")) {
+                        ImageView troll = findViewById(R.id.troll_top_right);
+                        troll.setVisibility(View.VISIBLE);
+                    } else if (placement.equals("right")) {
+                        ImageView troll = findViewById(R.id.troll_right);
+                        troll.setVisibility(View.VISIBLE);
+                    } else if (placement.equals("bottom")) {
+                        ImageView troll = findViewById(R.id.troll_bottom);
+                        troll.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }
     };
+    MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
         bound = new Intent(this, memeService.class);
         bindService(bound, mConnection, Context.BIND_AUTO_CREATE);
 
-        final MediaPlayer player = MediaPlayer.create(this, R.raw.fuckyou);
+        player = MediaPlayer.create(this, R.raw.fuckyou);
 
         Button start = findViewById(R.id.start_btn);
         Button recent = findViewById(R.id.Recent_activity_btn);
@@ -202,8 +182,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-
                 setContentView(R.layout.troll_layout);
 
                 troll_pressed = true;
@@ -222,9 +200,11 @@ public class MainActivity extends AppCompatActivity {
                     public void run(){
                         //do something
 
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+
                         if(!player.isPlaying())
                         {
-                            android.os.Process.killProcess(android.os.Process.myPid());
+                            System.exit(0);
                         }
 
                         if(visibility1) {
@@ -290,7 +270,6 @@ public class MainActivity extends AppCompatActivity {
 
                             }
 
-
                         }
 
 
@@ -301,6 +280,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }, delay);
 
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
             }
 

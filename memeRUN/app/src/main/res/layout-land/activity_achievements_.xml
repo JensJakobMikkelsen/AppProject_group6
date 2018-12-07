@@ -10,19 +10,13 @@
         android:id="@+id/cardView_back"
         android:layout_width="154dp"
         android:layout_height="109dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp"
         app:cardCornerRadius="3dp"
         app:cardElevation="16dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Achievements_listView"
-        app:layout_constraintVertical_bias="0.977">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <Button
             android:id="@+id/cardview_save"
@@ -38,12 +32,14 @@
 
     <ListView
         android:id="@+id/Achievements_listView"
-        android:layout_width="506dp"
-        android:layout_height="900dp"
+        android:layout_width="404dp"
+        android:layout_height="254dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="7dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="11dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cardView_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
