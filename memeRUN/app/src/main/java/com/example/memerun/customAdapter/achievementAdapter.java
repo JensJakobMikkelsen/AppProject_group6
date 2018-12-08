@@ -55,8 +55,6 @@ public class achievementAdapter extends ArrayAdapter<achievement> {
             achievements_image.setImageResource(id);
         }
 
-
-
         TextView requirement = convertView.findViewById(R.id.requirement_in_m_text);
 
 

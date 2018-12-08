@@ -10,10 +10,6 @@ public class bitmapCounter
     int numberOfBitmap;
     Bitmap bm;
 
-    public bitmapCounter()
-    {
-    }
-
     public int getNumberOfBitmap() {
         return numberOfBitmap;
     }

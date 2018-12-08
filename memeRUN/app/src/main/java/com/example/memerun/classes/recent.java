@@ -67,7 +67,10 @@ public class recent {
         return this.steps;
     }
 
-    //Fra stackOverflow
+
+
+
+    //https://stackoverflow.com/questions/18717111/to-get-date-and-time-from-timestamp-android
 
     public String getDateCurrentTimeZone(long timestamp) {
         try{

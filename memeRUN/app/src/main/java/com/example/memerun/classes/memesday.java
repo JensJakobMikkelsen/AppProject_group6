@@ -13,6 +13,8 @@ public class memesday {
 
     public memesday()
     {
+        //Citater fra internettet
+
         memesday.add(" learned the meme gods came with their own doomsday: Memearok, the twilight of the gods, " +
                 "the end of it all. The gods were going to battle the frost giants, and they were all going to die.");
         memesday.add("God created memekind in His image and likeness, remember? For some reason, you people always forget your divinity");
