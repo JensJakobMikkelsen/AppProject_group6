@@ -28,7 +28,7 @@
             android:layout_height="36dp"
             android:background="@color/colorAccent"
             android:shadowColor="@android:color/background_dark"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:verticalScrollbarPosition="left"
             android:visibility="visible" />
 

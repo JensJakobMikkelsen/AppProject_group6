@@ -13,4 +13,6 @@
     <string name="Date">Dato</string>
     <string name="map">Map</string>
     <string name="title_activity_maps">Map</string>
+    <string name="stop">"Stoppet "</string>
+    <string name="cancel">afslut</string>
 </resources>

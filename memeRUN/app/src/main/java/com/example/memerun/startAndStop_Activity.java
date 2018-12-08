@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -339,7 +340,12 @@ public class startAndStop_Activity extends AppCompatActivity {
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               // String  stop =  findViewById(R.string.stop);
+                String stop = getResources().getString(R.string.stop);
                 mService.stopStepSensor();
+                Toast.makeText(getApplicationContext(),stop ,
+                        Toast.LENGTH_LONG).show();
+
             }
 
 
