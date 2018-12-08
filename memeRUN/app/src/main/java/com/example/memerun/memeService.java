@@ -61,8 +61,8 @@ import java.util.TimeZone;
 public class memeService extends Service implements SensorEventListener {
 
     Context context_;
-
     int timeCount = 0;
+    int unlockedPosition = 0;
     SensorManager sensorManager;
     public Sensor counterSensor;
 
@@ -73,6 +73,10 @@ public class memeService extends Service implements SensorEventListener {
     public static final String myPreferences = "MyPrefs";
     double mode = 1;
     int progAmount = 0;
+
+    public int getUnlockedPosition() {
+        return unlockedPosition;
+    }
 
     public int getProgAmount() {
         return progAmount;
@@ -131,6 +135,7 @@ public class memeService extends Service implements SensorEventListener {
                     achievementList.get(i).setUnlocked(true);
                     send_achievement_unlocked(i);
                     appDb.daoAccess().update(achievementList.get(i));
+                    unlockedPosition = i;
                     unlocked = true;
 
                     progAmount++;

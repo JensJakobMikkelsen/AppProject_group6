@@ -198,10 +198,24 @@ public class startAndStop_Activity extends AppCompatActivity {
                 txt.setText(Double.toString(mService.getSteps()));
 
                 achievements = mService.getAchievements();
-                TextView next = findViewById(R.id.next_achievevement_txt);
-                next.setText(achievements.get(0).getRequirement());
 
-                //Refreshes UI when connected to service
+                int number = mService.getUnlockedPosition();
+                TextView next = findViewById(R.id.next_achievevement_txt);
+
+                if(number == 0)
+                {
+                    next.setText(achievements.get(0).getRequirement());
+                }
+
+                else if (number < achievements.size() - 1) {
+                    next.setText(achievements.get(number + 1).getRequirement());
+                }
+
+                else {
+                    next.setText("Everything is unlocked");
+                }
+
+
             }
 
             public void onServiceDisconnected(ComponentName className) {
