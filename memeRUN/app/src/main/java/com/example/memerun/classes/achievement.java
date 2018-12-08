@@ -55,9 +55,8 @@ public class achievement {
         return requirement;
     }
 
-    public achievement(String requirement, int steps)
+    public achievement(int steps)
     {
-        this.requirement = requirement;
         this.steps = steps;
     }
 
