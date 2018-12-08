@@ -112,7 +112,13 @@ public class recent_Activity extends AppCompatActivity {
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(recent_Activity.this);
                 // set title
-                alertDialogBuilder.setTitle("Set steps");
+                String Setsteps = getString(R.string.Setsteps);
+                String No = getString(R.string.No);
+                String Set = getString(R.string.Set);
+                String cancel = getString(R.string.cancel);
+                alertDialogBuilder.setTitle(Setsteps);
+
+                alertDialogBuilder.setTitle(Setsteps);
 
                 final EditText input = new EditText (this);
                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -124,9 +130,9 @@ public class recent_Activity extends AppCompatActivity {
 
                 // set dialog message
                 alertDialogBuilder
-                        .setMessage("NEJ")
+                        .setMessage(No)
                         .setCancelable(false)
-                        .setPositiveButton("Search", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(Set, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 mService.setSteps(Double.parseDouble(input.getText().toString()));
                                 Toast.makeText(getApplicationContext(), "fatass",
@@ -144,7 +150,7 @@ public class recent_Activity extends AppCompatActivity {
 
 
                         })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             }
