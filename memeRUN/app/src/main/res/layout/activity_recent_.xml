@@ -11,11 +11,10 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
 
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="92dp"
         android:src="@raw/anigif"
-        app:layout_constraintEnd_toStartOf="@+id/cardview_back_recent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardview_save" />
 
@@ -46,15 +45,13 @@
         android:id="@+id/cardview_back_recent"
         android:layout_width="154dp"
         android:layout_height="112dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="33dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="3dp"
         app:cardElevation="16dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardview_save">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <Button
             android:id="@+id/back_recent_btn"
@@ -72,10 +69,12 @@
     <ListView
         android:id="@+id/cardview_save"
         android:layout_width="372dp"
-        android:layout_height="310dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/cardview_back_recent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressbar_achievement" />
