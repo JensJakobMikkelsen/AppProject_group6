@@ -3,7 +3,7 @@
     <item
 
         android:id="@+id/difficuly"
-        android:title="difficulty">
+        android:title="Difficulty">
 
         <menu>
             <item

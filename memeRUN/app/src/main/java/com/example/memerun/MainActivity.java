@@ -3,6 +3,7 @@ package com.example.memerun;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -11,24 +12,36 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
+import android.widget.VideoView;
 
+import com.example.memerun.classes.achievement;
 import com.example.memerun.classes.bitmapCounter;
 import com.example.memerun.classes.memesday;
 import com.example.memerun.customAdapter.SwipeAdapter;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -55,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
     int min_ = 0;
     int max_ = 4;
 
+    List<achievement> achievements = new ArrayList<>();
+    public boolean execute = true;
 
 
     private memeService mService;
@@ -65,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
             public void onServiceConnected(ComponentName className, IBinder service) {
                 mService = ((memeService.stockUpdateServiceBinder) service).getService();
 
+                achievements = mService.getAchievements();
+
                 //Refreshes UI when connected to service
             }
 
@@ -72,7 +89,128 @@ public class MainActivity extends AppCompatActivity {
                 mService = null;
             }
         };
+
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.startandstop, menu);
+
+        return true;
+    }
+
+    boolean mShowVisible =false;
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        menu.findItem(R.id.cheats).setVisible(mShowVisible);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+
+        MenuItem cheat = findViewById(R.id.cheats);
+
+        switch(item.getItemId())
+        {
+            case R.id.collection:
+
+                Intent collectionIntent = new Intent(MainActivity.this, collection_Activity.class);
+                startActivityForResult(collectionIntent, COLLECTIONACTIVITY);
+                return true;
+
+            case R.id.recent_activity:
+
+                Intent recentIntent = new Intent(MainActivity.this, recent_Activity.class);
+                startActivityForResult(recentIntent, STARTANDSTOPACTIVITY);
+                return true;
+
+            case R.id.achievement:
+
+                Intent achievementIntent = new Intent(MainActivity.this, achievements_Activity.class);
+                startActivityForResult(achievementIntent, ACHIEVEMENTSACTIVITY);
+                return true;
+
+            case R.id.easy:
+
+                mService.setMode(2);
+
+                return true;
+
+            case R.id.medium:
+
+                mService.setMode(1);
+
+                return true;
+
+            case R.id.hard:
+
+                mService.setMode(0.5);
+
+                return true;
+
+            case R.id.Set:
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                // set title
+                alertDialogBuilder.setTitle("Set steps");
+
+                final EditText input = new EditText (this);
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+                final TextView input_ = new EditText (this);
+
+                alertDialogBuilder.setView(input);
+
+
+                // set dialog message
+                alertDialogBuilder
+                        .setMessage("NEJ")
+                        .setCancelable(false)
+                        .setPositiveButton("Search", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                mService.setSteps(Double.parseDouble(input.getText().toString()));
+                                Toast.makeText(getApplicationContext(), "fatass",
+                                        Toast.LENGTH_LONG).show();
+                                mService.sendSensorUpdateMessage((int)mService.getSteps());
+                                mService.checkAchievements(mService.getAchievements(), (int)mService.getSteps());
+
+                                if(mService.getSteps() > 10000)
+                                {
+                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=d0aIqx1McVI"));
+                                    startActivity(browserIntent);
+                                }
+
+                            }
+
+
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -130,6 +268,58 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            else if (message.equals("Achievement unlocked!")) {
+
+                if(execute) {
+
+                    execute = false;
+
+                    //https://stackoverflow.com/questions/6276501/how-to-put-an-image-in-an-alertdialog-android
+                    //https://stackoverflow.com/questions/3263736/playing-a-video-in-videoview-in-android
+
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                    LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+                    View dialogView = inflater.inflate(R.layout.video_alert, null);
+
+
+                    dialogBuilder.setView(dialogView);
+                    final VideoView videoView = dialogView.findViewById(R.id.videoView_alert);
+                    Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.achievementunlocked);
+                    videoView.setVideoURI(uri);
+
+                    videoView.start();
+                    final AlertDialog alertDialog = dialogBuilder.create();
+                    alertDialog.show();
+
+                    final Handler handler = new Handler();
+                    final int delay = 250; //milliseconds
+
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+
+                            if (!videoView.isPlaying()) {
+                                alertDialog.dismiss();
+                                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                                stop = true;
+                                execute = true;
+                            }
+                            handler.postDelayed(this, delay);
+
+
+                        }
+                    }, delay);
+
+
+                }
+
+            }
+
+            stop = false;
+
+
+
         }
     };
     MediaPlayer player;
@@ -150,6 +340,15 @@ public class MainActivity extends AppCompatActivity {
         int i1 = r.nextInt(max - min + 1) + min;
         TextView memesday = findViewById(R.id.diary_txt);
         memesday.setText(timeStamp + ": " + quotes.get(i1));
+
+        sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE);
+        troll_pressed = sharedPreferences.getBoolean("troll_pressed", false);
+
+        if(troll_pressed)
+        {
+            mShowVisible = true;
+            this.invalidateOptionsMenu();
+        }
 
 
         Intent intent = new Intent(MainActivity.this, memeService.class);

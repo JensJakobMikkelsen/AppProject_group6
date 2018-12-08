@@ -186,8 +186,8 @@ public class startAndStop_Activity extends AppCompatActivity {
                     default:
                         return super.onOptionsItemSelected(item);
             }
-
     }
+
     private void setupService() {
         mConnection = new ServiceConnection() {
             public void onServiceConnected(ComponentName className, IBinder service) {
