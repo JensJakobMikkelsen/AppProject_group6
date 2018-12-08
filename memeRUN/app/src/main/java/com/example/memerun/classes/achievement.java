@@ -27,6 +27,10 @@ public class achievement {
     @Ignore
     public Bitmap bm = null;
 
+    public void setSteps(int steps) {
+        this.steps = steps;
+    }
+
     public Bitmap getBm() {
         return bm;
     }

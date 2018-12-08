@@ -63,8 +63,10 @@ public class memeService extends Service implements SensorEventListener {
     Context context_;
     int timeCount = 0;
     int unlockedPosition = 0;
+    int final_unlocked_position = 0;
     SensorManager sensorManager;
     public Sensor counterSensor;
+    achievement tempAchievementUnlocked = new achievement();
 
     private WeakReference<Context> contextRef;
     AppDatabase appDb;
@@ -121,10 +123,10 @@ public class memeService extends Service implements SensorEventListener {
         return recentList;
     }
 
+    boolean unlocked = false;
+
     public void checkAchievements(List<achievement> achievementList, int steps)
     {
-
-        boolean unlocked = false;
 
         for(int i = 0; i < achievementList.size(); ++i)
         {
@@ -163,6 +165,7 @@ public class memeService extends Service implements SensorEventListener {
             NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
             nm.notify(1, b.build());
         }
+
 
 
     }
@@ -426,37 +429,21 @@ public class memeService extends Service implements SensorEventListener {
         sensorIsRunning = true;
     }
 
-
-
-    public String getDateCurrentTimeZone(long timestamp) {
-        try{
-
-            Calendar calendar = Calendar.getInstance();
-            TimeZone tz = TimeZone.getTimeZone("Denmark");
-            calendar.setTimeInMillis(timestamp * 1000);
-            calendar.add(Calendar.MILLISECOND, tz.getOffset(calendar.getTimeInMillis()));
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date currentTimeZone = (Date) calendar.getTime();
-            return sdf.format(currentTimeZone);
-        }catch (Exception e) {
-        }
-        return "";
-    }
-
-    public void stopSensorBecauseRotation()
-    {
-        sensorManager.unregisterListener(this);
-        sensorIsRunning = false;
-    }
-
     public boolean sensorIsRunning = false;
 
     public void stopStepSensor()
     {
         if(steps != 0) {
             recent recent_ = new recent(steps);
+
+            if(unlocked) {
+                recent_.setLastPosition(unlockedPosition);
+                recent_.setTempAchievement(achievementList.get(unlockedPosition));
+                unlocked = false;
+            }
             recentList.add(recent_);
             appDb.daoAccess().insert(recent_);
+
 
             steps = 0;
         }

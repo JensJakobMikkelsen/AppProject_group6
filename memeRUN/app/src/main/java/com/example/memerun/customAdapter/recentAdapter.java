@@ -36,7 +36,7 @@ public class recentAdapter extends ArrayAdapter<recent> {
         // Lookup view for data population
         TextView date = convertView.findViewById(R.id.date);
         TextView metres = convertView.findViewById(R.id.metres_run);
-        TextView rating = convertView.findViewById(R.id.rating_txt);
+        TextView achievement_unlocked = convertView.findViewById(R.id.achievements_unlocked_list_txt);
 
         // Populate the data into the template view using the data object
         date.setText(user.getDate());
@@ -55,14 +55,9 @@ public class recentAdapter extends ArrayAdapter<recent> {
 
         metres.setText(metres_s);
 
-        if(metres_d < 10)
+        if(!(user.getTempAchievement().getRequirement().isEmpty()))
         {
-            rating.setText("Fat");
-        }
-
-        if(metres_d > 10 && metres_d < 20 )
-        {
-            rating.setText("Decent");
+            achievement_unlocked.setText(user.getTempAchievement().getRequirement());
         }
 
         // Return the completed view to render on screen

@@ -2,6 +2,7 @@ package com.example.memerun.classes;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.text.SimpleDateFormat;
@@ -24,6 +25,16 @@ public class recent {
     @ColumnInfo(name = "rating")
     private String rating;
 
+    int lastPosition;
+
+    public int getLastPosition() {
+        return lastPosition;
+    }
+
+    public void setLastPosition(int lastPosition) {
+        this.lastPosition = lastPosition;
+    }
+
     public String getRating() {
         return rating;
     }
@@ -43,6 +54,18 @@ public class recent {
         date = getDateCurrentTimeZone(tsLong);
         steps = steps_;
     }
+
+    @Ignore
+    public achievement tempAchievement = new achievement();
+
+    public achievement getTempAchievement() {
+        return tempAchievement;
+    }
+
+    public void setTempAchievement(achievement tempAchievement) {
+        this.tempAchievement = tempAchievement;
+    }
+
 
     public int getId() {
         return id;
