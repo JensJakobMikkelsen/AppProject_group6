@@ -55,13 +55,10 @@ public class achievement {
         return requirement;
     }
 
-    public achievement(int steps)
+    public achievement(String requirement, int steps)
     {
-        this.steps = steps;
-    }
-
-    public void setRequirement(String requirement) {
         this.requirement = requirement;
+        this.steps = steps;
     }
 
     public String getImageName() {

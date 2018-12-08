@@ -207,16 +207,8 @@ public class achievements_Activity extends AppCompatActivity {
 
                 for(int i = 0; i < achievements_list.size(); ++i)
                 {
-                    String mess = getResources().getString(R.string.Steps);
-
                     tempList.add(achievements_list.get(i));
                     tempList.get(i).setImageName("question");
-
-                    int s = tempList.get(i).getSteps();
-                    String s_ = Integer.toString(s);
-
-                    tempList.get(i).setRequirement(s_ + " " + mess);
-
                     adapter.add(tempList.get(i));
                 }
 
