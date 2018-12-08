@@ -8,40 +8,51 @@
     tools:context=".MainActivity">
 
 
-        <ImageView
-            android:id="@+id/trollface3"
-            android:layout_width="58dp"
-            android:layout_height="57dp"
-            android:clickable="true"
-            android:rotation="180"
-            app:srcCompat="@mipmap/trollface_foregnd"
-            tools:layout_editor_absoluteX="90dp"
-            tools:layout_editor_absoluteY="268dp" />
+    <ImageView
+        android:id="@+id/trollface3"
+        android:layout_width="58dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:rotation="180"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:srcCompat="@mipmap/trollface_foregnd" />
 
-        <ImageView
-            android:id="@+id/trollface4"
-            android:layout_width="58dp"
-            android:layout_height="57dp"
-            android:layout_marginStart="32dp"
-            android:clickable="true"
-            android:rotation="295"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@mipmap/trollface_foregnd"
-            tools:layout_editor_absoluteY="135dp" />
+    <ImageView
+        android:id="@+id/trollface4"
+        android:layout_width="58dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="9dp"
+        android:clickable="true"
+        android:rotation="295"
+        app:layout_constraintBottom_toTopOf="@+id/cardView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.917"
+        app:srcCompat="@mipmap/trollface_foregnd" />
 
-        <ImageView
-            android:id="@+id/trollface2"
-            android:layout_width="58dp"
-            android:layout_height="57dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="28dp"
-            android:clickable="true"
-            android:rotation="90"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.944"
-            app:layout_constraintStart_toEndOf="@+id/cardView_start"
-            app:srcCompat="@mipmap/trollface_foregnd"
-            tools:layout_editor_absoluteY="325dp" />
+    <ImageView
+        android:id="@+id/trollface2"
+        android:layout_width="58dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
+        android:rotation="90"
+        app:layout_constraintBottom_toTopOf="@+id/trollface"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.944"
+        app:layout_constraintStart_toEndOf="@+id/cardView_start"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:srcCompat="@mipmap/trollface_foregnd" />
 
         <android.support.v7.widget.CardView
             android:id="@+id/cardView4"
@@ -118,30 +129,30 @@
 
         </android.support.v7.widget.CardView>
 
-        <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/cardView"
-            android:layout_width="290dp"
-            android:layout_height="94dp"
-            android:layout_marginStart="38dp"
-            android:layout_marginEnd="38dp"
-            app:cardCornerRadius="3dp"
-            app:cardElevation="16dp"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/diary_txt">
+    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cardView"
+        android:layout_width="291dp"
+        android:layout_height="94dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginEnd="38dp"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="16dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/diary_txt">
 
-                <Button
-                    android:id="@+id/View_collection_btn"
-                    android:layout_width="261dp"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorAccent"
-                    android:shadowColor="@android:color/background_dark"
-                    android:text="@string/ViewCollection"
-                    android:verticalScrollbarPosition="left"
-                    android:visibility="visible" />
+        <Button
+            android:id="@+id/View_collection_btn"
+            android:layout_width="261dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:shadowColor="@android:color/background_dark"
+            android:text="@string/ViewCollection"
+            android:verticalScrollbarPosition="left"
+            android:visibility="visible" />
 
-        </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
 
         <ImageView
             android:id="@+id/trollface"
