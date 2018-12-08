@@ -422,7 +422,8 @@ public class achievements_Activity extends AppCompatActivity {
                                         }
 
                                         else {
-                                            Toast.makeText(getApplicationContext(), "Meme not unlocked yet",
+                                            String MemeUnlocked = getResources().getString(R.string.MemeUnlocked);
+                                            Toast.makeText(getApplicationContext(), MemeUnlocked,
                                                     Toast.LENGTH_LONG).show();
                                         }
                                         break;
