@@ -29,7 +29,7 @@
 
         <menu>
             <item
-                android:id="@+id/startandstop"
+                android:id="@+id/startAndStop"
                 android:title="Start" />
             <item
                 android:id="@+id/recent_activity"
@@ -44,21 +44,17 @@
     </item>
 
     <item
-        android:id = "@+id/Cheats"
-        android:title = "Cheats">
+        android:id = "@+id/cheats"
+        android:title = "Cheat">
 
         <menu>
             <item
-                android:id="@+id/cheats1"
-                android:title="menuitem6" />
-            <item
-                android:id="@+id/cheats2"
-                android:title="menuitem7" />
+                android:id="@+id/Set"
+                android:title="Set steps" />
+
         </menu>
 
 
     </item>
-
-
 
 </menu>

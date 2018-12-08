@@ -84,7 +84,7 @@ public class recent_Activity extends AppCompatActivity {
                 startActivityForResult(achievementIntent, RECENTACTIVITY);
                 return true;
 
-            case R.id.startandstop:
+            case R.id.startAndStop:
 
                 Intent startAndStopIntent = new Intent(recent_Activity.this, startAndStop_Activity.class);
                 startActivityForResult(startAndStopIntent, STARTANDSTOPACTIVITY);

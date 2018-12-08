@@ -91,7 +91,6 @@ public class startAndStop_Activity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item)
     {
 
-        MenuItem cheat = findViewById(R.id.cheats);
 
         switch(item.getItemId())
         {
