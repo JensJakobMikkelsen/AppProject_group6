@@ -168,6 +168,7 @@ public abstract class AppDatabase extends RoomDatabase {
             achievement achievement20 = new achievement("9450 steps", 9450);
             achievement achievement21 = new achievement("10500 steps", 10500);
             achievement achievement22 = new achievement("11600 steps", 11600);
+            achievement achievement23 = new achievement("12750 steps", 12750);
 
 
             mDao.insert(achievement1);
@@ -192,6 +193,7 @@ public abstract class AppDatabase extends RoomDatabase {
             mDao.insert(achievement20);
             mDao.insert(achievement21);
             mDao.insert(achievement22);
+            mDao.insert(achievement23);
 
             Log.d("sender", "Broadcasting message");
             Intent intent = new Intent("memeService");
