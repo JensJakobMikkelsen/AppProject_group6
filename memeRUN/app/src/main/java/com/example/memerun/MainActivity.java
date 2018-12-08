@@ -181,20 +181,23 @@ public class MainActivity extends AppCompatActivity {
                         .setCancelable(false)
                         .setPositiveButton(Set, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                mService.setSteps(Double.parseDouble(input.getText().toString()));
-                                Toast.makeText(getApplicationContext(), "fatass",
-                                        Toast.LENGTH_LONG).show();
-                                mService.sendSensorUpdateMessage((int)mService.getSteps());
-                                mService.checkAchievements(mService.getAchievements(), (int)mService.getSteps());
 
-                                if(mService.getSteps() > 10000)
+                                if (!(input.getText().toString().isEmpty()))
                                 {
-                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=d0aIqx1McVI"));
-                                    startActivity(browserIntent);
+                                    mService.setSteps(Double.parseDouble(input.getText().toString()));
+                                    Toast.makeText(getApplicationContext(), "fatass",
+                                            Toast.LENGTH_LONG).show();
+                                    mService.sendSensorUpdateMessage((int) mService.getSteps());
+                                    mService.checkAchievements(mService.getAchievements(), (int) mService.getSteps());
+
+                                    if (mService.getSteps() > 10000) {
+                                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=d0aIqx1McVI"));
+                                        startActivity(browserIntent);
+                                    }
+
                                 }
 
                             }
-
 
                         })
                         .setNegativeButton(cancel, new DialogInterface.OnClickListener() {
