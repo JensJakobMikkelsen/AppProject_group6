@@ -43,16 +43,15 @@ public class achievementAdapter extends ArrayAdapter<achievement> {
 
         // Lookup view for data population
 
-        int id = context_.getResources().getIdentifier("com.example.memerun:mipmap/" + user.getImageName(), null, null);
+          int id = context_.getResources().getIdentifier("com.example.memerun:mipmap/" + user.getImageName(), null, null);
         ImageView achievements_image = (ImageView) convertView.findViewById(R.id.Achievements_image);
-
-        if(user.getBm() != null) {
+       if(user.getBm() != null) {
             achievements_image.setImageBitmap(user.getBm());
         }
 
         else
         {
-            achievements_image.setImageResource(id);
+              achievements_image.setImageResource(id);
         }
 
 
