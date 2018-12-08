@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".recent_Activity">
 
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="92dp"
+        android:src="@raw/anigif"
+        app:layout_constraintEnd_toStartOf="@+id/cardview_back_recent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardview_save" />
+
     <TextView
         android:id="@+id/progress_bar_txt"
         android:layout_width="267dp"
@@ -32,16 +45,15 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardview_back_recent"
         android:layout_width="154dp"
-        android:layout_height="109dp"
-        android:layout_marginStart="118dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="112dp"
+        android:layout_height="112dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginBottom="16dp"
         app:cardCornerRadius="3dp"
         app:cardElevation="16dp"
         app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardview_save">
 
         <Button
@@ -60,7 +72,7 @@
     <ListView
         android:id="@+id/cardview_save"
         android:layout_width="372dp"
-        android:layout_height="267dp"
+        android:layout_height="310dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
