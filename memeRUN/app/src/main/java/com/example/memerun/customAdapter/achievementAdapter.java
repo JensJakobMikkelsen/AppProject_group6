@@ -58,6 +58,8 @@ public class achievementAdapter extends ArrayAdapter<achievement> {
 
 
         TextView requirement = convertView.findViewById(R.id.requirement_in_m_text);
+
+
         requirement.setText(user.getRequirement());
 
 /*

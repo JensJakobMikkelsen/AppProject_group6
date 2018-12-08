@@ -207,6 +207,11 @@ public class achievements_Activity extends AppCompatActivity {
 
                 for(int i = 0; i < achievements_list.size(); ++i)
                 {
+                    String s = achievements_list.get(i).getRequirement();
+                    s = s + "INDSÆT HER";
+                    achievements_list.get(i).setRequirement(s);
+                    
+
                     tempList.add(achievements_list.get(i));
                     tempList.get(i).setImageName("question");
                     adapter.add(tempList.get(i));

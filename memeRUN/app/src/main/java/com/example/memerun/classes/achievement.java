@@ -61,6 +61,10 @@ public class achievement {
         this.steps = steps;
     }
 
+    public void setRequirement(String requirement) {
+        this.requirement = requirement;
+    }
+
     public String getImageName() {
         return imageName;
     }
