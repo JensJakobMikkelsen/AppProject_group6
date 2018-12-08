@@ -362,17 +362,10 @@ public class memeService extends Service implements SensorEventListener {
 
     }
 
-    public int retCount()
-    {
-        return timeCount;
-    }
-
-
     @Override
     public void onDestroy()
     {
         super.onDestroy();
-        Toast.makeText(this, "Service destroyed!", Toast.LENGTH_LONG).show();
 
     }
 

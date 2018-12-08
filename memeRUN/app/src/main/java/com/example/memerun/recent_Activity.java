@@ -172,7 +172,25 @@ public class recent_Activity extends AppCompatActivity {
             public void onServiceConnected(ComponentName className, IBinder service) {
                 // http://developer.android.com/reference/android/app/Service.html
                 mService = ((memeService.stockUpdateServiceBinder) service).getService();
-                //Refreshes UI when connected to service
+                adapter.clear();
+                List<recent> recentList = mService.getRecentActivity();
+
+                if(recentList.size() != 0)
+                {
+                    for (int i = 0; i < recentList.size(); ++i) {
+                        adapter.add(recentList.get(i));
+                    }
+                }
+
+                prog = findViewById(R.id.progressbar_achievement);
+                prog.setMax(mService.getAchievements().size());
+                prog.setProgress(mService.getProgAmount());
+
+                String progAmount_s = Integer.toString(mService.getProgAmount());
+
+                progess_txt = findViewById(R.id.progress_bar_txt);
+                progess_txt.setText("Achievements unlocked: " + progAmount_s + "/" + Integer.toString(prog.getMax()));
+
             }
 
             public void onServiceDisconnected(ComponentName className) {
@@ -192,24 +210,6 @@ public class recent_Activity extends AppCompatActivity {
             String message = intent.getStringExtra("message");
             if (message.equals("recent___"))
             {
-                adapter.clear();
-                List<recent> recentList = mService.getRecentActivity();
-
-                if(recentList.size() != 0)
-                {
-                    for (int i = 0; i < recentList.size(); ++i) {
-                        adapter.add(recentList.get(i));
-                    }
-                }
-
-                prog = findViewById(R.id.progressbar_achievement);
-                prog.setMax(mService.getAchievements().size());
-                prog.setProgress(mService.getProgAmount());
-
-                String progAmount_s = Integer.toString(mService.getProgAmount());
-
-                progess_txt = findViewById(R.id.progress_bar_txt);
-                progess_txt.setText("Achievements unlocked: " + progAmount_s + "/" + Integer.toString(prog.getMax()));
 
             }
 

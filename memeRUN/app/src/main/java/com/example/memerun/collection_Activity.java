@@ -184,28 +184,6 @@ public class collection_Activity extends AppCompatActivity {
             public void onServiceConnected(ComponentName className, IBinder service) {
                 // http://developer.android.com/reference/android/app/Service.html
                 mService = ((memeService.stockUpdateServiceBinder) service).getService();
-                //Refreshes UI when connected to service
-            }
-
-            public void onServiceDisconnected(ComponentName className) {
-
-                mService = null;
-            }
-        };
-    }
-
-    SwipeAdapter swipeAdapter;
-    ViewPager viewPager;
-
-
-    int swipePosition;
-
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            String message = intent.getStringExtra("message");
-            if (message == "Initialization_done") {
 
                 List<bitmapCounter> tempBitmapList = mService.getBmList();
 
@@ -225,12 +203,31 @@ public class collection_Activity extends AppCompatActivity {
                     @Override
                     public void onPageSelected(int position) {
 
-                        swipePosition = position;
                     }
                     @Override
                     public void onPageScrollStateChanged(int state) {
                     }
                 });
+
+            }
+
+            public void onServiceDisconnected(ComponentName className) {
+
+                mService = null;
+            }
+        };
+    }
+
+    SwipeAdapter swipeAdapter;
+    ViewPager viewPager;
+
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("message");
+            if (message == "Initialization_done") {
 
             }
 
@@ -274,7 +271,6 @@ public class collection_Activity extends AppCompatActivity {
 
                         }
                     }, delay);
-
 
                 }
 

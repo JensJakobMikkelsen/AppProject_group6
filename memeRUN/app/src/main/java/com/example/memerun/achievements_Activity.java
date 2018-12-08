@@ -193,27 +193,10 @@ public class achievements_Activity extends AppCompatActivity {
             public void onServiceConnected(ComponentName className, IBinder service) {
                 // http://developer.android.com/reference/android/app/Service.html
                 mService = ((memeService.stockUpdateServiceBinder) service).getService();
-                //Refreshes UI when connected to service
-            }
 
-            public void onServiceDisconnected(ComponentName className) {
+                achievements_list = mService.getAchievements();
 
-                mService = null;
-            }
-        };
-    }
-    List<achievement> tempList;
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent)
-        {
-            // Get extra data included in the Intent
-            String message = intent.getStringExtra("message");
-            achievements_list = mService.getAchievements();
-
-            if(message == "achievements___")
-            {
                 adapter.clear();
                 tempList = new ArrayList<>();
 
@@ -247,6 +230,28 @@ public class achievements_Activity extends AppCompatActivity {
                         adapter.add(tempList.get(i));
                     }
                 }
+
+
+
+            }
+
+            public void onServiceDisconnected(ComponentName className) {
+
+                mService = null;
+            }
+        };
+    }
+    List<achievement> tempList;
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent)
+        {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("message");
+
+            if(message == "achievements___")
+            {
             }
 
             else if (message.equals("Achievement unlocked!")) {
@@ -512,7 +517,6 @@ public class achievements_Activity extends AppCompatActivity {
     public void onDestroy()
     {
         super.onDestroy();
-        Toast.makeText(this, "Service destroyed!", Toast.LENGTH_LONG).show();
         unbindService(mConnection);
 
     }
