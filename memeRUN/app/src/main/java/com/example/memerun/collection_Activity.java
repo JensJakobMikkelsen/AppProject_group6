@@ -195,7 +195,7 @@ public class collection_Activity extends AppCompatActivity {
                 viewPager = (ViewPager)findViewById(R.id.viewPager);
                 viewPager.setOffscreenPageLimit(1);
 
-                Bitmap not_unlocked = BitmapFactory.decodeResource(getResources(), R.mipmap.not_unlocked);
+                Bitmap not_unlocked = BitmapFactory.decodeResource(getResources(), R.raw.bitch);
                 swipeAdapter = new SwipeAdapter(getSupportFragmentManager(), tempBitmapList, mService.getAchievements(), not_unlocked);
 
                 viewPager.setAdapter(swipeAdapter);
