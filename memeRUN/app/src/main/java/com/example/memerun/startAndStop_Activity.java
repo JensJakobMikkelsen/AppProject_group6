@@ -45,6 +45,9 @@ public class startAndStop_Activity extends AppCompatActivity {
     private memeService mService;
     private ServiceConnection mConnection;
     boolean mBound = false;
+    int only_once = 0;
+
+
 
     int STARTANDSTOPACTIVITY = 111;
     int RECENTACTIVITY = 112;
@@ -59,7 +62,8 @@ public class startAndStop_Activity extends AppCompatActivity {
     int textSize_stop = 0;
     final int textSize_small = 14;
 
-    int steps = 0;
+    public boolean execute = true;
+    public boolean stop = false;
 
     TextView TvSteps2;
     List<achievement> achievements = new ArrayList<>();
@@ -238,46 +242,55 @@ public class startAndStop_Activity extends AppCompatActivity {
                     next.setText("Everything is unlocked");
                 }
 
-                //https://stackoverflow.com/questions/6276501/how-to-put-an-image-in-an-alertdialog-android
-                //https://stackoverflow.com/questions/3263736/playing-a-video-in-videoview-in-android
+                if(execute) {
 
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(startAndStop_Activity.this);
-                LayoutInflater inflater = startAndStop_Activity.this.getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.video_alert, null);
+                    execute = false;
 
+                    //https://stackoverflow.com/questions/6276501/how-to-put-an-image-in-an-alertdialog-android
+                    //https://stackoverflow.com/questions/3263736/playing-a-video-in-videoview-in-android
 
-                dialogBuilder.setView(dialogView);
-                final VideoView videoView = dialogView.findViewById(R.id.videoView_alert);
-                Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.achievementunlocked);
-                videoView.setVideoURI(uri);
-
-                videoView.start();
-                final AlertDialog alertDialog = dialogBuilder.create();
-                alertDialog.show();
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(startAndStop_Activity.this);
+                    LayoutInflater inflater = startAndStop_Activity.this.getLayoutInflater();
+                    View dialogView = inflater.inflate(R.layout.video_alert, null);
 
 
-                final Handler handler = new Handler();
-                final int delay = 250; //milliseconds
+                    dialogBuilder.setView(dialogView);
+                    final VideoView videoView = dialogView.findViewById(R.id.videoView_alert);
+                    Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.achievementunlocked);
+                    videoView.setVideoURI(uri);
 
-                handler.postDelayed(new Runnable() {
-                    public void run()
-                    {
-                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+                    videoView.start();
+                    final AlertDialog alertDialog = dialogBuilder.create();
+                    alertDialog.show();
 
-                        if(!videoView.isPlaying())
-                        {
-                            alertDialog.dismiss();
 
-                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                    final Handler handler = new Handler();
+                    final int delay = 250; //milliseconds
+
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
+
+                            if (!videoView.isPlaying()) {
+                                alertDialog.dismiss();
+                                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                                stop = true;
+                                execute = true;
+                            }
+                                handler.postDelayed(this, delay);
+
+
                         }
-                        handler.postDelayed(this, delay);
+                    }, delay);
 
-                    }
-                }, delay);
 
+                }
 
             }
+
+            stop = false;
         }
+
 
     };
 
@@ -302,12 +315,6 @@ public class startAndStop_Activity extends AppCompatActivity {
             this.invalidateOptionsMenu();
         }
 
-        /*
-        VideoView videoview = (VideoView) findViewById(R.id.videoView);
-        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.walk);
-        videoview.setVideoURI(uri);
-        videoview.start();
-*/
         sendInitialization_recent();
 
         Button back = findViewById(R.id.startandstop_back);
@@ -354,7 +361,6 @@ public class startAndStop_Activity extends AppCompatActivity {
     }
     @Override
     protected void onDestroy() {
-        // Unregister since the activity is about to be closed.
         unbindService(mConnection);
         super.onDestroy();
     }
