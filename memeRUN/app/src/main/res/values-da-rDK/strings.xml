@@ -24,6 +24,6 @@
     <string name="Easy">Nem</string>
     <string name="Medium">Normal</string>
     <string name="Hard">Svært</string>
-    <string name="Steps">Skridt:</string>
+    <string name="Steps">Skridt</string>
     <string name="Thisfeelslikeyou">Det føles som om dig:</string>
 </resources>

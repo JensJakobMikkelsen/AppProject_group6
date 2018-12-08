@@ -23,6 +23,6 @@
     <string name="Easy">Easy</string>
     <string name="Medium">Medium</string>
     <string name="Hard">Hard</string>
-    <string name="Steps">Steps:</string>
+    <string name="Steps">Steps</string>
     <string name="Thisfeelslikeyou">This feels like you:</string>
 </resources>

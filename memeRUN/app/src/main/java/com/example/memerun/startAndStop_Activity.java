@@ -207,11 +207,18 @@ public class startAndStop_Activity extends AppCompatActivity {
 
                 if(number == 0)
                 {
-                    next.setText(achievements.get(0).getRequirement());
+                    String mess = getResources().getString(R.string.Steps);
+                    int steps = achievements.get(0).getSteps();
+                    String steps_s = Integer.toString(steps);
+                    next.setText(steps_s + " " + mess);
                 }
 
                 else if (number < achievements.size() - 1) {
-                    next.setText(achievements.get(number + 1).getRequirement());
+
+                    String mess = getResources().getString(R.string.Steps);
+                    int steps = achievements.get(number + 1).getSteps();
+                    String steps_s = Integer.toString(steps);
+                    next.setText(steps_s + " " + mess);
                 }
 
                 else {
