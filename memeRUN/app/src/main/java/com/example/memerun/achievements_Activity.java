@@ -209,6 +209,9 @@ public class achievements_Activity extends AppCompatActivity {
                 {
                     tempList.add(achievements_list.get(i));
                     tempList.get(i).setImageName("question");
+
+                    String mess = getResources().getString(R.string.Steps);
+                    tempList.get(i).setRequirement(Integer.toString(tempList.get(i).getSteps()) + " " + mess);
                     adapter.add(tempList.get(i));
                 }
 
