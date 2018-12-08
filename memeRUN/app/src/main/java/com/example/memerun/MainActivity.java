@@ -311,7 +311,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }, delay);
 
-
                 }
 
             }
@@ -323,6 +322,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     MediaPlayer player;
+    TextView memesday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -338,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
         int max = quotes.size()-1;
         Random r = new Random();
         int i1 = r.nextInt(max - min + 1) + min;
-        TextView memesday = findViewById(R.id.diary_txt);
+        memesday = findViewById(R.id.diary_txt);
         memesday.setText(timeStamp + ": " + quotes.get(i1));
 
         sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE);
@@ -361,8 +361,6 @@ public class MainActivity extends AppCompatActivity {
         Button achievements = findViewById(R.id.Achievements_btn);
         Button collection = findViewById(R.id.View_collection_btn);
 
-
-        //final TextView retCount = findViewById(R.id.retCount);
         ImageView trollface = findViewById(R.id.trollface);
 
         collection.setOnClickListener(new View.OnClickListener() {
@@ -643,6 +641,18 @@ public class MainActivity extends AppCompatActivity {
             mBound = false;
         }
         super.onDestroy();
+    }
+
+    protected void onSaveInstanceState(Bundle savedInstanceState)
+    {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("memesday", memesday.getText().toString());
+    }
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onSaveInstanceState(savedInstanceState);
+        memesday.setText(savedInstanceState.getString("memesday"));
     }
 
 

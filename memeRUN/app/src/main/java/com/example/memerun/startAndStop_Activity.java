@@ -367,6 +367,7 @@ public class startAndStop_Activity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),stop ,
                         Toast.LENGTH_LONG).show();
 
+
             }
 
 

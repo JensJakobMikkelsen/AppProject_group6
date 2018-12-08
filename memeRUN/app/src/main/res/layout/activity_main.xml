@@ -8,6 +8,41 @@
     tools:context=".MainActivity">
 
 
+        <ImageView
+            android:id="@+id/trollface3"
+            android:layout_width="58dp"
+            android:layout_height="57dp"
+            android:clickable="true"
+            android:rotation="180"
+            app:srcCompat="@mipmap/trollface_foregnd"
+            tools:layout_editor_absoluteX="90dp"
+            tools:layout_editor_absoluteY="268dp" />
+
+        <ImageView
+            android:id="@+id/trollface4"
+            android:layout_width="58dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="32dp"
+            android:clickable="true"
+            android:rotation="295"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@mipmap/trollface_foregnd"
+            tools:layout_editor_absoluteY="135dp" />
+
+        <ImageView
+            android:id="@+id/trollface2"
+            android:layout_width="58dp"
+            android:layout_height="57dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="28dp"
+            android:clickable="true"
+            android:rotation="90"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.944"
+            app:layout_constraintStart_toEndOf="@+id/cardView_start"
+            app:srcCompat="@mipmap/trollface_foregnd"
+            tools:layout_editor_absoluteY="325dp" />
+
         <android.support.v7.widget.CardView
             android:id="@+id/cardView4"
             android:layout_width="290dp"
