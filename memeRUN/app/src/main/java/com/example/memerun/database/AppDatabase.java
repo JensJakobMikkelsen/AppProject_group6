@@ -120,6 +120,7 @@ public abstract class AppDatabase extends RoomDatabase {
             final memeURL ghost = new memeURL("https://rg00018.files.wordpress.com/2012/09/rage-comic-i-hear-dead-people.png");
             final memeURL road = new memeURL("https://doilooksick.files.wordpress.com/2017/02/h8631d747.png?w=775&h=685");
             final memeURL dildo = new memeURL("https://i.ytimg.com/vi/c4XZc1fmGl8/maxresdefault.jpg");
+            final memeURL notcheating = new memeURL("https://steamuserimages-a.akamaihd.net/ugc/863988638213171236/08413D0D7896DD8B89C9E1D392305BD6790FA5FD/");
 
             mDao.insert(yoda);
             mDao.insert(successkid);
@@ -143,6 +144,7 @@ public abstract class AppDatabase extends RoomDatabase {
             mDao.insert(ghost);
             mDao.insert(road);
             mDao.insert(dildo);
+            mDao.insert(notcheating);
 
             achievement achievement1 = new achievement("5 steps", 5);
             achievement achievement2 = new achievement("50 steps", 50);
