@@ -15,4 +15,15 @@
     <string name="title_activity_maps">Map</string>
     <string name="stop">"Stoppet "</string>
     <string name="cancel">afslut</string>
+    <string name="No">Nej</string>
+    <string name="Set">Sæt</string>
+    <string name="Setsteps">Sæt Skridt</string>
+    <string name="Cheat">Snyd</string>
+    <string name="Activities">Aktiviteter</string>
+    <string name="Difficulty">"Sværhedsgrad "</string>
+    <string name="Easy">Nem</string>
+    <string name="Medium">Normal</string>
+    <string name="Hard">Svært</string>
+    <string name="Steps">Skridt:</string>
+    <string name="Thisfeelslikeyou">Det føles som om dig:</string>
 </resources>

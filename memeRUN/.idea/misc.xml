@@ -30,9 +30,7 @@
     </option>
   </component>
   <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/app/src/main/res/menu/achievements.xml" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/menu/collection.xml" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/menu/recent.xml" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout-land/activity_main.xml" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />

@@ -3,18 +3,18 @@
     <item
 
         android:id="@+id/difficuly"
-        android:title="Difficulty">
+        android:title="@string/Difficulty">
 
         <menu>
             <item
                 android:id="@+id/easy"
-                android:title="Easy" />
+                android:title="@string/Easy" />
             <item
                 android:id="@+id/medium"
-                android:title="Medium" />
+                android:title="@string/Medium" />
             <item
                 android:id="@+id/hard"
-                android:title="Hard" />
+                android:title="@string/Hard" />
 
         </menu>
 
@@ -23,19 +23,19 @@
 
     <item
 
-        android:id = "@+id/activities"
-        android:title = "Activities">
+        android:id="@+id/activities"
+        android:title="@string/Activities">
 
         <menu>
             <item
                 android:id="@+id/collection"
-                android:title="Collection" />
+                android:title="@string/ViewCollection" />
             <item
                 android:id="@+id/recent_activity"
-                android:title="Recent activity" />
+                android:title="@string/RecentActivity" />
             <item
                 android:id="@+id/achievement"
-                android:title="Achievements" />
+                android:title="@string/Achievements" />
 
         </menu>
 
@@ -43,13 +43,13 @@
     </item>
 
     <item
-        android:id = "@+id/cheats"
-        android:title = "Cheat">
+        android:id="@+id/cheats"
+        android:title="@string/Cheat">
 
         <menu>
             <item
                 android:id="@+id/Set"
-                android:title="Set steps" />
+                android:title="@string/Setsteps" />
 
         </menu>
 

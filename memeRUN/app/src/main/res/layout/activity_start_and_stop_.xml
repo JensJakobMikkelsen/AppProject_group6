@@ -141,10 +141,9 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="25dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Steps:"
+        android:text="@string/Steps"
         app:layout_constraintEnd_toStartOf="@+id/progress_text"
-        app:layout_constraintTop_toBottomOf="@+id/next_txt"
-        tools:text="Steps:" />
+        app:layout_constraintTop_toBottomOf="@+id/next_txt" />
 
     <TextView
         android:id="@+id/feels_like_you"
@@ -153,7 +152,7 @@
 
         android:layout_marginBottom="6dp"
         android:fontFamily="sans-serif-medium"
-        android:text="This feels like you:"
+        android:text="@string/Thisfeelslikeyou"
         app:layout_constraintBottom_toTopOf="@+id/gifImageView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"

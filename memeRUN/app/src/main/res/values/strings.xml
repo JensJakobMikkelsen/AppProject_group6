@@ -14,4 +14,15 @@
     <string name="title_activity_maps">Map</string>
     <string name="stop">Stopped</string>
     <string name="cancel">cancel</string>
+    <string name="No">No</string>
+    <string name="Set">Set</string>
+    <string name="Setsteps">Set steps</string>
+    <string name="Cheat">Cheat</string>
+    <string name="Activities">Activities</string>
+    <string name="Difficulty">Difficulty</string>
+    <string name="Easy">Easy</string>
+    <string name="Medium">Medium</string>
+    <string name="Hard">Hard</string>
+    <string name="Steps">Steps:</string>
+    <string name="Thisfeelslikeyou">This feels like you:</string>
 </resources>
