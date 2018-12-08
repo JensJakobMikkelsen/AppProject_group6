@@ -55,17 +55,15 @@ public class recent {
         steps = steps_;
     }
 
-    @Ignore
-    public achievement tempAchievement = new achievement();
+    String unlockedRequirement;
 
-    public achievement getTempAchievement() {
-        return tempAchievement;
+    public String getUnlockedRequirement() {
+        return unlockedRequirement;
     }
 
-    public void setTempAchievement(achievement tempAchievement) {
-        this.tempAchievement = tempAchievement;
+    public void setUnlockedRequirement(String unlockedRequirement) {
+        this.unlockedRequirement = unlockedRequirement;
     }
-
 
     public int getId() {
         return id;

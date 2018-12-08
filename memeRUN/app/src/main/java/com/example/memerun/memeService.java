@@ -124,6 +124,7 @@ public class memeService extends Service implements SensorEventListener {
     }
 
     boolean unlocked = false;
+    boolean unlocked2 = false;
 
     public void checkAchievements(List<achievement> achievementList, int steps)
     {
@@ -139,12 +140,14 @@ public class memeService extends Service implements SensorEventListener {
                     appDb.daoAccess().update(achievementList.get(i));
                     unlockedPosition = i;
                     unlocked = true;
+                    unlocked2 = true;
 
                     progAmount++;
                     send_progessbar_inc();
                 }
 
             }
+
         }
 
         if(unlocked) {
@@ -164,9 +167,8 @@ public class memeService extends Service implements SensorEventListener {
 
             NotificationManager nm = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
             nm.notify(1, b.build());
+            unlocked = false;
         }
-
-
 
     }
 
@@ -435,11 +437,12 @@ public class memeService extends Service implements SensorEventListener {
     {
         if(steps != 0) {
             recent recent_ = new recent(steps);
+            //recent_.setLastPosition(unlockedPosition);
 
-            if(unlocked) {
-                recent_.setLastPosition(unlockedPosition);
-                recent_.setTempAchievement(achievementList.get(unlockedPosition));
-                unlocked = false;
+            if(unlocked2) {
+                //recent_.setLastPosition(unlockedPosition);
+                recent_.setUnlockedRequirement(achievementList.get(unlockedPosition).getRequirement());
+                unlocked2 = false;
             }
             recentList.add(recent_);
             appDb.daoAccess().insert(recent_);

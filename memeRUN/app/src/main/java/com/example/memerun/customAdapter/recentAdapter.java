@@ -55,9 +55,9 @@ public class recentAdapter extends ArrayAdapter<recent> {
 
         metres.setText(metres_s);
 
-        if(!(user.getTempAchievement().getRequirement().isEmpty()))
+        if(!(user.getUnlockedRequirement().isEmpty()))
         {
-            achievement_unlocked.setText(user.getTempAchievement().getRequirement());
+            achievement_unlocked.setText(user.getUnlockedRequirement());
         }
 
         // Return the completed view to render on screen
