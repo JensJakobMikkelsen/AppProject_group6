@@ -8,23 +8,28 @@
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
 
         android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:src="@raw/anigif"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardview_save" />
+        app:layout_constraintBottom_toTopOf="@+id/cardview_back_recent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardview_save"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/progress_bar_txt"
         android:layout_width="267dp"
         android:layout_height="38dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="8dp"
+        android:textSize="30sp"
         android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,16 +38,17 @@
         android:layout_width="267dp"
         android:layout_height="38dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:text="@string/RecentActivity"
+        android:textSize="30sp"
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressbar_achievement" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardview_back_recent"
-        android:layout_width="154dp"
-        android:layout_height="112dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="3dp"
@@ -53,11 +59,12 @@
 
         <Button
             android:id="@+id/back_recent_btn"
-            android:layout_width="125dp"
-            android:layout_height="61dp"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
             android:background="@color/colorAccent"
             android:shadowColor="@android:color/background_dark"
             android:text="@string/BackButton"
+            android:textSize="30sp"
             android:verticalScrollbarPosition="left"
             android:visibility="visible" />
 
@@ -66,14 +73,13 @@
 
     <ListView
         android:id="@+id/cardview_save"
-        android:layout_width="372dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="36dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardview_back_recent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cardview_back_recent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progressbar_achievement" />
 
@@ -82,7 +88,9 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="318dp"
         android:layout_height="41dp"
+        android:layout_marginStart="32dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progress_bar_txt" />
 

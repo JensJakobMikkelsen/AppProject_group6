@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fadingEdge="none|horizontal|vertical"
+    tools:context=".startAndStop_Activity">
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="16dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toTopOf="@+id/cardView_back"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/startandstop_cancel"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:shadowColor="@android:color/background_dark"
+            android:text="@string/cancel"
+            android:textSize="30sp"
+            android:verticalScrollbarPosition="left"
+            android:visibility="visible" />
+
+    </android.support.v7.widget.CardView>
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="12dp"
+        android:src="@raw/walk"
+        app:layout_constraintBottom_toTopOf="@+id/cardView_start"
+        app:layout_constraintEnd_toStartOf="@+id/cardView_back"
+        app:layout_constraintStart_toEndOf="@+id/cardView_start"
+        app:layout_constraintTop_toBottomOf="@+id/feels_like_you" />
+
+    <TextView
+        android:id="@+id/next_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/NextAchievement"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/next_achievevement_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="TextView"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/progress_text"
+        app:layout_constraintStart_toEndOf="@+id/next_txt"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="16dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/startandstop_back"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:shadowColor="@android:color/background_dark"
+            android:text="@string/BackButton"
+            android:textSize="30sp"
+            android:verticalScrollbarPosition="left"
+            android:visibility="visible" />
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView_start"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="16dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/startandstop_start"
+            android:layout_width="247dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:shadowColor="@android:color/background_dark"
+            android:text="@string/Start"
+            android:textSize="30sp"
+            android:verticalScrollbarPosition="left"
+            android:visibility="visible" />
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/progress_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="160dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="TextView"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/steps___"
+        app:layout_constraintTop_toBottomOf="@+id/next_achievevement_txt" />
+
+    <TextView
+        android:id="@+id/steps___"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/Steps"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/progress_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/next_txt" />
+
+    <TextView
+        android:id="@+id/feels_like_you"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/Thisfeelslikeyou"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/steps___" />
+
+</android.support.constraint.ConstraintLayout>

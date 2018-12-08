@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imgviewer_page1"
-        android:layout_width="337dp"
-        android:layout_height="340dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
