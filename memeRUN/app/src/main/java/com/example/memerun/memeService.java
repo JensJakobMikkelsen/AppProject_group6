@@ -124,7 +124,8 @@ public class memeService extends Service implements SensorEventListener {
     }
 
     boolean unlocked = false;
-    boolean unlocked2 = false;
+
+    String lastRequirement = "";
 
     public void checkAchievements(List<achievement> achievementList, int steps)
     {
@@ -138,9 +139,9 @@ public class memeService extends Service implements SensorEventListener {
                     achievementList.get(i).setUnlocked(true);
                     send_achievement_unlocked(i);
                     appDb.daoAccess().update(achievementList.get(i));
+                    lastRequirement = achievementList.get(i).getRequirement();
                     unlockedPosition = i;
                     unlocked = true;
-                    unlocked2 = true;
 
                     progAmount++;
                     send_progessbar_inc();
@@ -437,13 +438,10 @@ public class memeService extends Service implements SensorEventListener {
     {
         if(steps != 0) {
             recent recent_ = new recent(steps);
-            //recent_.setLastPosition(unlockedPosition);
 
-            if(unlocked2) {
-                //recent_.setLastPosition(unlockedPosition);
-                recent_.setUnlockedRequirement(achievementList.get(unlockedPosition).getRequirement());
-                unlocked2 = false;
-            }
+            recent_.setUnlockedRequirement(achievementList.get(unlockedPosition).getRequirement());
+            recent_.setUnlockedRequirement(lastRequirement);
+            lastRequirement = "";
             recentList.add(recent_);
             appDb.daoAccess().insert(recent_);
 

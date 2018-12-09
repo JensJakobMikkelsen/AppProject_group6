@@ -37,6 +37,7 @@ public class recentAdapter extends ArrayAdapter<recent> {
         TextView date = convertView.findViewById(R.id.date);
         TextView metres = convertView.findViewById(R.id.metres_run);
         TextView achievement_unlocked = convertView.findViewById(R.id.achievements_unlocked_list_txt);
+        TextView ach = convertView.findViewById(R.id.achievements_unlocked_list);
 
         // Populate the data into the template view using the data object
         date.setText(user.getDate());
@@ -55,9 +56,15 @@ public class recentAdapter extends ArrayAdapter<recent> {
 
         metres.setText(metres_s);
 
-        if(!(user.getUnlockedRequirement().isEmpty()))
+        if((user.getUnlockedRequirement() != ""))
         {
             achievement_unlocked.setText(user.getUnlockedRequirement());
+        }
+
+        else
+        {
+            achievement_unlocked.setText("");
+            ach.setText("");
         }
 
         // Return the completed view to render on screen

@@ -397,6 +397,12 @@ public class startAndStop_Activity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("memeService"));
+
+        if(mBound && mService != null)
+        {
+            TextView txt = findViewById(R.id.progress_text);
+            txt.setText(Double.toString(mService.getSteps()));
+        }
     }
 
     @Override
