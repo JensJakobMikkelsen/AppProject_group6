@@ -324,12 +324,6 @@ public class achievements_Activity extends AppCompatActivity {
         // https://developer.android.com/training/permissions/requesting
 
 
-        /*
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted
-        }
-        */
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE)

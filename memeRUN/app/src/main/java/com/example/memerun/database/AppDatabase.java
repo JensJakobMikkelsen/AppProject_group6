@@ -207,14 +207,7 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-/*
-            Log.d("sender", "Broadcasting message");
-            Intent intent = new Intent("memeService");
-            // You can also include some extra data.
-            intent.putExtra("message", "databasePopulated");
-            LocalBroadcastManager.getInstance(contextRef.get()).sendBroadcast(intent);
-*/
-        }
+     }
 
     }
 

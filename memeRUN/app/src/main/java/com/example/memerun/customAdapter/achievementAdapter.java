@@ -59,25 +59,7 @@ public class achievementAdapter extends ArrayAdapter<achievement> {
 
         requirement.setText(user.getRequirement());
 
-/*
-        // Populate the data into the template view using the data object
-        date.setText(user.getDate());
 
-        double metres_d = user.getMetres_run();
-        String metres_s = "";
-
-        try
-        {
-            metres_s = Double.toString(metres_d);
-        }
-        catch(NumberFormatException nfe)
-        {
-
-        }
-
-        metres.setText(metres_s);
-        // Return the completed view to render on screen
-        */
         return convertView;
     }
 }
