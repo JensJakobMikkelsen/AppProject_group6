@@ -137,6 +137,7 @@ public class collection_Activity extends AppCompatActivity {
                 alertDialogBuilder.setView(input);
 
 
+                //https://stackoverflow.com/questions/12993992/issue-with-alert-dialog-with-two-buttons-cancel-and-open-link-activity
 
                 // set dialog message
                 alertDialogBuilder
@@ -202,6 +203,8 @@ public class collection_Activity extends AppCompatActivity {
 
                 viewPager.setAdapter(swipeAdapter);
                 viewPager.setCurrentItem(0);
+
+                // https://stackoverflow.com/questions/13819865/how-to-know-viewpager-has-scrolled-half-the-screen-in-android
 
                 viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                     @Override
@@ -378,8 +381,5 @@ public class collection_Activity extends AppCompatActivity {
         unbindService(mConnection);
 
     }
-
-
-
 
 }

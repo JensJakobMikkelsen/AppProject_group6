@@ -128,6 +128,8 @@ public class recent_Activity extends AppCompatActivity {
                 alertDialogBuilder.setView(input);
 
 
+                // https://stackoverflow.com/questions/12993992/issue-with-alert-dialog-with-two-buttons-cancel-and-open-link-activity
+
                 // set dialog message
                 alertDialogBuilder
                         .setMessage(No)

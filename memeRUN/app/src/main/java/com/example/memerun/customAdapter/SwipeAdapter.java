@@ -18,6 +18,8 @@ import java.util.List;
 
 public class SwipeAdapter extends FragmentStatePagerAdapter {
 
+    // https://stackoverflow.com/questions/10120119/how-does-the-getview-method-work-when-creating-your-own-custom-adapter
+
     List<bitmapCounter> tempBitmapList;
     public Bitmap bm;
     int position;
@@ -66,6 +68,8 @@ public class SwipeAdapter extends FragmentStatePagerAdapter {
         catch(NullPointerException nfe)
         {
         }
+
+        //https://stackoverflow.com/questions/50181700/android-bitmap-compression-is-causing-out-of-memory-problems?noredirect=1&lq=1
 
         if(bmp != null) {
 

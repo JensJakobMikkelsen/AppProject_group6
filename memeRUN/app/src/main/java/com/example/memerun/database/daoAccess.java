@@ -15,6 +15,8 @@ import java.util.List;
 @Dao
 public interface daoAccess {
 
+    // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#0
+
     // memeURL
 
     @Insert

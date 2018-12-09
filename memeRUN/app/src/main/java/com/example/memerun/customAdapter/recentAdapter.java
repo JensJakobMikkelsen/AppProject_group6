@@ -13,8 +13,7 @@ import com.example.memerun.classes.recent;
 
 public class recentAdapter extends ArrayAdapter<recent> {
 
-    //View updateView;
-    //ViewGroup updateParent;
+    // https://stackoverflow.com/questions/10120119/how-does-the-getview-method-work-when-creating-your-own-custom-adapter
 
     public recentAdapter(Context context) {
         super(context, 0);
@@ -22,13 +21,8 @@ public class recentAdapter extends ArrayAdapter<recent> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
-
-        //updateView = convertView;
-        //updateParent = parent;
 
         recent user = getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_recent, parent, false);
         }

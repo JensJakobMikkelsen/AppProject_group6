@@ -175,6 +175,8 @@ public class MainActivity extends AppCompatActivity {
                 alertDialogBuilder.setView(input);
 
 
+                // https://stackoverflow.com/questions/12993992/issue-with-alert-dialog-with-two-buttons-cancel-and-open-link-activity
+
                 // set dialog message
                 alertDialogBuilder
                         .setMessage(No)
@@ -254,7 +256,6 @@ public class MainActivity extends AppCompatActivity {
 
             else if(message.equals("show"))
             {
-                Bitmap bmap = intent.getParcelableExtra("bmap");
 
                 if(player.isPlaying()) {
 
@@ -577,7 +578,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //Fra stackOverflow
+    // https://stackoverflow.com/questions/18717111/to-get-date-and-time-from-timestamp-android
 
     public String getDateCurrentTimeZone(long timestamp) {
         try{

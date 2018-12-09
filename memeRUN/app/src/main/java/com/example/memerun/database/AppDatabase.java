@@ -25,7 +25,7 @@ import java.lang.ref.WeakReference;
 public abstract class AppDatabase extends RoomDatabase {
 
 
-    //Most come from https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#0
+    // https://codelabs.developers.google.com/codelabs/android-room-with-a-view/#0
 
     static final Migration MIGRATION_1_2 = new Migration(1, 9) {
         @Override

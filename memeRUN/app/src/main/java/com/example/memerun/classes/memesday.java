@@ -13,7 +13,7 @@ public class memesday {
 
     public memesday()
     {
-        //Citater fra internettet
+        //Quotes from the internet, none of them are written ourselves.. creating the class is.
 
         memesday.add(" learned the meme gods came with their own doomsday: Memearok, the twilight of the gods, " +
                 "the end of it all. The gods were going to battle the frost giants, and they were all going to die.");

@@ -18,8 +18,7 @@ import java.net.URL;
 
 public class achievementAdapter extends ArrayAdapter<achievement> {
 
-    //View updateView;
-    //ViewGroup updateParent;
+    // https://stackoverflow.com/questions/10120119/how-does-the-getview-method-work-when-creating-your-own-custom-adapter
 
     Context context_;
 
@@ -30,10 +29,7 @@ public class achievementAdapter extends ArrayAdapter<achievement> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
 
-        //updateView = convertView;
-        //updateParent = parent;
 
         achievement user = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
@@ -41,22 +37,16 @@ public class achievementAdapter extends ArrayAdapter<achievement> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_achievements, parent, false);
         }
 
-        // Lookup view for data population
-
-          int id = context_.getResources().getIdentifier("com.example.memerun:mipmap/" + user.getImageName(), null, null);
+        int id = context_.getResources().getIdentifier("com.example.memerun:mipmap/" + user.getImageName(), null, null);
         ImageView achievements_image = (ImageView) convertView.findViewById(R.id.Achievements_image);
-       if(user.getBm() != null) {
+        if(user.getBm() != null) {
             achievements_image.setImageBitmap(user.getBm());
         }
-
         else
         {
               achievements_image.setImageResource(id);
         }
-
         TextView requirement = convertView.findViewById(R.id.requirement_in_m_text);
-
-
         requirement.setText(user.getRequirement());
 
 

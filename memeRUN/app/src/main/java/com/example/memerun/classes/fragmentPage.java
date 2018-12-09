@@ -16,6 +16,9 @@ import com.example.memerun.R;
 
 public class fragmentPage extends Fragment {
 
+    // https://stackoverflow.com/questions/10120119/how-does-the-getview-method-work-when-creating-your-own-custom-adapter
+    // https://stackoverflow.com/questions/52359709/newinstance-recieves-null-in-the-fragment
+
     ImageView img;
 
     @Nullable
