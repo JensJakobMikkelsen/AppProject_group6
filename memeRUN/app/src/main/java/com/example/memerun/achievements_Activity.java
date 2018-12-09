@@ -292,14 +292,13 @@ public class achievements_Activity extends AppCompatActivity {
 
                     handler.postDelayed(new Runnable() {
                         public void run() {
-                            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
 
                             if (!videoView.isPlaying()) {
-                                alertDialog.dismiss();
-                                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                         //       alertDialog.dismiss();
                                 stop = true;
                                 execute = true;
                             }
+
                             handler.postDelayed(this, delay);
 
 
