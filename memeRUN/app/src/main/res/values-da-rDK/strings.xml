@@ -26,4 +26,5 @@
     <string name="Hard">Svært</string>
     <string name="Steps">Skridt</string>
     <string name="Thisfeelslikeyou">Det føles som om dig:</string>
+    <string name="AchievementsUnlocked">" Opnåede resultater: "</string>
 </resources>

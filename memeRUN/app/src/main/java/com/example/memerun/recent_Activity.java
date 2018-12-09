@@ -197,7 +197,8 @@ public class recent_Activity extends AppCompatActivity {
                 String progAmount_s = Integer.toString(mService.getProgAmount());
 
                 progess_txt = findViewById(R.id.progress_bar_txt);
-                progess_txt.setText("Achievements unlocked: " + progAmount_s + "/" + Integer.toString(prog.getMax()));
+                String Achievements = getString(R.string.AchievementsUnlocked);
+                progess_txt.setText(Achievements + progAmount_s + "/" + Integer.toString(prog.getMax()));
 
             }
 
@@ -227,7 +228,8 @@ public class recent_Activity extends AppCompatActivity {
                 String progAmount_s = Integer.toString(mService.getProgAmount());
 
                 progess_txt = findViewById(R.id.progress_bar_txt);
-                progess_txt.setText("Achievements unlocked: " + progAmount_s + "/" + Integer.toString(prog.getMax()));
+                String Achievements = getString(R.string.AchievementsUnlocked);
+                progess_txt.setText(Achievements + progAmount_s + "/" + Integer.toString(prog.getMax()));
             }
 
             else if (message.equals("Achievement unlocked!")) {

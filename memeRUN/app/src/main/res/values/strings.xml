@@ -25,4 +25,5 @@
     <string name="Hard">Hard</string>
     <string name="Steps">Steps</string>
     <string name="Thisfeelslikeyou">This feels like you:</string>
+    <string name="AchievementsUnlocked">"Achievements unlocked: "</string>
 </resources>
